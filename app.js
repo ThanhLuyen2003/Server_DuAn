@@ -6,6 +6,9 @@ var logger = require('morgan');
 
 var homeRouter = require('./routes/home.route');
 var settingRouter = require('./routes/settings.route');
+var apiSalonRouter=require('./routes/salon.apiRoute');
+var apiTimeRouter=require('./routes/time.apiRoute');
+
 
 
 var app = express();
@@ -22,6 +25,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', homeRouter);
 app.use('/settings', settingRouter);
+app.use('/apisalon',apiSalonRouter);
+app.use('/apitime',apiTimeRouter);
+
 
 
 // catch 404 and forward to error handler
