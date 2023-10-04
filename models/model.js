@@ -5,8 +5,8 @@ const SalonSchema = new db.mongoose.Schema(
         address: { type: String, required: true },
         describe: { type: String, required: true },
         img: { type: String, required: true },
-        phone: { type: String, require: true },
-        evalute: { type: String, require: true },
+        phone: { type: String, required: true },
+        evalute: { type: String, required: true },
     },
     {
         collection: 'Salon'
