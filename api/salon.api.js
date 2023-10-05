@@ -1,8 +1,8 @@
 var md = require('../models/model');
 
- exports.salon = async(req, res, next)=>{
+exports.salon = async (req, res, next) => {
     try {
-        let salon = await md.salonModel.find();
+        let salon = await md.salonModel.find().sort({ _id: -1 });
 
         if (salon) {
             res.status(200).json(salon);
