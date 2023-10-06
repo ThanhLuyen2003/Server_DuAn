@@ -19,7 +19,7 @@ let salonModel = db.mongoose.model('salonModel', SalonSchema);
 const TimeSchema = new db.mongoose.Schema(
     {
         time: { type: String, required: true },
-       
+
     },
     {
         collection: 'Time'
@@ -36,14 +36,31 @@ const UsersSchema = new db.mongoose.Schema(
         email: { type: String, required: true },
         password: { type: String, required: true },
         avatar: { type: String, required: true },
-        historyUsers: {type: String, required: true},
-        addressUser: {type: String, required: true},
+        historyUsers: { type: String, required: true },
+        addressUser: { type: String, required: true },
     },
     {
         collection: 'AccountUsers'
     }
 );
 // tạo model
+
 let userModel = db.mongoose.model('userModel', UsersSchema);
 
-module.exports = { salonModel, timeModel, userModel };
+const ProductModel = new db.mongoose.Schema({
+    avatar: { type: String, required: true },
+    name: { type: String, required: true },
+    trademark: { type: String, required: true },
+    price: { type: String, required: true },
+    describe: { type: String, required: true },
+    ingredient: { type: String, required: true },
+    type: { type: String, required: true },
+},
+    {
+        collection: 'ProductSalon'
+    }
+)
+
+let productModel = db.mongoose.model('productModel', ProductModel)
+
+module.exports = { salonModel, timeModel, userModel, productModel };
