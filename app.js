@@ -9,7 +9,7 @@ var settingRouter = require('./routes/settings.route');
 var apiSalonRouter=require('./routes/salon.apiRoute');
 var apiTimeRouter=require('./routes/time.apiRoute');
 var apiUsersRouter=require('./routes/users.apiRoute');
-
+var apiProductRouter=require('./routes/ProductSalon.apiRoute');
 
 
 
@@ -30,7 +30,7 @@ app.use('/settings', settingRouter);
 app.use('/apisalon',apiSalonRouter);
 app.use('/apitime',apiTimeRouter);
 app.use('/apiuser',apiUsersRouter);
-
+app.use('/apiProduct',apiProductRouter);
 
 
 
