@@ -63,4 +63,18 @@ const ProductModel = new db.mongoose.Schema({
 
 let productModel = db.mongoose.model('productModel', ProductModel)
 
-module.exports = { salonModel, timeModel, userModel, productModel };
+const serviceModel = new db.mongoose.Schema({
+    name: { type: String, required: true },
+    price: { type: String, required: true },
+    type: { type: String, required: true },
+    image: { type: String, required: true },
+    describe: { type: String, required: true },
+
+},
+    {
+        collection: 'Service'
+    })
+
+let ServiceModel = db.mongoose.model('serviceModel', serviceModel)
+
+module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel };
