@@ -11,7 +11,7 @@ var apiTimeRouter = require('./routes/time.apiRoute');
 var apiUsersRouter = require('./routes/users.apiRoute');
 var apiProductRouter = require('./routes/ProductSalon.apiRoute');
 var apiService = require('./routes/Service.route');
-
+var apiComment = require('./routes/comment.apiRoute');
 
 
 var app = express();
@@ -33,7 +33,7 @@ app.use('/apitime', apiTimeRouter);
 app.use('/apiuser', apiUsersRouter);
 app.use('/apiProduct', apiProductRouter);
 app.use('/service', apiService);
-
+app.use('/apiComment', apiComment);
 
 
 
