@@ -35,6 +35,33 @@ app.use('/apiProduct', apiProductRouter);
 app.use('/service', apiService);
 app.use('/apiComment', apiComment);
 
+const Bill = require('./models/BillModel')
+
+app.post('/addBill', async (req, res) => {
+
+  var u = new Bill(req.body);
+
+  try {
+    await u.save();
+
+    res.status(200).json(u);
+
+  } catch (error) {
+    res.status(500).send(error);
+  }
+})
+
+
+app.get('/getBill/:idUser', (req, res) => {
+
+  const id = req.params.idUser;
+
+  Bill.find({ idUser: id }).then(data => {
+    res.status(200).json(data);
+  })
+
+
+})
 
 
 // catch 404 and forward to error handler
