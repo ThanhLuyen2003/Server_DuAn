@@ -77,4 +77,14 @@ const serviceModel = new db.mongoose.Schema({
 
 let ServiceModel = db.mongoose.model('serviceModel', serviceModel)
 
-module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel };
+
+const commentModel = new db.mongoose.Schema({
+    Comment: { type: String, required: true },
+    TimeComment: { type: String, required: true },
+},
+    {
+        collection: 'Comment'
+    })
+let CommentModel = db.mongoose.model('commentModel', commentModel)
+
+module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel,CommentModel };
