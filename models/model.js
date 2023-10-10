@@ -87,4 +87,7 @@ const commentModel = new db.mongoose.Schema({
     })
 let CommentModel = db.mongoose.model('commentModel', commentModel)
 
-module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel,CommentModel };
+
+
+
+module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel, CommentModel, };
