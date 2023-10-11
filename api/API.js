@@ -27,9 +27,7 @@ app.post('/addBill', async (req, res) => {
 
     try {
         await u.save();
-
         res.status(200).json(u);
-
     } catch (error) {
         res.status(500).send(error);
     }
@@ -46,4 +44,16 @@ app.get('/getBill/:idUser', (req, res) => {
 
 
 })
+
+app.post('/addUser',async (req, res) => {
+
+    var addU = new md.userModel(req.body);
+    try {
+        await addU.save();
+        res.status(200).json(addU);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
+
 module.exports = app;
