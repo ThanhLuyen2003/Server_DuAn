@@ -20,6 +20,20 @@ app.get('/login/:phone', (req, res) => {
 
 })
 
+app.post('/adduser', async (req, res) => {
+
+    var u = new md.userModel(req.body);
+
+    try {
+        await u.save();
+
+        res.status(200).json(u);
+
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
 
 app.post('/addBill', async (req, res) => {
 
