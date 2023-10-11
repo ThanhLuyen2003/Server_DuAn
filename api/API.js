@@ -20,6 +20,20 @@ app.get('/login/:phone', (req, res) => {
 
 })
 
+app.post('/addBill', async (req, res) => {
+
+    var u = new Bill(req.body);
+
+    try {
+        await u.save();
+
+        res.status(200).json(u);
+
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
 app.post('/adduser', async (req, res) => {
 
     var u = new md.userModel(req.body);
@@ -35,19 +49,7 @@ app.post('/adduser', async (req, res) => {
 })
 
 
-app.post('/addBill', async (req, res) => {
 
-    var u = new Bill(req.body);
-
-    try {
-        await u.save();
-
-        res.status(200).json(u);
-
-    } catch (error) {
-        res.status(500).send(error);
-    }
-})
 
 
 app.get('/getBill/:idUser', (req, res) => {
