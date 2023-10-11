@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var homeRouter = require('./routes/home.route');
 var settingRouter = require('./routes/settings.route');
+var salonRouter = require('./routes/salon.route');
 var apiSalonRouter = require('./routes/salon.apiRoute');
 var apiTimeRouter = require('./routes/time.apiRoute');
 var apiUsersRouter = require('./routes/users.apiRoute');
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', homeRouter);
 app.use('/settings', settingRouter);
+app.use('/salon', salonRouter);
 app.use('/apisalon', apiSalonRouter);
 app.use('/apitime', apiTimeRouter);
 app.use('/apiuser', apiUsersRouter);
