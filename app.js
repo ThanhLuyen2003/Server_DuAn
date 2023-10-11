@@ -14,6 +14,7 @@ var apiUsersRouter = require('./routes/users.apiRoute');
 var apiProductRouter = require('./routes/ProductSalon.apiRoute');
 var apiService = require('./routes/Service.route');
 var apiComment = require('./routes/comment.apiRoute');
+var api = require('./api/API');
 
 
 var app = express();
@@ -38,34 +39,7 @@ app.use('/apiuser', apiUsersRouter);
 app.use('/apiProduct', apiProductRouter);
 app.use('/service', apiService);
 app.use('/apiComment', apiComment);
-
-const Bill = require('./models/BillModel')
-
-app.post('/addBill', async (req, res) => {
-
-  var u = new Bill(req.body);
-
-  try {
-    await u.save();
-
-    res.status(200).json(u);
-
-  } catch (error) {
-    res.status(500).send(error);
-  }
-})
-
-
-app.get('/getBill/:idUser', (req, res) => {
-
-  const id = req.params.idUser;
-
-  Bill.find({ idUser: id }).then(data => {
-    res.status(200).json(data);
-  })
-
-
-})
+app.use(api);
 
 
 // catch 404 and forward to error handler
