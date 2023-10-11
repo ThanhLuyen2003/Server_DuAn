@@ -8,7 +8,7 @@ exports.productsalon = async (req, res, next) => {
             res.status(200).json(productsalon);
         } else {
             res.status(204).json({
-                msg: 'khong co du lieu hihihihidsd',
+                msg: 'khong co du lieu',
 
             });
         }
