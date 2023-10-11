@@ -18,3 +18,15 @@ var md = require('../models/model');
         });
     }
 }
+
+exports.addUser=async(req,res,next)=>{
+    var addU = new md.userModel(req.body);
+
+    try {
+        await addU.save();
+        res.status(200).json(addU)
+    } catch (error) {
+        res.status(200).json(error)
+    }
+   
+}
