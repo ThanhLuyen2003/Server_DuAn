@@ -31,13 +31,11 @@ let timeModel = db.mongoose.model('timeModel', TimeSchema);
 const UsersSchema = new db.mongoose.Schema(
     {
         name: { type: String, required: true },
-        birthday: { type: String, required: true },
-        phoneNumber: { type: String, required: true },
+        phone: { type: String, required: true },
         email: { type: String, required: true },
-        password: { type: String, required: true },
+        pass: { type: String, required: true },
         avatar: { type: String, required: true },
-        historyUsers: { type: String, required: true },
-        addressUser: { type: String, required: true },
+        address: { type: String, required: true },
     },
     {
         collection: 'AccountUsers'
