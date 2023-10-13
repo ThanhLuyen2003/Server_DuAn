@@ -35,6 +35,21 @@ app.post('/addBill', async (req, res) => {
 })
 
 
+app.post('/addBillDetail', async (req, res) => {
+
+    var u = new md.BillDetailModel(req.body);
+
+    try {
+        await u.save();
+
+        res.status(200).json(u);
+
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+
 app.get('/getBill/:idUser', (req, res) => {
 
     const id = req.params.idUser;
