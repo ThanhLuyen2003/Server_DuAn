@@ -5,11 +5,16 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var homeRouter = require('./routes/home.route');
+var salonRouter = require('./routes/salon.route');
+var serviceRouter = require('./routes/dichvu.route');
 var settingRouter = require('./routes/settings.route');
-var apiSalonRouter=require('./routes/salon.apiRoute');
-var apiTimeRouter=require('./routes/time.apiRoute');
-
-
+var apiSalonRouter = require('./routes/salon.apiRoute');
+var apiTimeRouter = require('./routes/time.apiRoute');
+var apiUsersRouter = require('./routes/users.apiRoute');
+var apiProductRouter = require('./routes/ProductSalon.apiRoute');
+var apiService = require('./routes/Service.route');
+var apiComment = require('./routes/comment.apiRoute');
+var api = require('./api/API');
 
 var app = express();
 
@@ -24,11 +29,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', homeRouter);
+app.use('/dichvu', serviceRouter);
+app.use('/salon', salonRouter);
 app.use('/settings', settingRouter);
-app.use('/apisalon',apiSalonRouter);
-app.use('/apitime',apiTimeRouter);
-
-
+app.use('/apisalon', apiSalonRouter);
+app.use('/apitime', apiTimeRouter);
+app.use('/apiuser', apiUsersRouter);
+app.use('/apiProduct', apiProductRouter);
+app.use('/service', apiService);
+app.use('/apiComment', apiComment);
+app.use(api);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

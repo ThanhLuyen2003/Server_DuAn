@@ -1,4 +1,70 @@
 <%- include('../inc/header.ejs') %>
 
+  <div class="container text-center">
+    <div class="row">
+      <div class="col">
+<h1 style="text-align: center;">Đăng nhập</h1>
+
+<form class="row g-3 needs-validation" novalidate>
+    <div class="col-md-12">
+      <label class="form-label">First name</label>
+      <input type="text" class="form-control" id="validationCustom01"  required>
+    </div>
+    <div class="col-md-12">
+      <label for="validationCustom02" class="form-label">Last name</label>
+      <input type="text" class="form-control" id="validationCustom02"  required>
+    </div>
+    <div class="col-md-12">
+      <label for="validationCustomUsername" class="form-label">Username</label>
+      <div class="input-group has-validation">
+        <span class="input-group-text" id="inputGroupPrepend">@</span>
+        <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+    
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label for="validationCustom03" class="form-label">City</label>
+      <input type="text" class="form-control" id="validationCustom03" required>
+      <div class="invalid-feedback">
+        Please provide a valid city.
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label for="validationCustom04" class="form-label">State</label>
+      <select class="form-select" id="validationCustom04" required>
+        <option selected disabled value="">Choose</option>
+        <option>...</option>
+      </select>
+      <div class="invalid-feedback">
+        Please select a valid state.
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label for="validationCustom05" class="form-label">Zip</label>
+      <input type="text" class="form-control" id="validationCustom05" required>
+      <div class="invalid-feedback">
+        Please provide a valid zip.
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+        <label class="form-check-label" for="invalidCheck">
+          Ghi nhớ
+        </label>
+      </div>
+    </div>
+    <div class="col-12">
+      <button class="btn btn-primary" type="submit">Submit form</button>
+    </div>
+  </form>
+  <a href="http://localhost:3000/settings/register">Bạn chưa có tài khoản? Đăng kí</a>
+      </div>
+      <div class="col">
+        <img src="https://scontent.xx.fbcdn.net/v/t1.15752-9/378152636_756805516205033_9023472447757140310_n.png?stp=dst-png_p206x206&_nc_cat=101&ccb=1-7&_nc_sid=aee45a&_nc_ohc=r9dqCfZa_4UAX8XZEKV&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&cb_e2o_trans=t&oh=03_AdRhxg7tX8FMvbptufgGDmfN_q-YrHiTmRyUWAWKC5dIjw&oe=6530946D" >
+      </div>
+    </div>
+  </div>
+
 
 <%- include('../inc/footer.ejs') %>
