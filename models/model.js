@@ -79,7 +79,7 @@ let ServiceModel = db.mongoose.model('serviceModel', serviceModel)
 const commentModel = new db.mongoose.Schema({
     Comment: { type: String, required: true },
     idUser: { type: String, required: true }
-    
+
 },
     {
         collection: 'Comment'
@@ -87,6 +87,20 @@ const commentModel = new db.mongoose.Schema({
 let CommentModel = db.mongoose.model('commentModel', commentModel)
 
 
+const billDetailModel = new db.mongoose.Schema({
+    idSalon: { type: String, required: true },
+    hour: { type: String, required: true },
+    day: { type: String, required: true },
+    idServices: { type: Array, required: true },
+    idUser: { type: String, required: true }
+
+},
+    {
+        collection: 'BillDetail'
+    })
+
+let BillDetailModel = db.mongoose.model('billDetail', billDetailModel)
 
 
-module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel, CommentModel, };
+
+module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel, CommentModel, BillDetailModel };
