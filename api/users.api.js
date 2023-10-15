@@ -2,7 +2,7 @@ var md = require('../models/model');
 
  exports.users = async(req, res, next)=>{
     try {
-        let users = await md.userModel.find();
+        let id = await md.userModel.find();
 
         if (users) {
             res.status(200).json(users);
