@@ -1,19 +1,15 @@
 var md = require('../models/model');
 
 exports.Comment = async (req, res, next) => {
-    try {
-        let comment =await md.CommentModel.find();
-
-        if (comment) {
-            res.status(200).json(comment);
-        } else {
-            res.status(204).json({
-                msg: 'khong co du lieu hihihihidsd',
-            });
+        const idu= req.params.idPosts
+        try {
+            const story= await md.productModel.findById(idu)
+            if(!story){
+                return res.status(404).json({messge:"Bai viet khong ton tai"})
+            }
+            
+            res.status(200).json({story})
+        } catch (error) {
+            return res.status(500).json({messge:error.messge})
         }
-    } catch (err) {
-        return res.status(err.status).json({
-            msg: err.massage
-        });
-    }
 }
