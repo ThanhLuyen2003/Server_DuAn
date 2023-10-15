@@ -78,7 +78,8 @@ let ServiceModel = db.mongoose.model('serviceModel', serviceModel)
 
 const commentModel = new db.mongoose.Schema({
     Comment: { type: String, required: true },
-    idUser: { type: String, required: true }
+    idUser: { type: String, required: true },
+    idPosts: { type: String, required: true }
     
 },
     {
