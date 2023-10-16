@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <form class="d-flex" role="search">
           <div class="col-3">
-  <a type="button" class="btn btn-primary" href="#">Thêm dịch vụ
+  <a type="button" class="btn btn-primary" href="#" style="width: 150px;">Thêm dịch vụ
   </a>
         </div>
         </form>
@@ -15,7 +15,7 @@
 
     <div class="container">
       <table class="table table-bordered table-striped">
-        <tr><th>ID</th> <th>Name</th> <th>Price</th> <th>Type</th> <th>Image</th> <th>Describe</th> <th>UD</th>
+        <tr><th>ID</th> <th>Name</th> <th>Price</th> <th>Type</th> <th>Image</th> <th>Describe</th> 
         </tr>
         <% listDichVu.forEach( ( row )=>{  %>
             <tr>
@@ -27,7 +27,7 @@
                 <td> <%= row.describe %></td>
                 <td><a type="button" class="btn btn-danger" href="#">Sửa
                 </a>
-                <a  class="btn btn-danger" href="#">Xóa
+                <td><a  class="btn btn-danger" href="#">Xóa
                 </a>
             </tr>
         
