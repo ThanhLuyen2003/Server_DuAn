@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <form class="d-flex" role="search">
           <div class="col-3">
-  <a type="button" class="btn btn-primary" href="#" style="width: 150px;">Thêm dịch vụ
+  <a type="button" class="btn btn-success" href="http://localhost:3000/dichvu/add" style="width: 150px;">+ Thêm dịch vụ
   </a>
         </div>
         </form>
@@ -25,9 +25,9 @@
                 <td> <%= row.type %></td>
                 <td>  <img src="<%=row.image %>" alt="" style="width: 60px; height: 60px;"></td>
                 <td> <%= row.describe %></td>
-                <td><a type="button" class="btn btn-danger" href="#">Sửa
+                <td><a type="button" class="btn btn-danger" href="/dichvu/edit/<%=row._id%>">Sửa
                 </a>
-                <td><a  class="btn btn-danger" href="#">Xóa
+                <td><a  class="btn btn-danger" href="/dichvu/delete/<%=row._id%>">Xóa
                 </a>
             </tr>
         
