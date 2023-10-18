@@ -115,7 +115,17 @@ const cartModel = new db.mongoose.Schema({
 
 let CartModel = db.mongoose.model('cartModel', cartModel)
 
+const adminSche = new db.mongoose.Schema({
+    username: { type: String, required: true },
+    pass: { type: String, required: true },
+},
+    {
+        collection: 'Admin'
+    })
+
+let AdminModel = db.mongoose.model('AdminModel', adminSche)
 
 
 
-module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel, CommentModel, BillDetailModel, CartModel };
+
+module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel, CommentModel, BillDetailModel, CartModel,AdminModel };
