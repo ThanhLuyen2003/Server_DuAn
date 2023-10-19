@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var session = require('express-session');
 var homeRouter = require('./routes/home.route');
 var salonRouter = require('./routes/salon.route');
 var serviceRouter = require('./routes/dichvu.route');
@@ -27,7 +27,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(session({
+  secret: 'NDASHUDHAUHD3427328guisfjsdfkjshdjhsafkjsdfkeasdasdasdfsdwe',
+  resave: true,
+  saveUninitialized: true
+  }));
 app.use('/', homeRouter);
 app.use('/dichvu', serviceRouter);
 app.use('/salon', salonRouter);
