@@ -1,60 +1,64 @@
 <%- include('../inc/header.ejs') %>
 <div class="container">
-<h1 style="text-align: center;">Đăng kí</h1>
-<form class="row g-3 needs-validation" novalidate>
-    <div class="col-md-4">
-      <label for="validationCustom01" class="form-label">First name</label>
-      <input type="text" class="form-control" id="validationCustom01" value="Mark" required>
+  <h1 style="text-align: center;">Đăng ký</h1>
+  <form class="row g-3 needs-validation" novalidate>
+    <div class="col-md-6">
+      <label for="validationCustom01" class="form-label">Họ và tên</label>
+      <input type="text" class="form-control" id="validationCustom01" placeholder="Họ và tên" required>
       <div class="valid-feedback">
         Looks good!
-      </div>
-    </div>
-    <div class="col-md-4">
-      <label for="validationCustom02" class="form-label">Last name</label>
-      <input type="text" class="form-control" id="validationCustom02" value="Otto" required>
-      <div class="valid-feedback">
-        Looks good!
-      </div>
-    </div>
-    <div class="col-md-4">
-      <label for="validationCustomUsername" class="form-label">Username</label>
-      <div class="input-group has-validation">
-        <span class="input-group-text" id="inputGroupPrepend">@</span>
-        <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-        <div class="invalid-feedback">
-          Please choose a username.
-        </div>
       </div>
     </div>
     <div class="col-md-6">
-      <label for="validationCustom03" class="form-label">City</label>
-      <input type="text" class="form-control" id="validationCustom03" required>
-      <div class="invalid-feedback">
-        Please provide a valid city.
+      <label for="validationCustom02" class="form-label">Số điện thoại</label>
+      <input type="tel" class="form-control" id="validationCustom02" placeholder="Số điện thoại" required>
+      <div class="valid-feedback">
+        Looks good!
       </div>
     </div>
-    <div class="col-md-3">
-      <label for="validationCustom04" class="form-label">State</label>
-      <select class="form-select" id="validationCustom04" required>
-        <option selected disabled value="">Choose...</option>
-        <option>...</option>
-      </select>
-      <div class="invalid-feedback">
-        Please select a valid state.
+    <div class="col-12">
+      <label for="validationCustomUsername" class="form-label">Email</label>
+      <div class="input-group has-validation">
+        <span class="input-group-text" id="inputGroupPrepend">@</span>
+        <input type="email" class="form-control" id="validationCustomUsername" placeholder="Email" aria-describedby="inputGroupPrepend" required>
+        <div class="invalid-feedback">
+          Please enter a valid email.
+        </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <label for="validationCustom05" class="form-label">Zip</label>
-      <input type="text" class="form-control" id="validationCustom05" required>
+    <div class="col-12">
+      <label for="validationCustom03" class="form-label">Mật khẩu</label>
+      <input type="password" class="form-control" id="validationCustom03" placeholder="Mật khẩu" required>
       <div class="invalid-feedback">
-        Please provide a valid zip.
+        Please provide a valid password.
+      </div>
+    </div>
+    <div class="col-12">
+      <label for="validationCustom03" class="form-label"> Nhập lại mật khẩu</label>
+      <input type="password" class="form-control" id="validationCustom06" placeholder="Mật khẩu" required>
+      <div class="invalid-feedback">
+        Please provide a valid password.
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label for="validationCustom04" class="form-label">Avatar</label>
+      <input type="file" class="form-control" id="validationCustom04" accept="image/*" required>
+      <div class="invalid-feedback">
+        Please select an image file.
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label for="validationCustom05" class="form-label">Địa chỉ</label>
+      <input type="text" class="form-control" id="validationCustom05" placeholder="Địa chỉ" required>
+      <div class="invalid-feedback">
+        Please provide a valid address.
       </div>
     </div>
     <div class="col-12">
       <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
         <label class="form-check-label" for="invalidCheck">
-          Agree to terms and conditions
+          I agree to the terms and conditions
         </label>
         <div class="invalid-feedback">
           You must agree before submitting.
@@ -62,7 +66,7 @@
       </div>
     </div>
     <div class="col-12">
-      <button class="btn btn-primary" type="submit">Submit form</button>
+      <button class="btn btn-primary" type="submit">Submit</button>
     </div>
   </form>
 </div>

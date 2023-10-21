@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <form class="d-flex" role="search">
           <div class="col-3">
-  <a type="button" class="btn btn-primary" href="http://localhost:3000/salon/add">Thêm Salon
+  <a type="button" class="btn btn-success" style="width: 150px;" href="http://localhost:3000/salon/add">+ Thêm Salon
   </a>
         </div>
         </form>
@@ -15,7 +15,7 @@
 
     <div class="container">
       <table class="table table-bordered table-striped">
-        <tr><th>ID</th> <th>Name</th> <th>Address</th> <th>Describe</th> <th>Image</th> <th>PhoneNumber</th> <th>Evalute</th> <th>UD</th>
+        <tr><th>ID</th> <th>Name</th> <th>Address</th> <th>Describe</th> <th>Image</th> <th>PhoneNumber</th> <th>Evalute</th>
         </tr>
         <% listSalon.forEach( ( row )=>{  %>
             <tr>
@@ -26,9 +26,9 @@
                 <td>  <img src="<%=row.image %>" alt="" style="width: 60px; height: 60px;"></td>
                 <td> <%= row.phone %></td>
                 <td> <%= row.evalute %></td>
-                <td><a type="button" class="btn btn-danger" href="#">Sửa
+                <td><a type="button" class="btn btn-danger" href="/salon/edit/<%=row._id%>">Sửa
                 </a>
-                <a  class="btn btn-danger" href="#">Xóa
+                <td><a type="button" class="btn btn-danger" href="/salon/delete/<%=row._id%>">Xóa
                 </a>
             </tr>
         

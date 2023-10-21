@@ -20,6 +20,31 @@ app.get('/login/:phone', (req, res) => {
 
 })
 
+app.get('/getCart/:id', (req, res) => {
+
+    var idUser = req.params.id;
+
+    md.CartModel.find({ idUser: idUser }).then(data => {
+        res.status(200).json(data);
+    })
+})
+
+
+app.post('/addCart', async (req, res) => {
+
+    var u = new md.CartModel(req.body);
+
+    try {
+        await u.save();
+
+        res.status(200).json(u);
+
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+
 app.post('/addBill', async (req, res) => {
 
     var u = new Bill(req.body);
@@ -78,17 +103,13 @@ app.get('/getBill/:idUser', (req, res) => {
 
 
 
-app.post('/addComment', async (req, res) => {
+app.get('/addComment/:idBv', async (req, res) => {
 
-    var addC = new md.CommentModel(req.body);
-    try {
-        await addC.save();
+    var id = req.params.idBv;
 
-        res.status(200).json(addC);
-
-    } catch (error) {
-        res.status(500).send(error);
-    }
+    md.CommentModel.find({ idUser: id }).then(data => {
+        res.status(200).json(data);
+    })
 })
 
 module.exports = app;
