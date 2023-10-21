@@ -1,70 +1,148 @@
-<%- include('../inc/header.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
 
-  <div class="container text-center">
-    <div class="row">
-      <div class="col">
-<h1 style="text-align: center;">Đăng nhập</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+  /* Tùy chỉnh style bổ sung */
+  body {
+      background-image: url('https://scontent.xx.fbcdn.net/v/t1.15752-9/378152636_756805516205033_9023472447757140310_n.png?stp=dst-png_p206x206&_nc_cat=101&ccb=1-7&_nc_sid=aee45a&_nc_ohc=r9dqCfZa_4UAX8XZEKV&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&cb_e2o_trans=t&oh=03_AdRhxg7tX8FMvbptufgGDmfN_q-YrHiTmRyUWAWKC5dIjw&oe=6530946D'); /* Đường dẫn đến hình nền của bạn */
+      background-size: 800px;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: left;
+  }
+  .container {
+      margin-top: 120px;
+      margin-left: 150px;
+  }
 
-<form class="row g-3 needs-validation" novalidate>
-    <div class="col-md-12">
-      <label class="form-label">First name</label>
-      <input type="text" class="form-control" id="validationCustom01"  required>
-    </div>
-    <div class="col-md-12">
-      <label for="validationCustom02" class="form-label">Last name</label>
-      <input type="text" class="form-control" id="validationCustom02"  required>
-    </div>
-    <div class="col-md-12">
-      <label for="validationCustomUsername" class="form-label">Username</label>
-      <div class="input-group has-validation">
-        <span class="input-group-text" id="inputGroupPrepend">@</span>
-        <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-    
+  .row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .card {
+      background: rgba(255, 255, 255, 0.8); /* Độ mờ của hình nền */
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .card-header {
+      background-color: #fff;
+      color: #121111;
+      text-align: center;
+  }
+
+  .card-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+  }
+
+  .form-control {
+      border: 2px solid #007BFF;
+      border-radius: 20px; /* Góc bo tròn 10px */
+      padding: 15px; /* Khoảng cách bên trong ô nhập */
+      
+  }
+
+  .btn-primary {
+      background-color: #9b2811;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-left: 250px;
+  }
+
+  .btn-primary:hover {
+      background-color: #0056b3;
+  }
+
+  .form-link {
+      color: #ff00ae;
+      text-decoration: none;
+  }
+
+  .form-link:hover {
+      text-decoration: underline;
+  }
+
+  .login-image {
+      width: 300px; /* Độ rộng của hình ảnh */
+      margin-right: 20px; /* Khoảng cách với khung đăng nhập */
+  }
+  .eye-icon {
+            cursor: pointer;
+        }
+</style>
+</head>
+<body>
+  <div class="container">
+    <form action="" method="post">
+      <div class="row">
+          <div class="col-md-6">
+              <img class="login-image" src="" alt="">
+          </div>
+          <div class="col-md-6">
+              <div class="card">
+                  <div class="card-header">
+                      <h2 class="card-title">Đăng Nhập</h2>
+                  </div>
+                  <div class="card-body">
+                      <form>
+                          <div class="mb-3">
+                              <input type="text" class="form-control" placeholder="Tài Khoản" required name="username">
+                          </div>
+                          <div class="mb-3">
+                              <div class="input-group">
+                                  <input type="password" class="form-control" id="password" placeholder="Mật Khẩu" name="pass" required>
+                                  <span class="input-group-text eye-icon" id="togglePassword">👁️
+                                      <i class="bi bi-eye-slash"></i>
+                                  </span>
+                              </div>
+                          </div>
+                          <%= msg %>
+                          <div class="mb-3 form-check">
+                              <input type="checkbox" class="form-check-input" id="rememberMe">
+                              <label class="form-check-label" for="rememberMe">Nhớ mật khẩu</label>
+                          </div>
+                          
+                          <button type="submit" class="btn btn-primary btn-block">Đăng Nhập</button>
+                      </form>
+                      <p class="mt-3 text-center">
+                          <a class="form-link" href="http://localhost:3000/settings/register">Quên mật khẩu</a>
+                      </p>
+                  </div>
+              </div>
+          </div>
       </div>
-    </div>
-    <div class="col-md-6">
-      <label for="validationCustom03" class="form-label">City</label>
-      <input type="text" class="form-control" id="validationCustom03" required>
-      <div class="invalid-feedback">
-        Please provide a valid city.
-      </div>
-    </div>
-    <div class="col-md-3">
-      <label for="validationCustom04" class="form-label">State</label>
-      <select class="form-select" id="validationCustom04" required>
-        <option selected disabled value="">Choose</option>
-        <option>...</option>
-      </select>
-      <div class="invalid-feedback">
-        Please select a valid state.
-      </div>
-    </div>
-    <div class="col-md-3">
-      <label for="validationCustom05" class="form-label">Zip</label>
-      <input type="text" class="form-control" id="validationCustom05" required>
-      <div class="invalid-feedback">
-        Please provide a valid zip.
-      </div>
-    </div>
-    <div class="col-2">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-        <label class="form-check-label" for="invalidCheck">
-          Ghi nhớ
-        </label>
-      </div>
-    </div>
-    <div class="col-12">
-      <button class="btn btn-primary" type="submit">Submit form</button>
-    </div>
-  </form>
-  <a href="http://localhost:3000/settings/register">Bạn chưa có tài khoản? Đăng kí</a>
-      </div>
-      <div class="col">
-        <img src="https://scontent.xx.fbcdn.net/v/t1.15752-9/378152636_756805516205033_9023472447757140310_n.png?stp=dst-png_p206x206&_nc_cat=101&ccb=1-7&_nc_sid=aee45a&_nc_ohc=r9dqCfZa_4UAX8XZEKV&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&cb_e2o_trans=t&oh=03_AdRhxg7tX8FMvbptufgGDmfN_q-YrHiTmRyUWAWKC5dIjw&oe=6530946D" >
-      </div>
-    </div>
+    </form>
   </div>
 
+  <!-- Sử dụng Bootstrap JS và Popper.js (tùy chọn) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+  <script>
+      const passwordInput = document.getElementById("password");
+      const togglePasswordButton = document.getElementById("togglePassword");
+      let isPasswordVisible = false;
 
-<%- include('../inc/footer.ejs') %>
+      togglePasswordButton.addEventListener("click", function () {
+          isPasswordVisible = !isPasswordVisible;
+          passwordInput.type = isPasswordVisible ? "text" : "password";
+          togglePasswordButton.innerHTML = isPasswordVisible ? '<i class="bi bi-eye">👁️</i>' : '<i class="bi bi-eye-slash">👁️</i>';
+      });
+  </script>
+</body>

@@ -101,6 +101,31 @@ const billDetailModel = new db.mongoose.Schema({
 
 let BillDetailModel = db.mongoose.model('billDetail', billDetailModel)
 
+const cartModel = new db.mongoose.Schema({
+    namePro: { type: String, required: true },
+    pricePro: { type: String, required: true },
+    quantity: { type: String, required: true },
+    imagePro: { type: String, required: true },
+    idUser: { type: String, required: true },
+    idPro: { type: String, required: true }
+},
+    {
+        collection: 'Cart'
+    })
+
+let CartModel = db.mongoose.model('cartModel', cartModel)
+
+const adminSche = new db.mongoose.Schema({
+    username: { type: String, required: true },
+    pass: { type: String, required: true },
+},
+    {
+        collection: 'Admin'
+    })
+
+let AdminModel = db.mongoose.model('AdminModel', adminSche)
 
 
-module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel, CommentModel, BillDetailModel };
+
+
+module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel, CommentModel, BillDetailModel, CartModel,AdminModel };

@@ -20,6 +20,31 @@ app.get('/login/:phone', (req, res) => {
 
 })
 
+app.get('/getCart/:id', (req, res) => {
+
+    var idUser = req.params.id;
+
+    md.CartModel.find({ idUser: idUser }).then(data => {
+        res.status(200).json(data);
+    })
+})
+
+
+app.post('/addCart', async (req, res) => {
+
+    var u = new md.CartModel(req.body);
+
+    try {
+        await u.save();
+
+        res.status(200).json(u);
+
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+
 app.post('/addBill', async (req, res) => {
 
     var u = new Bill(req.body);
@@ -50,6 +75,21 @@ app.post('/addBillDetail', async (req, res) => {
 })
 
 
+app.post('/addUser', async (req, res) => {
+
+    var u = new md.userModel(req.body);
+
+    try {
+        await u.save();
+
+        res.status(200).json(u);
+
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+
 app.get('/getBill/:idUser', (req, res) => {
 
     const id = req.params.idUser;
@@ -61,30 +101,15 @@ app.get('/getBill/:idUser', (req, res) => {
 
 })
 
-app.post('/addUser', async (req, res) => {
 
-    var addU = new md.userModel(req.body);
-    try {
-        await addU.save();
 
-        res.status(200).json(addU);
+app.get('/addComment/:idBv', async (req, res) => {
 
-    } catch (error) {
-        res.status(500).send(error);
-    }
-})
+    var id = req.params.idBv;
 
-app.post('/addComment', async (req, res) => {
-
-    var addC = new md.CommentModel(req.body);
-    try {
-        await addC.save();
-
-        res.status(200).json(addC);
-
-    } catch (error) {
-        res.status(500).send(error);
-    }
+    md.CommentModel.find({ idUser: id }).then(data => {
+        res.status(200).json(data);
+    })
 })
 
 module.exports = app;
