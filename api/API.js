@@ -112,4 +112,26 @@ app.get('/addComment/:idBv', async (req, res) => {
     })
 })
 
+app.delete('/delCart/:id', (req, res) => {
+
+    var id = req.params.id;
+
+    md.CartModel.deleteOne({ _id: id })
+        .then((data) => {
+            if (data) {
+                res.status(200).json({
+                    message: "Dữ liệu da xoa",
+                    data: data,
+                });
+            } else {
+                res.status(404).json({ error: "Không tìm thấy dữ liệu" });
+            }
+        })
+        .catch((error) => {
+            res.status(500).json({ error: "Đã xảy ra lỗi khi cập nhật dữ liệu" });
+        });
+
+
+})
+
 module.exports = app;
