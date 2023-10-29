@@ -102,7 +102,6 @@ app.get('/getBill/:idUser', (req, res) => {
 })
 
 
-
 app.get('/addComment/:idBv', async (req, res) => {
 
     var id = req.params.idBv;
@@ -133,5 +132,20 @@ app.delete('/delCart/:id', (req, res) => {
 
 
 })
+
+app.post('/addOrder', async (req, res) => {
+
+    var u = new md.OrderModel(req.body);
+
+    try {
+        await u.save();
+
+        res.status(200).json(u);
+
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
 
 module.exports = app;

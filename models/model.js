@@ -81,7 +81,7 @@ const commentModel = new db.mongoose.Schema({
 
     idUser: { type: String, required: true },
     idPosts: { type: String, required: true },
-    
+
 
     idUser: { type: String, required: true }
 
@@ -132,6 +132,19 @@ const adminSche = new db.mongoose.Schema({
 let AdminModel = db.mongoose.model('AdminModel', adminSche)
 
 
+const orderModel = new db.mongoose.Schema({
+    phoneU: { type: String, required: true },
+    addressU: { type: String, required: true },
+    message: { type: String, required: true },
+    idUser: { type: String, required: true },
+    price: { type: String, required: true },
+    products: { type: Array, require: true }
+},
+    {
+        collection: 'Order'
+    })
+
+let OrderModel = db.mongoose.model('orderModel', orderModel)
 
 
-module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel, CommentModel, BillDetailModel, CartModel,AdminModel };
+module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel, CommentModel, BillDetailModel, CartModel, AdminModel, OrderModel };
