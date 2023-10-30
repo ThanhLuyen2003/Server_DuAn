@@ -4,9 +4,18 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         <form class="d-flex" role="search">
-          <div class="col-3">
+          <div class="d-flex justify-content-around align-items-center mb-9">
   <a type="button" class="btn btn-success" href="http://localhost:3000/dichvu/add" style="width: 150px;">+ Thêm dịch vụ
   </a>
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Sắp xếp theo
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="#">Tên</a></li>
+      <li><a class="dropdown-item" href="#">Giá</a></li>
+    </ul>
+  </div>
         </div>
         </form>
       </div>
