@@ -74,3 +74,15 @@ exports.deleteSalon =async (req,res,next) =>{
     }
     res.redirect('/salon');
 }
+exports.sxTheoTen = async (req,res,next) =>{
+    var listSalon = await myMD.salonModel.find().sort({name :1});
+    res.render('Salon/list',{listSalon: listSalon})
+}
+exports.sxTheoDiaChi = async (req,res,next) =>{
+    var listSalon = await myMD.salonModel.find().sort({address :1});
+    res.render('Salon/list',{listSalon: listSalon})
+}
+exports.sxTheoDanhGia = async (req,res,next) =>{
+    var listSalon = await myMD.salonModel.find().sort({evalute :1});
+    res.render('Salon/list',{listSalon: listSalon})
+}

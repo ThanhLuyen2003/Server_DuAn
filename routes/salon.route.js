@@ -17,4 +17,13 @@ router.post('/edit/:ids',uploader.single('file_anh'), SalonController.editSalon)
 router.get('/delete/:ids', SalonController.deleteSalon);
 router.post('/delete/:ids', SalonController.deleteSalon);
 
+router.get('/sxtheoten', SalonController.sxTheoTen);
+router.post('/sxtheoten', SalonController.sxTheoTen);
+
+router.get('/sxtheosao', SalonController.sxTheoDanhGia);
+router.post('/sxtheosao', SalonController.sxTheoDanhGia);
+
+router.get('/sxtheodiachi', SalonController.sxTheoDiaChi);
+router.post('/sxtheodiachi', SalonController.sxTheoDiaChi);
+
 module.exports = router;
