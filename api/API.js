@@ -76,18 +76,30 @@ app.post('/addBillDetail', async (req, res) => {
 
 
 app.post('/addUser', async (req, res) => {
+    const { name, email, phone, pass, avatar, address } = req.body;
 
-    var u = new md.userModel(req.body);
-
-    try {
-        await u.save();
-
-        res.status(200).json(u);
-
+    try {  
+        const phonee = await md.userModel.findOne({ phone: phone });
+        const emaill = await md.userModel.findOne({ email: email });
+        if (phonee) {
+            return res.status(400).json({ error: 'Số điện thoại hoặc email đã tồn tại' });
+        }else if(emaill){
+            return res.status(400).json({ error: 'Số điện thoại hoặc email đã tồn tại' });
+        }
+        const newUser = new md.userModel({
+            name,
+            email,
+            phone,
+            pass,
+            avatar,
+            address
+        });
+await newUser.save();
+        res.status(200).json({ message: 'Người dùng được thêm thành công' });
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).json({ error: error.message });
     }
-})
+});
 
 
 app.get('/getBill/:idUser', (req, res) => {
@@ -102,14 +114,7 @@ app.get('/getBill/:idUser', (req, res) => {
 })
 
 
-app.get('/addComment/:idBv', async (req, res) => {
 
-    var id = req.params.idBv;
-
-    md.CommentModel.find({ idUser: id }).then(data => {
-        res.status(200).json(data);
-    })
-})
 
 app.delete('/delCart/:id', (req, res) => {
 

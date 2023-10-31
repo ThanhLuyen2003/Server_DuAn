@@ -34,8 +34,8 @@ const UsersSchema = new db.mongoose.Schema(
         phone: { type: String, required: true },
         email: { type: String, required: true },
         pass: { type: String, required: true },
-        avatar: { type: String, required: true },
-        address: { type: String, required: true },
+        avatar: { type: String, default:"" },
+        address: { type: String, default:"" },
     },
     {
         collection: 'AccountUsers'
@@ -78,13 +78,10 @@ let ServiceModel = db.mongoose.model('serviceModel', serviceModel)
 
 const commentModel = new db.mongoose.Schema({
     Comment: { type: String, required: true },
-
     idUser: { type: String, required: true },
     idPosts: { type: String, required: true },
-
-
-    idUser: { type: String, required: true }
-
+    avatarUser:{ type: String, required: true },
+    nameUser:{ type: String, required: true },
 
 },
     {
