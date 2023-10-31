@@ -119,7 +119,7 @@ app.delete('/delCart/:id', (req, res) => {
         .then((data) => {
             if (data) {
                 res.status(200).json({
-                    message: "Dữ liệu da xoa",
+                    message: "Dữ liệu đã xóa",
                     data: data,
                 });
             } else {
