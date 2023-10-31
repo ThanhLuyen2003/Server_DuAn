@@ -17,4 +17,10 @@ router.post('/edit/:idse',uploader.single('file_anh'), ServiceController.editSer
 router.get('/delete/:idse', ServiceController.deleteService);
 router.post('/delete/:idse', ServiceController.deleteService);
 
+router.get('/sxtenservice', ServiceController.sxTheoTenService);
+router.post('/sxtenservice', ServiceController.sxTheoTenService);
+
+router.get('/sxtheogia', ServiceController.sxTheoGia);
+router.post('/sxtheogia', ServiceController.sxTheoGia);
+
 module.exports = router;
