@@ -102,14 +102,7 @@ app.get('/getBill/:idUser', (req, res) => {
 })
 
 
-app.get('/addComment/:idBv', async (req, res) => {
 
-    var id = req.params.idBv;
-
-    md.CommentModel.find({ idUser: id }).then(data => {
-        res.status(200).json(data);
-    })
-})
 
 app.delete('/delCart/:id', (req, res) => {
 
