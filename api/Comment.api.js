@@ -8,7 +8,7 @@ exports.getComment = async (req, res, next) => {
             return res.status(400).json({ message: 'Invalid post ID' });
         }
 
-        const comments = await md.CommentModel.find({ idPosts });
+        const comments = await md.CommentModel.find({ idPosts }).sort({ _id: -1 });
 
         if (comments) {
             res.status(200).json(comments);
