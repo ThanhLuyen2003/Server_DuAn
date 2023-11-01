@@ -8,5 +8,5 @@ router.get('/getComment/:idPosts', comment_api.getComment);
 
 
 router.post('/addComment/:idUser/:idPosts',comment_api.addComment);
-
+router.get('/addComment/:idUser/:idPosts',comment_api.addComment);
 module.exports = router;
