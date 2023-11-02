@@ -131,8 +131,8 @@ let AdminModel = db.mongoose.model('AdminModel', adminSche)
 
 const orderModel = new db.mongoose.Schema({
     phoneU: { type: String, required: true },
-    addressU: { type: String, required: true },
-    message: { type: String, required: true },
+    addressU: { type: String, },
+    message: { type: String, },
     nameU: { type: String, required: true },
     idUser: { type: String, required: true },
     price: { type: String, required: true },
