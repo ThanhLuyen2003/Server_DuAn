@@ -34,8 +34,8 @@ const UsersSchema = new db.mongoose.Schema(
         phone: { type: String, required: true },
         email: { type: String, required: true },
         pass: { type: String, required: true },
-        avatar: { type: String, default:"" },
-        address: { type: String, default:"" },
+        avatar: { type: String, default: "" },
+        address: { type: String, default: "" },
     },
     {
         collection: 'AccountUsers'
@@ -80,8 +80,8 @@ const commentModel = new db.mongoose.Schema({
     Comment: { type: String, required: true },
     idUser: { type: String, required: true },
     idPosts: { type: String, required: true },
-    avatarUser:{ type: String, required: true },
-    nameUser:{ type: String, required: true },
+    avatarUser: { type: String, required: true },
+    nameUser: { type: String, required: true },
 
 },
     {
@@ -133,9 +133,11 @@ const orderModel = new db.mongoose.Schema({
     phoneU: { type: String, required: true },
     addressU: { type: String, required: true },
     message: { type: String, required: true },
+    nameU: { type: String, required: true },
     idUser: { type: String, required: true },
     price: { type: String, required: true },
-    products: { type: Array, require: true }
+    products: { type: Array, require: true },
+    status: { type: String, require: true },
 },
     {
         collection: 'Order'
