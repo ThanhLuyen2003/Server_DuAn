@@ -137,6 +137,7 @@ const orderModel = new db.mongoose.Schema({
     idUser: { type: String, required: true },
     price: { type: String, required: true },
     products: { type: Array, require: true },
+    time: { type: String, require: true },
     status: { type: String, require: true },
 },
     {

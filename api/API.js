@@ -152,6 +152,19 @@ app.post('/addOrder', async (req, res) => {
     }
 })
 
+app.get('/getOrder/:id/:status', (req, res) => {
+
+    var idUser = req.params.id;
+    var status = req.params.status;
+
+
+    md.OrderModel.find({ idUser: idUser, status: status })
+        .sort({ _id: -1 })
+        .then(data => {
+            res.status(200).json(data);
+        })
+})
+
 
 
 module.exports = app;
