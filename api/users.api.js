@@ -37,3 +37,24 @@ exports.updateUser = async (req, res, next) => {
         });
     }
 }
+exports.OTPGiaoDich = async (req, res, next) => {
+    const phoneNumber = req.body.phone; // Số điện thoại từ phía client
+    const newOTP = generateNewOTP(); // Tạo mã OTP mới
+    try {
+        // Tìm người dùng dựa trên ID
+        const user = await UserModel.findById(userId);
+
+        if (user) {
+            // Nếu tìm thấy người dùng, cập nhật trường OTP với mã mới
+            user.otp = newOTP;
+            await user.save(); // Lưu thay đổi vào cơ sở dữ liệu
+
+            // Trả về phản hồi cho phía client
+            res.json({ message: "Mã OTP đã được cập nhật thành công." });
+        } else {
+            res.status(404).json({ message: "Không tìm thấy người dùng với ID đã cung cấp." });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Đã xảy ra lỗi trong quá trình cập nhật OTP." });
+    }
+}
