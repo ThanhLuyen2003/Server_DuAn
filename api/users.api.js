@@ -38,18 +38,14 @@ exports.updateUser = async (req, res, next) => {
     }
 }
 exports.OTPGiaoDich = async (req, res, next) => {
-    const phoneNumber = req.body.phone; // Số điện thoại từ phía client
-    const newOTP = generateNewOTP(); // Tạo mã OTP mới
+    const userId = req.params.id; // Lấy ID người dùng từ URL
+    const newOTP = req.body.otp; // Lấy giá trị OTP từ yêu cầu
+
     try {
-        // Tìm người dùng dựa trên ID
-        const user = await UserModel.findById(userId);
+        // Tìm người dùng dựa trên ID và cập nhật trường OTP với mã mới
+        const updatedUser = await md.userModel.findByIdAndUpdate(userId, { otp: newOTP }, { new: true });
 
-        if (user) {
-            // Nếu tìm thấy người dùng, cập nhật trường OTP với mã mới
-            user.otp = newOTP;
-            await user.save(); // Lưu thay đổi vào cơ sở dữ liệu
-
-            // Trả về phản hồi cho phía client
+        if (updatedUser) {
             res.json({ message: "Mã OTP đã được cập nhật thành công." });
         } else {
             res.status(404).json({ message: "Không tìm thấy người dùng với ID đã cung cấp." });
