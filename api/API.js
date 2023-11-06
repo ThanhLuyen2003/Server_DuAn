@@ -102,14 +102,16 @@ app.post('/addUser', async (req, res) => {
 });
 
 
-app.get('/getBill/:idUser', (req, res) => {
+app.get('/getBill/:idUser/:status', (req, res) => {
 
     const id = req.params.idUser;
+    const status = req.params.status;
 
-    Bill.find({ idUser: id }).then(data => {
-        res.status(200).json(data);
-    })
-
+    Bill.find({ idUser: id, status: status })
+        .sort({ _id: -1 })
+        .then(data => {
+            res.status(200).json(data);
+        })
 
 })
 
@@ -164,6 +166,9 @@ app.get('/getOrder/:id/:status', (req, res) => {
             res.status(200).json(data);
         })
 })
+
+
+
 
 
 
