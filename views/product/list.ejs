@@ -1,0 +1,68 @@
+<%- include('../inc/header.ejs') %>
+<div class="container">
+    <h1 style="font-weight: bold; text-align: center;">Danh sách Sản Phẩm</h1>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <form class="d-flex" role="search">
+          <div class="d-flex justify-content-around align-items-center mb-9">
+  <a type="button" class="btn btn-success" style="width: 180px;" href="http://localhost:3000/product/add">+ Thêm Sản Phẩm
+  </a>
+  <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Sắp xếp theo
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Tên</a></li>
+    <li><a class="dropdown-item" href="#">Giá</a></li>
+  </ul>
+</div>
+        </div>
+        </form>
+      </div>
+    </nav>
+    </div>
+
+    <div class="container">
+      <table class="table table-bordered table-striped">
+        <tr><th>ID</th> <th>Avatar</th> <th>Name</th> <th>Trademark</th> <th>Price</th> <th>Describe</th> <th>Ingredient</th> <th>Type</th>
+        </tr>
+        <% listProducts.forEach( ( row )=>{  %>
+            <tr>
+                <td><%= row._id %></td>
+                <td>  <img src="<%=row.avatar %>" alt="" style="width: 60px; height: 60px;"></td>
+                <td> <%= row.name %></td>
+                <td> <%= row.trademark %></td>
+                <td> <%= row.price %></td>
+                <td> <%= row.describe %></td>
+                <td> <%= row.ingredient %></td>
+                <td> <%= row.type %></td>
+                <td><a type="button" class="btn btn-danger" href="/product/edit/<%=row._id%>">Sửa
+                </a>
+                <td><a type="button" class="btn btn-danger" href="/product/delete/<%=row._id%>">Xóa
+                </a>
+            </tr>
+        
+        
+            <% } ) %>
+        
+        
+        
+        
+        </table>
+  </div>
+
+    
+    <div style="margin-left: 850px; margin-top: 50px;">
+        <p class="text-muted">
+            <a href="#" class="text-reset">Đang xem 3/12</a>
+        
+            <button class="btn btn-light">Trước</button>
+            <button class="btn btn-light">1</button>
+            <button class="btn btn-light">2</button>
+            <button class="btn btn-light">3</button>
+            <button class="btn btn-light">Tiếp</button>
+        </p>
+    </div>
+  
+  <%- include('../inc/footer.ejs') %>
+  </div>
