@@ -6,6 +6,7 @@ var logger = require('morgan');
 var session = require('express-session');
 var homeRouter = require('./routes/home.route');
 var salonRouter = require('./routes/salon.route');
+var productRouter = require('./routes/products.route');
 var serviceRouter = require('./routes/dichvu.route');
 var settingRouter = require('./routes/settings.route');
 var apiSalonRouter = require('./routes/salon.apiRoute');
@@ -35,6 +36,7 @@ app.use(session({
 app.use('/', homeRouter);
 app.use('/dichvu', serviceRouter);
 app.use('/salon', salonRouter);
+app.use('/product', productRouter);
 app.use('/settings', settingRouter);
 app.use('/apisalon', apiSalonRouter);
 app.use('/apitime', apiTimeRouter);
