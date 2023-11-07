@@ -77,3 +77,11 @@ exports.deletePro =async (req,res,next) =>{
     }
     res.redirect('/product');
 }
+exports.sxTheoTenSP = async (req,res,next) =>{
+    var listProducts = await myMD.productModel.find().sort({name :1});
+    res.render('product/list',{listProducts: listProducts})
+}
+exports.sxTheoGiaSP = async (req,res,next) =>{
+    var listProducts = await myMD.productModel.find().sort({price :1});
+    res.render('product/list',{listProducts: listProducts})
+}
