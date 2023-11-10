@@ -4,7 +4,11 @@ exports.list = async (req,res,next) =>{
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 5;
     const skip = (page - 1) * limit;
+//      const sortBy = req.query.sortBy || 'name';
+//   const sortOrder = req.query.sortOrder || 'asc';
     try {
+    //     const sortOptions = {};
+    // sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
         var listDichVu = await myMD.ServiceModel.find().skip(skip).limit(limit);
         var totalService = await myMD.ServiceModel.countDocuments();
     

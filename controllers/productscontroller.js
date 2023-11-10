@@ -4,8 +4,12 @@ exports.list = async (req,res,next) =>{
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 5;
     const skip = (page - 1) * limit;
+    const sortBy = req.query.sortBy || 'name';
+  const sortOrder = req.query.sortOrder || 'asc';
     try {
-        var listProducts = await myMD.productModel.find().skip(skip).limit(limit);
+        const sortOptions = {};
+    sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+        var listProducts = await myMD.productModel.find().skip(skip).limit(limit).sort(sortOptions);
         var totalProducts = await myMD.productModel.countDocuments();
     
       } catch (err) {
@@ -90,10 +94,41 @@ exports.deletePro =async (req,res,next) =>{
     res.redirect('/product');
 }
 exports.sxTheoTenSP = async (req,res,next) =>{
-    var listProducts = await myMD.productModel.find().sort({name :1});
-    res.render('product/list',{listProducts: listProducts})
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const skip = (page - 1) * limit;
+    const sortBy = req.query.sortBy || 'name';
+  const sortOrder = req.query.sortOrder || 'asc';
+    try {
+        const sortOptions = {};
+    sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+        var listProducts = await myMD.productModel.find().skip(skip).limit(limit).sort(sortOptions);
+        var totalProducts = await myMD.productModel.countDocuments();
+      } catch (err) {
+        console.error('Error retrieving users:', err);
+        res.status(500).json({ error: 'Internal server error' });
+      }  
+  res.render('product/list',{listProducts: listProducts,currentPage: page,
+        totalPages: Math.ceil(totalProducts / limit),
+        totalProducts})
 }
 exports.sxTheoGiaSP = async (req,res,next) =>{
-    var listProducts = await myMD.productModel.find().sort({price :1});
-    res.render('product/list',{listProducts: listProducts})
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const skip = (page - 1) * limit;
+    const sortBy = req.query.sortBy || 'price';
+    const sortOrder = req.query.sortOrder || 'asc';
+    try {
+        const sortOptions = {};
+    sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+        var listProducts = await myMD.productModel.find().skip(skip).limit(limit).sort(sortOptions);
+        var totalProducts = await myMD.productModel.countDocuments();
+    
+      } catch (err) {
+        console.error('Error retrieving users:', err);
+        res.status(500).json({ error: 'Internal server error' });
+      }
+    res.render('product/list',{listProducts: listProducts,currentPage: page,
+        totalPages: Math.ceil(totalProducts / limit),
+        totalProducts})
 }
