@@ -1,8 +1,20 @@
 var myMD = require('../models/model');
 var fs = require ('fs');
 exports.list = async (req,res,next) =>{
-    var listSalon = await myMD.salonModel.find().sort({name :1});
-    res.render('Salon/list',{listSalon: listSalon});
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const skip = (page - 1) * limit;
+    try {
+        var listSalon = await myMD.salonModel.find().skip(skip).limit(limit);
+        var totalSalon = await myMD.salonModel.countDocuments();
+    
+      } catch (err) {
+        console.error('Error retrieving users:', err);
+        res.status(500).json({ error: 'Internal server error' });
+      }
+    res.render('Salon/list',{listSalon: listSalon, currentPage: page,
+        totalPages: Math.ceil(totalSalon / limit),
+        totalSalon});
 }
 exports.addSalon = async(req,res,next) => {
     let msg ='';

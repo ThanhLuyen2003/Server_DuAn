@@ -25,11 +25,11 @@
 
     <div class="container">
       <table class="table table-bordered table-striped">
-        <tr><th>ID</th> <th>Name</th> <th>Address</th> <th>Describe</th> <th>Image</th> <th>PhoneNumber</th> <th>Evalute</th>
+        <tr> <th>Name</th> <th>Address</th> <th>Describe</th> <th>Image</th> <th>PhoneNumber</th> <th>Evalute</th>
         </tr>
         <% listSalon.forEach( ( row )=>{  %>
             <tr>
-                <td><%= row._id %></td>
+                
                 <td> <%= row.name %></td>
                 <td> <%= row.address %></td>
                 <td> <%= row.describe %></td>
@@ -52,17 +52,18 @@
   </div>
 
     
-    <div style="margin-left: 850px; margin-top: 50px;">
-        <p class="text-muted">
-            <a href="#" class="text-reset">Đang xem 3/12</a>
-        
-            <button class="btn btn-light">Trước</button>
-            <button class="btn btn-light">1</button>
-            <button class="btn btn-light">2</button>
-            <button class="btn btn-light">3</button>
-            <button class="btn btn-light">Tiếp</button>
-        </p>
-    </div>
+  <div style="margin-left: 850px; margin-top: 50px;">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/salon?currentPage-1&limit=5">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/salon?page=1&limit=5">1</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/salon?page=2&limit=5">2</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/salon?page=3&limit=5">3</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/salon?page=4&limit=5">4</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/salon?currentPage+1&limit=5">Next</a></li>
+      </ul>
+    </nav>
+  </div>
   
   <%- include('../inc/footer.ejs') %>
   </div>

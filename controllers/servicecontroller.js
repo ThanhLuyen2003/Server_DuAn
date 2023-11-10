@@ -1,8 +1,20 @@
 var myMD = require('../models/model');
 var fs = require ('fs');
 exports.list = async (req,res,next) =>{
-    var listDichVu = await myMD.ServiceModel.find().sort({name :1});
-    res.render('Service/list',{listDichVu: listDichVu});
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const skip = (page - 1) * limit;
+    try {
+        var listDichVu = await myMD.ServiceModel.find().skip(skip).limit(limit);
+        var totalService = await myMD.ServiceModel.countDocuments();
+    
+      } catch (err) {
+        console.error('Error retrieving users:', err);
+        res.status(500).json({ error: 'Internal server error' });
+      }
+    res.render('Service/list',{listDichVu: listDichVu, currentPage: page,
+        totalPages: Math.ceil(totalService / limit),
+        totalService});
 }
 exports.addService = async(req,res,next) => {
     let msg ='';
