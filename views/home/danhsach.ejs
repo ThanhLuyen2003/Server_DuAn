@@ -1,28 +1,70 @@
 <%- include('../inc/header.ejs') %>
 
-  <div class="container-fluid">
-    <div id="carouselExample" class="carousel slide">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="https://shop.30shine.com/_next/image?url=https%3A%2F%2Fstatic.30shine.com%2Fshop-web%2Fbanners%2FbannerT0723-3.jpg&w=1920&q=75" class="d-block w-100" alt="">
+<div class="container">
+    <h1 style="font-weight: bold; text-align: center;">Danh sách hóa đơn</h1>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <form class="d-flex" role="search">
+          <div class="d-flex justify-content-around align-items-center mb-2">
+  <a type="button" class="btn btn-success" style="width: 160px; margin-right: 55px;" href="#">Duyệt hóa đơn 
+  </a>
+  <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Sắp xếp theo
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Tên</a></li>
+    <li><a class="dropdown-item" href="#">Giá</a></li>
+  </ul>
+</div>
         </div>
-        <div class="carousel-item">
-          <img src="https://storage.30shine.com/ResourceWeb/data/images/home/20220104-30shine-banner-shine-combo-1.jpg?v=1" class="d-block w-100" alt="#">
-        </div>
-        <div class="carousel-item">
-          <img src="https://storage.30shine.com/ResourceWeb/data/images/home/30shine-spa/30shine-spa-pc.jpg" class="d-block w-100" alt="...">
-        </div>
+        </form>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+    </nav>
     </div>
+
+    <div class="container">
+      <table class="table table-bordered table-striped">
+        <tr> <th>Tên Salon</th> <th>Địa chỉ</th> <th>Giờ</th> <th>Ngày</th> <th>SĐT</th> <th>Ảnh Salon</th> <th>Dịch vụ</th> <th>Chi phí</th> <th>Trạng thái</th> <th>Người đặt</th>
+        </tr>
+        <% listBill.forEach( ( row )=>{  %>
+            <tr>
+                
+                <td> <%= row.nameSalon %></td>
+                <td> <%= row.addressSalon %></td>
+                <td> <%= row.hour %></td>
+                <td> <%= row.day %></td>
+                <td> <%= row.phone %></td>
+                <td>  <img src="<%=row.imageSalon %>" alt="" style="width: 60px; height: 60px;"></td>
+                <td> <%= row.services %></td>
+                <td> <%= row.price %></td>
+                <td> <%= row.status %></td>
+                <td><%= row.idUser.name %> </td>
+            </tr>
+        
+        
+            <% } ) %>
+        
+        
+        
+        
+        </table>
   </div>
 
-<%- include('../inc/footer.ejs') %>
+    
+    <div style="margin-left: 850px; margin-top: 50px;">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="http://localhost:3000?page=1&limit=5">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="http://localhost:3000?page=1&limit=5">1</a></li>
+          <li class="page-item"><a class="page-link" href="http://localhost:3000?page=2&limit=5">2</a></li>
+          <li class="page-item"><a class="page-link" href="http://localhost:3000?page=3&limit=5">3</a></li>
+          <li class="page-item"><a class="page-link" href="http://localhost:3000?page=4&limit=5">4</a></li>
+          <li class="page-item"><a class="page-link" href="http://localhost:3000?page=4&limit=5">Next</a></li>
+        </ul>
+      </nav>
+    </div>
+  
+  <%- include('../inc/footer.ejs') %>
+
 

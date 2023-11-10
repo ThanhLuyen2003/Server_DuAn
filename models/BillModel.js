@@ -10,7 +10,7 @@ const useSchema = new mongoose.Schema({
     services: { type: String, required: true },
     price: { type: String, required: true },
     status: { type: String, required: true },
-    idUser: { type: String, required: true }
+    idUser: { type: mongoose.Schema.Types.ObjectId,ref:'userModel' }
 
 },
     {
