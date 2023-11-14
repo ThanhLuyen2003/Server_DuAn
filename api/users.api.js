@@ -54,3 +54,39 @@ exports.OTPGiaoDich = async (req, res, next) => {
         res.status(500).json({ message: "Đã xảy ra lỗi trong quá trình cập nhật OTP." });
     }
 }
+
+
+
+
+
+exports.deleteUser = async (req, res, next) => {
+    const userId = req.params.id;
+
+    try {
+        const deletedUser = await md.userModel.findByIdAndDelete(userId);
+        if (deletedUser) {
+            res.status(200).json({ message: 'Xóa người dùng thành công' });
+        } else {
+            res.status(404).json({ message: 'Không tìm thấy người dùng' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Lỗi server' });
+    }
+};
+
+exports.updateAvatar = async (req, res, next) => {
+    const userId = req.params.id;
+    const newAvatar = req.body.avatar;
+
+    try {
+        const updatedUser = await md.userModel.findByIdAndUpdate(userId, { avatar: newAvatar }, { new: true });
+
+        if (updatedUser) {
+            res.json({ message: "Cập nhật avatar thành công" });
+        } else {
+            res.status(404).json({ message: "Không tìm thấy id người dùng" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Server Lỗi " });
+    }
+};
