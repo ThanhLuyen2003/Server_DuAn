@@ -167,6 +167,46 @@ app.get('/getOrder/:id/:status', (req, res) => {
         })
 })
 
+app.get('/getCat', (req, res) => {
+
+    md.ServiceModel.find({ type: 'cat' })
+        .then(data => {
+            res.status(200).json(data);
+        })
+})
+
+app.get('/getMassage', (req, res) => {
+
+    md.ServiceModel.find({ type: 'Massage' })
+        .then(data => {
+            res.status(200).json(data);
+        })
+})
+
+app.get('/getChamsocda', (req, res) => {
+
+    md.ServiceModel.find({ type: 'Chamsocda' })
+        .then(data => {
+            res.status(200).json(data);
+        })
+})
+
+app.get('/getUon', (req, res) => {
+
+    md.ServiceModel.find({ type: 'Uon' })
+        .then(data => {
+            res.status(200).json(data);
+        })
+})
+
+
+app.get('/getNhuom', (req, res) => {
+
+    md.ServiceModel.find({ type: 'Nhuom' })
+        .then(data => {
+            res.status(200).json(data);
+        })
+})
 
 
 
