@@ -1,45 +1,58 @@
 <%- include('../inc/header.ejs') %>
 <div class="container">
-    <h1 style="font-weight: bold; text-align: center;">Danh sách Sản Phẩm</h1>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Danh sách sản phẩm</h1>
+    <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <form class="d-flex" role="search">
           <div class="d-flex justify-content-around align-items-center mb-2">
-  <a type="button" class="btn btn-success" style="width: 160px; margin-right: 55px;" href="http://localhost:3000/product/add">+ Thêm sản phẩm
-  </a>
-  <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Sắp xếp theo
-  </button>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/product/sxtheotensp">Tên</a></li>
-    <li><a class="dropdown-item" href="/product/sxtheogiasp">Giá</a></li>
-  </ul>
-</div>
+            <a type="button" class="btn btn-warning" style="width: 160px; margin-right: 30px;" href="http://localhost:3000/product/add">+ Thêm sản phẩm
+            </a>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Sắp xếp theo
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/product/sxtheotensp">Tên</a></li>
+                <li><a class="dropdown-item" href="/product/sxtheogiasp">Giá</a></li>
+              </ul>
+            </div>
         </div>
         </form>
       </div>
     </nav>
-    </div>
+</div>
 
     <div class="container">
       <table class="table table-bordered table-striped">
-        <tr> <th>Avatar</th> <th>Name</th> <th>Trademark</th> <th>Price</th> <th>Describe</th> <th>Ingredient</th> <th>Type</th>
-        </tr>
+        <tr class="text-sm-center"> 
+          <th style="width: 130px;"  >Ảnh sản phẩm</th>
+          <th style="width: 330px;">Tên sản phẩm</th>
+          <th>Nhãn hiệu</th> 
+          <th>Giá</th> 
+          <th style="width: 350px;">Mô tả</th>
+          <th style="width: 120px;">Nguyên liệu</th> 
+          <th>Danh mục</th>
+          <th></th>
+      </tr>
+
         <% listProducts.forEach( ( row )=>{  %>
             <tr>
                 
-                <td>  <img src="<%=row.avatar %>" alt="" style="width: 60px; height: 60px;"></td>
+                <td>  <img src="<%=row.avatar %>" alt="" style="width: 60px; height: 60px; margin-left: 25px;"></td>
                 <td> <%= row.name %></td>
                 <td> <%= row.trademark %></td>
                 <td> <%= row.price %></td>
                 <td> <%= row.describe %></td>
                 <td> <%= row.ingredient %></td>
                 <td> <%= row.type %></td>
-                <td><a type="button" class="btn btn-danger" href="/product/edit/<%=row._id%>">Sửa
-                </a>
-                <td><a type="button" class="btn btn-danger" href="/product/delete/<%=row._id%>">Xóa
-                </a>
+                <td> 
+                  <div class="d-flex">
+                    <a href="/product/edit/<%=row._id%>">
+                      <button type="button" class="btn btn-warning" style="margin-right: 10px;">Sửa</button> 
+                    </a>
+                   
+                  </div> 
+                </td>
             </tr>
         
         

@@ -10,73 +10,56 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <style>
+          .description-column {
+            width: 100px; 
+          }
+          .center-image{
+            margin-left: 20px;
+          }
+  
+        </style>
+    
 </head>
 
-<body>
-
-    <header>
-        <nav class="navbar navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="http://localhost:3000/">
-                    <img src="https://i.imgur.com/L5vcAHf.png" width="80px">
-                  </a>
-                 
-              <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Nhập tên sản phẩm,..." aria-label="Search">
-         
-                <button class="btn btn-warning" type="submit">Tìm</button>
-            
-              </form>
-            
-              <form class="d-flex">
-                <a type="button" class="btn btn-warning" href="http://localhost:3000/settings/login">Đăng xuất</a>
-              </form>
-              <form class="d-flex">
-                <h5>Hi,admin</h5>
-              </form>
-            
-            </div>
-          </nav>
-    </header>
+<body>  
     <nav class="navbar navbar-expand-lg navbar-light bg-warning">
       <div class="container-fluid">
-        <a class="navbar-brand">MENU</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="nav nav-pills flex-column flex-sm-row nav-item dropdown">
-            <li class="flex-sm-fill text-sm-center nav-link">
-              <a  style="font-weight: bold; color: #000;" class="nav-link dropdown-toggle" href="#offcanvasExample" role="button" data-bs-toggle="offcanvas" aria-controls="offcanvasExample">
-                DANH MỤC
+            <li>
+              <a class="navbar-brand" href="http://localhost:3000/">
+                <img src="https://i.imgur.com/L5vcAHf.png" width="80px">
               </a>
-            
             </li>
-            <li class="flex-sm-fill text-sm-center nav-link">
-              <a class="nav-link" href="http://localhost:3000/dichvu" style="font-weight: bold; color: #000;">DỊCH VỤ</a>
+
+            <form class="d-flex" style="height: 30px; margin-top: 20px;">
+              <input class="form-control me-2" type="search" placeholder="Nhập tên cầm tìm" aria-label="Search">
+       
+              <button class="btn btn-light fw-semibold"type="submit">Tìm</button>
+          
+            </form>
+
+            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px;">
+              <a class="nav-link btn-outline-warning" href="http://localhost:3000/" style="font-weight: bold; color: #000;">HÓA ĐƠN</a>
             </li>
-            <li class="flex-sm-fill text-sm-center nav-link">
+            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px;">
+              <a class="nav-link btn-outline-warning" href="http://localhost:3000/dichvu" style="font-weight: bold; color: #000;">DỊCH VỤ</a>
+            </li>
+            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px;">
               <a class="nav-link" href="http://localhost:3000/salon" style="font-weight: bold; color: #000;">SALON TOÀN QUỐC</a>
             </li>
-            <li class="flex-sm-fill text-sm-center nav-link nav-item dropdown">
-              <a style="font-weight: bold; color: #000;" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                THƯƠNG HIỆU
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </li>
-            <li class="flex-sm-fill text-sm-center nav-link">
+            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px;">
               <a class="nav-link" href="http://localhost:3000/product" style="font-weight: bold; color: #000;">CÁC SẢN PHẨM</a>
             </li>
-            <li class="flex-sm-fill text-sm-center nav-link">
+            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px;">
               <a class="nav-link" href="#" style="font-weight: bold; color: #000;">GIỚI THIỆU</a>
             </li>
-            <li class="flex-sm-fill text-sm-center nav-link">
-              <a class="nav-link" href="#" style="font-weight: bold;color: #000;">BLOG</a>
+            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px; margin-left: 160px;">
+              <a class="nav-link" href="http://localhost:3000/settings/login" style="font-weight: bold;color: #000;">Đăng xuất</a>
             </li>
+            
           </ul>
         </div>
       </div>

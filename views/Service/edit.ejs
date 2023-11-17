@@ -1,6 +1,6 @@
 <%- include('../inc/header.ejs') %>
-<h1 style="font-weight: bold; text-align: center;">Sửa dịch vụ</h1>
-<%= msg %>
+<h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Sửa dịch vụ</h1>
+
 <div class="container">
 <form action="" method="post" enctype="multipart/form-data">
     <form class="px-4 py-3">
@@ -17,7 +17,7 @@
         </div>
     <label class="form-label">Mô tả</label>
     <input type="text" name="describe" placeholder="Mô tả" class="form-control" value="<%=objSe.describe %>"><br>
-    <button class="btn btn-danger" type="submit">Sửa</button>
+    <button class="btn btn-warning" type="submit">Sửa</button> <%= msg %>
 </form>
 </form>
 </div>
