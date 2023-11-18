@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
+var homepageRouter = require('./routes/homepage.route');
 var homeRouter = require('./routes/home.route');
 var salonRouter = require('./routes/salon.route');
 var productRouter = require('./routes/products.route');
@@ -33,7 +34,9 @@ app.use(session({
   resave: true,
   saveUninitialized: true
   }));
-app.use('/', homeRouter);
+
+app.use('/', homepageRouter);
+app.use('/home', homeRouter);
 app.use('/dichvu', serviceRouter);
 app.use('/salon', salonRouter);
 app.use('/product', productRouter);

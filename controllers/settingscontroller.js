@@ -13,7 +13,7 @@ exports.login = async (req,res,next) =>{
                     //đúng pass => lưu vào session
                     req.session.userLogin = objU;
                     //chuyển sang màn hình chính or danh sách
-                    return res.redirect('/');
+                    return res.redirect('/home/hom');
                 }else{
                     // ko đúng pass
                     msg = 'Sai mật khẩu!';

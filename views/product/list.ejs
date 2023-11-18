@@ -25,11 +25,12 @@
     <div class="container">
       <table class="table table-bordered table-striped">
         <tr class="text-sm-center"> 
-          <th style="width: 130px;"  >Ảnh sản phẩm</th>
-          <th style="width: 330px;">Tên sản phẩm</th>
+          <th style="width: 70px;"  >Ảnh</th>
+          <th style="width: 300px;">Tên sản phẩm</th>
           <th>Nhãn hiệu</th> 
-          <th>Giá</th> 
-          <th style="width: 350px;">Mô tả</th>
+          <th>Giá nhập</th>
+          <th>Giá bán</th> 
+          <th style="width: 320px;">Mô tả</th>
           <th style="width: 120px;">Nguyên liệu</th> 
           <th>Danh mục</th>
           <th></th>
@@ -41,6 +42,7 @@
                 <td>  <img src="<%=row.avatar %>" alt="" style="width: 60px; height: 60px; margin-left: 25px;"></td>
                 <td> <%= row.name %></td>
                 <td> <%= row.trademark %></td>
+                <td></td>
                 <td> <%= row.price %></td>
                 <td> <%= row.describe %></td>
                 <td> <%= row.ingredient %></td>
