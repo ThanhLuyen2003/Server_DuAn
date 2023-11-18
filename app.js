@@ -6,6 +6,7 @@ var logger = require('morgan');
 var session = require('express-session');
 var homepageRouter = require('./routes/homepage.route');
 var homeRouter = require('./routes/home.route');
+var homepageRouter = require('./routes/homepage.route');
 var salonRouter = require('./routes/salon.route');
 var productRouter = require('./routes/products.route');
 var serviceRouter = require('./routes/dichvu.route');
