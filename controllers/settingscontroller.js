@@ -1,32 +1,39 @@
 var md = require('../models/model');
-exports.login = async (req,res,next) =>{
-    let msg ='';
-    if(req.method =='POST'){
+exports.login = async (req, res, next) => {
+    let msg = '';
+    if (req.method == 'POST') {
         // lấy thông tin dựa vào email
-        try{
-            let objU = await md.AdminModel.findOne({username: req.body.username});
-            console.log(objU);
-
-            if(objU!= null){
-                //tồi tại user => kiểm tra pass
+        try {
+            let objU = await md.AdminModel.findOne({ username: req.body.username });
+            let objStaff = await md.StaffModel.findOne({ userName: req.body.username });
+            if (objU) {
+                // Nếu là admin, chuyển hướng đến màn hình danh sách
                 if(objU.pass == req.body.pass){
-                    //đúng pass => lưu vào session
                     req.session.userLogin = objU;
                     //chuyển sang màn hình chính or danh sách
                     return res.redirect('/home');
                 }else{
-                    // ko đúng pass
-                    msg = 'Sai mật khẩu!';
+                    msg = 'Vui lòng kiểm tra lại mật khẩu !!!'
                 }
-            }else{
-                msg = 'Không tồn tại user này: ' + req.body.username;
+            } else if (objStaff) {
+                // Nếu là nhân viên, chuyển hướng đến màn hình danh sách lịch đặt
+                if(objStaff.pass == req.body.pass){
+                    req.session.userLogin = objStaff;
+                    return res.redirect('/home/danh-sach-lich-dat');
+                  }else{
+                      msg = 'Vui lòng kiểm tra lại mật khẩu !!!'
+                  }
+            } else {
+                // Nếu không tìm thấy tài khoản nào
+                msg = 'Không tồn tại tài khoản này: ' + req.body.username;
             }
-        }catch(error){
-            msg = error.message;
+        } catch (error) {
+            msg = error;
         }
     }
-    res.render('settings/login',{msg: msg});
+    res.render('settings/login', { msg: msg });
 }
-exports.register = (req,res,next) =>{
+
+exports.register = (req, res, next) => {
     res.render('settings/register');
 }

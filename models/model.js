@@ -1,4 +1,6 @@
 var db = require('./db');
+const mongoose = require('mongoose');
+
 const SalonSchema = new db.mongoose.Schema(
     {
         name: { type: String, required: true },
@@ -7,6 +9,7 @@ const SalonSchema = new db.mongoose.Schema(
         image: { type: String, required: true },
         phone: { type: String, required: true },
         evalute: { type: String, required: true },
+        idStaff: { type: mongoose.Schema.Types.ObjectId, require: true }
     },
     {
         collection: 'Salon'
@@ -36,7 +39,7 @@ const UsersSchema = new db.mongoose.Schema(
         pass: { type: String, required: true },
         avatar: { type: String, default: "" },
         address: { type: String, default: "" },
-        otp:{ type: String, default: "" },
+        otp: { type: String, default: "" },
     },
     {
         collection: 'AccountUsers'
@@ -147,5 +150,22 @@ const orderModel = new db.mongoose.Schema({
 
 let OrderModel = db.mongoose.model('orderModel', orderModel)
 
+// model nhân viên
 
-module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel, CommentModel, BillDetailModel, CartModel, AdminModel, OrderModel };
+const staffSchema = new db.mongoose.Schema({
+    name: { type: String, require: true },
+    userName: { type: String, require: true },
+    pass: { type: String, require: true },
+    email: { type: String, require: true },
+    numberPhone: { type: String, require: true },
+    role: { type: String, require: true },
+    otherInfo: { type: String, require: true },
+},
+{
+    collection: 'staff'
+})
+let StaffModel = db.mongoose.model('staff', staffSchema);
+
+
+
+module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel, CommentModel, BillDetailModel, CartModel, AdminModel, OrderModel, StaffModel };
