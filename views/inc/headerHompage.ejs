@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poly Barber</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <style>
+          .highlight {
+            transition: transform 0.3s;
+          }
+
+          .highlight:hover {
+            transform: scale(1.2);
+          }
+          .hihi {     
+            border-radius: 10px;     
+            margin-right: 50px;
+            display: inline-block;
+            overflow: hidden;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+          }
+
+          .hihi img {
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+            height: 270px;
+            width: 270px;
+            transition: transform 0.3s ease;
+          }
+
+          .hihi:hover img {
+            transform: scale(1.1);
+          }
+
+          .hihi .description {
+            margin-left: 10px;
+            margin-top: 15px;
+          }
+
+          .hihi .description h5 {
+            margin: 0;
+          }          
+          .container {
+            width: 1000px;
+            overflow: hidden;
+            position: relative;
+            
+          }
+
+          .slider {
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+          }
+
+          .slider-item {
+            flex-shrink: 0;
+            width: 200px;
+            height: 300px;
+            margin: 10px;
+          }
+
+          .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background-color: #ccc;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+          }
+
+          .slider-arrow-left {
+            left: 0;
+          }
+
+          .slider-arrow-right {
+            right: 0;
+          }
+            
+
+        </style>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const container = document.querySelector('.container');
+          const slider = document.querySelector('.slider');
+          const sliderItems = document.querySelectorAll('.slider-item');
+          const sliderWidth = slider.offsetWidth;
+          const itemWidth = sliderItems[0].offsetWidth + parseInt(window.getComputedStyle(sliderItems[0]).marginLeft) + parseInt(window.getComputedStyle(sliderItems[0]).marginRight);
+          const visibleItems = Math.floor(sliderWidth / itemWidth);
+          const maxPosition = sliderItems.length - visibleItems;
+          let currentPosition = 0;
+
+          function updateSliderPosition() {
+            const translateX = currentPosition * -itemWidth;
+            slider.style.transform = `translateX(${translateX}px)`;
+          }
+
+          function moveSlider(direction) {
+            if (direction === 'left' && currentPosition > 0) {
+              currentPosition--;
+            } else if (direction === 'right' && currentPosition < maxPosition) {
+              currentPosition++;
+            }
+            updateSliderPosition();
+          }
+
+          const leftArrow = document.querySelector('.slider-arrow-left');
+          const rightArrow = document.querySelector('.slider-arrow-right');
+
+          leftArrow.addEventListener('click', function() {
+            moveSlider('left');
+          });
+
+          rightArrow.addEventListener('click', function() {
+            moveSlider('right');
+          });
+        });
+      </script>
+    
+</head>
+
+<body>  
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+      <div class="container" style="width: 1100px ;">
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="nav nav-pills flex-column flex-sm-row nav-item dropdown">
+            <li>
+              <a class="navbar-brand" href="#">
+                <img src="https://i.imgur.com/L5vcAHf.png" width="80px">
+              </a>
+            </li>
+
+            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px;">
+              <a class="nav-link highlight" href="http://localhost:3000" style="font-weight: bold; color: #000;">Trang chủ</a>
+            </li>
+            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px;">
+              <a class="nav-link highlight" href="#" style="font-weight: bold; color: #000;">Dịch vụ</a>
+            </li>
+          
+            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px;">
+              <a class="nav-link highlight" href="http://localhost:3000/vefpoly" style="font-weight: bold; color: #000;">Về Fpoly Barber</a>
+            </li>
+            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px;">
+              <a class="nav-link highlight" href="#" style="font-weight: bold; color: #000;">Học cắt tóc</a>
+            </li>
+            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px; margin-left: 245px;">
+              <a class="btn btn-light" href="http://localhost:3000/home" style="font-weight: bold;">Đăng nhập</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </nav>

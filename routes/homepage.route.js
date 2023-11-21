@@ -4,5 +4,7 @@ var homepagecontroller = require('../controllers/homepagecontroller');
 
 router.get('/',homepagecontroller.homepage);
 
+router.get('/vefpoly', homepagecontroller.vefpoly);
+
 module.exports = router;
 
