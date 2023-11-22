@@ -90,3 +90,33 @@ exports.updateAvatar = async (req, res, next) => {
         res.status(500).json({ message: "Server Lỗi " });
     }
 };
+
+
+
+exports.depositMoney = async (req, res, next) => {
+    const userId = req.params.id;
+    const { amount } = req.body;
+
+    try {
+        // Find the user by ID
+        const user = await md.userModel.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'Không tìm thấy user' });
+        }
+
+        // Validate the amount
+        if (isNaN(amount) || parseFloat(amount) <= 0) {
+            return res.status(400).json({ message: 'Số lỗi' });
+        }
+
+        // Deposit money
+        user.balance += parseFloat(amount);
+        await user.save();
+
+        return res.status(200).json({ message: 'Nạp thành công', user });
+    } catch (error) {
+        console.error('Error ', error);
+        return res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+};
