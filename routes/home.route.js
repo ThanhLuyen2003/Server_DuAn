@@ -9,7 +9,7 @@ var check_login = require('../middlewares/check_login');
 router.get('/',check_login.yeu_cau_dang_nhap,homeController.home);
 router.post('/',check_login.yeu_cau_dang_nhap,homeController.home);
 
-// phân quyền tạm thời bỏ qua
+// phân quyền tạm thời bor
 // router.get('/danh-sach-lich-dat',check_login.yeu_cau_dang_nhap,staffController.ds_lich_dat);
 
 module.exports = router;
