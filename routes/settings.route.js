@@ -17,8 +17,8 @@ router.get('/dang-xuat', check_login.yeu_cau_dang_nhap, (req, res) => {
             return res.status(500).send('Lỗi Server Nội bộ');
         }
 
-        // Điều hướng hoặc làm điều gì đó sau khi đăng xuất thành công
-        res.redirect('/settings/login');
+        // Điều hướng về màn hình homepage
+        res.redirect('/');
     });
 });
 

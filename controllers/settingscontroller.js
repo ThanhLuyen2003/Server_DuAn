@@ -15,14 +15,17 @@ exports.login = async (req, res, next) => {
                 }else{
                     msg = 'Vui lòng kiểm tra lại mật khẩu !!!'
                 }
-            } else if (objStaff) {
-                // Nếu là nhân viên, chuyển hướng đến màn hình danh sách lịch đặt
-                if(objStaff.pass == req.body.pass){
-                    req.session.userLogin = objStaff;
-                    return res.redirect('/home/danh-sach-lich-dat');
-                  }else{
-                      msg = 'Vui lòng kiểm tra lại mật khẩu !!!'
-                  }
+
+                // phân quyền tạm thời bỏ qua
+            // } else if (objStaff) {
+            //     // Nếu là nhân viên, chuyển hướng đến màn hình danh sách lịch đặt
+            //     if(objStaff.pass == req.body.pass){
+            //         req.session.userLogin = objStaff;
+            //         return res.redirect('/home/danh-sach-lich-dat');
+            //       }else{
+            //           msg = 'Vui lòng kiểm tra lại mật khẩu !!!'
+            //       }
+            
             } else {
                 // Nếu không tìm thấy tài khoản nào
                 msg = 'Không tồn tại tài khoản này: ' + req.body.username;
