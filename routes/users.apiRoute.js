@@ -13,4 +13,7 @@ router.put('/updateOTP/:id',users_api.OTPGiaoDich);
 
 router.delete('/deleteUser/:id', users_api.deleteUser);
 
+
+
+router.put('/depositMoney/:id', users_api.depositMoney);
 module.exports = router;
