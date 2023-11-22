@@ -10,13 +10,14 @@ exports.login = async (req, res, next) => {
                 // Nếu là admin, chuyển hướng đến màn hình danh sách
                 if(objU.pass == req.body.pass){
                     req.session.userLogin = objU;
+                    // console.log('aaaaaaaaaaaa' + user);
                     //chuyển sang màn hình chính or danh sách
                     return res.redirect('/home');
                 }else{
                     msg = 'Vui lòng kiểm tra lại mật khẩu !!!'
                 }
 
-                // phân quyền tạm thời bỏ qua
+                // phân quyền tạm thời bỏ
             // } else if (objStaff) {
             //     // Nếu là nhân viên, chuyển hướng đến màn hình danh sách lịch đặt
             //     if(objStaff.pass == req.body.pass){
@@ -25,7 +26,6 @@ exports.login = async (req, res, next) => {
             //       }else{
             //           msg = 'Vui lòng kiểm tra lại mật khẩu !!!'
             //       }
-            
             } else {
                 // Nếu không tìm thấy tài khoản nào
                 msg = 'Không tồn tại tài khoản này: ' + req.body.username;

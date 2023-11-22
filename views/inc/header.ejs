@@ -2,70 +2,106 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poly Barber</title>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poly Barber</title>
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        <style>
-          .description-column {
-            width: 100px; 
-          }
-          .center-image{
-            margin-left: 20px;
-          }
-          .highlight {
-            transition: transform 0.3s;
-          }
+  <style>
+    .description-column {
+      width: 100px;
+    }
 
-          .highlight:hover {
-            transform: scale(1.2);
-          }
-  
-        </style>
-    
+    .center-image {
+      margin-left: 20px;
+    }
+
+    .highlight {
+      transition: transform 0.3s;
+    }
+
+    .highlight:hover {
+      transform: scale(1.2);
+    }
+  </style>
+
 </head>
 
-<body>  
-    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
-      <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="nav nav-pills flex-column flex-sm-row nav-item dropdown">
-            <li>
-              <a class="navbar-brand" href="http://localhost:3000/home">
-                <img src="https://i.imgur.com/L5vcAHf.png" width="80px">
-              </a>
-            </li>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="http://localhost:3000/home">
+        <img src="https://i.imgur.com/L5vcAHf.png" width="80px">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-            <form class="d-flex" style="height: 30px; margin-top: 20px;">
-              <input class="form-control me-2" type="search" placeholder="Nhập tên cầm tìm" aria-label="Search">
-       
-              <button class="btn btn-light fw-semibold"type="submit">Tìm</button>
-          
-            </form>
+          <li class="flex-sm-fill text-sm-center nav-item me-5">
+            <a class="nav-link highlight" href="http://localhost:3000/home" style="font-weight: bold; color: #000;">LỊCH
+              ĐẶT</a>
+          </li>
 
-            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px;">
-              <a class="nav-link highlight" href="http://localhost:3000/home" style="font-weight: bold; color: #000;">LỊCH ĐẶT</a>
-            </li>
-            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px;">
-              <a class="nav-link highlight" href="http://localhost:3000/dichvu" style="font-weight: bold; color: #000;">DỊCH VỤ</a>
-            </li>
-          
-            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px;">
-              <a class="nav-link highlight" href="http://localhost:3000/product" style="font-weight: bold; color: #000;">CÁC SẢN PHẨM</a>
-            </li>
-            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px;">
-              <a class="nav-link highlight" href="#" style="font-weight: bold; color: #000;">GIỚI THIỆU</a>
-            </li>
-            <li class="flex-sm-fill text-sm-center nav-link" style="margin-top: 10px; margin-left: 160px;">
-              <!-- xử lý đăng xuất, không thay đổi đường dẫn -->
-              <a class="nav-link highlight" href="settings/dang-xuat" style="font-weight: bold;color: #000;">Đăng xuất</a>
-            </li>
-          </ul>
-        </div>
+          <li class="flex-sm-fill text-sm-center nav-item me-5">
+            <a class="nav-link highlight" href="http://localhost:3000/dichvu"
+              style="font-weight: bold; color: #000;">DỊCH VỤ</a>
+          </li>
+
+          <li class="flex-sm-fill text-sm-center nav-item me-5">
+            <a class="nav-link highlight" href="http://localhost:3000/product"
+              style="font-weight: bold; color: #000;">CÁC SẢN PHẨM</a>
+          </li>
+
+          <li class="flex-sm-fill text-sm-center nav-item me-5">
+            <a class="nav-link highlight" href="#" style="font-weight: bold; color: #000;">GIỚI THIỆU</a>
+          </li>
+
+        </ul>
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item dropdown pe-3" style="">
+
+            <a class="nav-link highlight nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+              <span class="d-none d-md-block dropdown-toggle ps-2 fw-semibold">
+                <% if (user) { %>
+                  <%= user.username %>
+                <% } else { %>
+                  Đăng nhập
+                <% } %>
+              </span>
+            </a>
+            <!-- End Profile Iamge Icon -->
+
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+              <li class="dropdown-header">
+                <h6>
+                  <% if (user) { %>
+                    <%= user.username %>
+                  <% } else { %>
+                    Đăng nhập
+                  <% } %>
+                </h6>
+                <span>Admin</span>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li class="flex-sm-fill text-sm-center nav-link">
+                <!-- xử lý đăng xuất, không thay đổi đường dẫn -->
+                <a class="nav-link" href="/settings/dang-xuat" style="font-weight: bold;color: #000;">Đăng xuất</a>
+              </li>
+
+            </ul><!-- End Profile Dropdown Items -->
+          </li>
+        </ul>
+
       </div>
-    </nav>
+    </div>
+  </nav>
