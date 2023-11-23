@@ -1,77 +1,80 @@
 <%- include('../inc/header.ejs') %>
-<div class="container">
+  <div class="container">
     <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Danh sách dịch vụ</h1>
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <form class="d-flex" role="search">
           <div class="d-flex justify-content-around align-items-center mb-9">
-  <a type="button" class="btn btn-warning" href="http://localhost:3000/dichvu/add" style="width: 150px; margin-right: 20px;">+ Thêm dịch vụ
-  </a>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Sắp xếp theo
-    </button>
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="/dichvu/sxtenservice">Tên</a></li>
-      <li><a class="dropdown-item" href="/dichvu/sxtheogia">Giá</a></li>
-    </ul>
-  </div>
-        </div>
+            <a type="button" class="btn btn-warning" href="http://localhost:3000/dichvu/add"
+              style="width: 150px; margin-right: 20px;">+ Thêm dịch vụ
+            </a>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Sắp xếp theo
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/dichvu/sxtenservice">Tên</a></li>
+                <li><a class="dropdown-item" href="/dichvu/sxtheogia">Giá</a></li>
+              </ul>
+            </div>
+          </div>
         </form>
       </div>
     </nav>
-    </div>
+  </div>
 
-    <div class="container">
-      <table class="table table-bordered table-striped">
-        <tr> 
-          <th>Tên dịch vụ</th> 
-          <th>Giá</th> 
-          <th>Danh mục</th> 
-          <th>Ảnh mô tả</th> 
-          <th>Mô tả dịch vụ</th> 
-          <th></th>
+  <div class="container">
+    <table class="table table-bordered table-striped">
+      <tr>
+        <th>Tên dịch vụ</th>
+        <th>Giá</th>
+        <th>Danh mục</th>
+        <th>Ảnh mô tả</th>
+        <th>Mô tả dịch vụ</th>
+        <th></th>
+      </tr>
+      <% listDichVu.forEach( ( row )=>{ %>
+        <tr>
+          <td>
+            <%= row.name %>
+          </td>
+          <td>
+            <%= row.price %>
+          </td>
+          <td>
+            <%= row.type %>
+          </td>
+          <td> <img src="<%=row.image %>" alt="" style="width: 60px; height: 60px;margin-left: 10px;"></td>
+          <td>
+            <%= row.describe %>
+          </td>
+          <td>
+            <div class="d-flex">
+              <a href="/dichvu/edit/<%=row._id%>">
+                <button type="button" class="btn btn-warning" style="margin-right: 10px;">Sửa</button>
+              </a>
+
+            </div>
+          </td>
         </tr>
-        <% listDichVu.forEach( ( row )=>{  %>
-            <tr>
-                <td> <%= row.name %></td>
-                <td> <%= row.price %></td>
-                <td> <%= row.type %></td>
-                <td>  <img src="<%=row.image %>" alt="" style="width: 60px; height: 60px;margin-left: 10px;"></td>
-                <td> <%= row.describe %></td>
-                <td> 
-                  <div class="d-flex">
-                    <a href="/dichvu/edit/<%=row._id%>">
-                      <button type="button" class="btn btn-warning" style="margin-right: 10px;">Sửa</button> 
-                    </a>
-                    
-                  </div> 
-                </td>
-
-
-            </tr>
-        
-        
-            <% } ) %>
-        
-        
-        
-        
-        </table>
+        <% } ) %>
+    </table>
   </div>
 
   <div style="margin-left: 850px; margin-top: 50px;">
     <nav aria-label="Page navigation example">
       <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="http://localhost:3000/dichvu?currentPage-1&limit=5">Previous</a></li>
+        <li class="page-item"><a class="page-link"
+            href="http://localhost:3000/dichvu?currentPage-1&limit=5">Previous</a></li>
         <li class="page-item"><a class="page-link" href="http://localhost:3000/dichvu?page=1&limit=5">1</a></li>
         <li class="page-item"><a class="page-link" href="http://localhost:3000/dichvu?page=2&limit=5">2</a></li>
         <li class="page-item"><a class="page-link" href="http://localhost:3000/dichvu?page=3&limit=5">3</a></li>
         <li class="page-item"><a class="page-link" href="http://localhost:3000/dichvu?page=4&limit=5">4</a></li>
-        <li class="page-item"><a class="page-link" href="http://localhost:3000/dichvu?currentPage+1&limit=5">Next</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/dichvu?currentPage+1&limit=5">Next</a>
+        </li>
       </ul>
     </nav>
   </div>
-  
+
   <%- include('../inc/footer.ejs') %>
-  </div>

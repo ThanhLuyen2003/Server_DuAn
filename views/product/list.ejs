@@ -1,14 +1,16 @@
 <%- include('../inc/header.ejs') %>
-<div class="container">
+  <div class="container">
     <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Danh sách sản phẩm</h1>
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <form class="d-flex" role="search">
           <div class="d-flex justify-content-around align-items-center mb-2">
-            <a type="button" class="btn btn-warning" style="width: 160px; margin-right: 30px;" href="http://localhost:3000/product/add">+ Thêm sản phẩm
+            <a type="button" class="btn btn-warning" style="width: 160px; margin-right: 30px;"
+              href="http://localhost:3000/product/add">+ Thêm sản phẩm
             </a>
             <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
                 Sắp xếp theo
               </button>
               <ul class="dropdown-menu">
@@ -16,69 +18,80 @@
                 <li><a class="dropdown-item" href="/product/sxtheogiasp">Giá</a></li>
               </ul>
             </div>
-        </div>
+          </div>
         </form>
       </div>
     </nav>
-</div>
+  </div>
 
-    <div class="container">
-      <table class="table table-bordered table-striped">
-        <tr class="text-sm-center"> 
-          <th style="width: 70px;"  >Ảnh</th>
-          <th style="width: 300px;">Tên sản phẩm</th>
-          <th>Nhãn hiệu</th> 
-          <th>Giá nhập</th>
-          <th>Giá bán</th> 
-          <th style="width: 320px;">Mô tả</th>
-          <th style="width: 120px;">Nguyên liệu</th> 
-          <th>Danh mục</th>
-          <th></th>
+  <div class="container">
+    <table class="table table-bordered table-striped">
+      <tr class="text-sm-center">
+        <th style="width: 70px;">Ảnh</th>
+        <th style="width: 300px;">Tên sản phẩm</th>
+        <th>Nhãn hiệu</th>
+        <th>Giá nhập</th>
+        <th>Giá bán</th>
+        <th style="width: 320px;">Mô tả</th>
+        <th style="width: 120px;">Nguyên liệu</th>
+        <th>Danh mục</th>
+        <th></th>
       </tr>
 
-        <% listProducts.forEach( ( row )=>{  %>
-            <tr>
-                
-                <td>  <img src="<%=row.avatar %>" alt="" style="width: 60px; height: 60px; margin-left: 25px;"></td>
-                <td> <%= row.name %></td>
-                <td> <%= row.trademark %></td>
-                <td></td>
-                <td> <%= row.price %></td>
-                <td> <%= row.describe %></td>
-                <td> <%= row.ingredient %></td>
-                <td> <%= row.type %></td>
-                <td> 
-                  <div class="d-flex">
-                    <a href="/product/edit/<%=row._id%>">
-                      <button type="button" class="btn btn-warning" style="margin-right: 10px;">Sửa</button> 
-                    </a>
-                   
-                  </div> 
-                </td>
-            </tr>
-        
-        
-            <% } ) %>
-        
-        
-        
-        
-        </table>
+      <% listProducts.forEach( ( row )=>{ %>
+        <tr>
+
+          <td> <img src="<%=row.avatar %>" alt="" style="width: 60px; height: 60px; margin-left: 25px;"></td>
+          <td>
+            <%= row.name %>
+          </td>
+          <td>
+            <%= row.trademark %>
+          </td>
+          <td></td>
+          <td>
+            <%= row.price %>
+          </td>
+          <td>
+            <%= row.describe %>
+          </td>
+          <td>
+            <%= row.ingredient %>
+          </td>
+          <td>
+            <%= row.type %>
+          </td>
+          <td>
+            <div class="d-flex">
+              <a href="/product/edit/<%=row._id%>">
+                <button type="button" class="btn btn-warning" style="margin-right: 10px;">Sửa</button>
+              </a>
+
+            </div>
+          </td>
+        </tr>
+
+
+        <% } ) %>
+
+
+
+
+    </table>
   </div>
 
-    
-    <div style="margin-left: 850px; margin-top: 50px;">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=1&limit=5">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=1&limit=5">1</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=2&limit=5">2</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=3&limit=5">3</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=4&limit=5">4</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=4&limit=5">Next</a></li>
-        </ul>
-      </nav>
-    </div>
-  
-  <%- include('../inc/footer.ejs') %>
+
+  <div style="margin-left: 850px; margin-top: 50px;">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=1&limit=5">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=1&limit=5">1</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=2&limit=5">2</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=3&limit=5">3</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=4&limit=5">4</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=4&limit=5">Next</a></li>
+      </ul>
+    </nav>
   </div>
+
+<%- include('../inc/footer.ejs') %>
