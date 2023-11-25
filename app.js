@@ -7,6 +7,7 @@ var session = require('express-session');
 var homepageRouter = require('./routes/homepage.route');
 var homeRouter = require('./routes/home.route');
 var homepageRouter = require('./routes/homepage.route');
+var statisticRouter = require('./routes/statistic.route');
 var salonRouter = require('./routes/salon.route');
 var productRouter = require('./routes/products.route');
 var serviceRouter = require('./routes/dichvu.route');
@@ -42,6 +43,7 @@ app.use('/dichvu', serviceRouter);
 app.use('/salon', salonRouter);
 app.use('/product', productRouter);
 app.use('/settings', settingRouter);
+app.use('/statistic', statisticRouter)
 app.use('/apisalon', apiSalonRouter);
 app.use('/apitime', apiTimeRouter);
 app.use('/apiuser', apiUsersRouter);

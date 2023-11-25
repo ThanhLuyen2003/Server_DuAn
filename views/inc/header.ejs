@@ -10,8 +10,159 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
     integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://kit.fontawesome.com/be081a0279.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="views/style.css">
 
   <style>
+    .filter {
+      position: absolute;
+      right: 0px;
+      top: 15px;
+    }
+
+    .filter .icon {
+      color: #aab7cf;
+      padding-right: 20px;
+      padding-bottom: 5px;
+      transition: 0.3s;
+      font-size: 16px;
+    }
+
+    .filter .icon:hover,
+    .filter .icon:focus {
+      color: #4154f1;
+    }
+
+    .filter .dropdown-header {
+      padding: 8px 15px;
+    }
+
+    .filter .dropdown-header h6 {
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #aab7cf;
+      margin-bottom: 0;
+      padding: 0;
+    }
+
+    .filter .dropdown-item {
+      padding: 8px 15px;
+    }
+
+    .card-icon {
+      font-size: 32px;
+      line-height: 0;
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+      flex-grow: 0;
+    }
+
+    .sales-card .card-icon {
+      color: #4154f1;
+      background: #f6f6fe;
+    }
+
+    .revenue-card .card-icon {
+      color: #2eca6a;
+      background: #e0f8e9;
+    }
+
+    .customers-card .card-icon {
+      color: #ff771d;
+      background: #ffecdf;
+    }
+
+    .dropdown-menu {
+      border-radius: 4px;
+      padding: 10px 0;
+      animation-name: dropdown-animate;
+      animation-duration: 0.2s;
+      animation-fill-mode: both;
+      border: 0;
+      box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
+    }
+
+    .dropdown-menu .dropdown-header,
+    .dropdown-menu .dropdown-footer {
+      text-align: center;
+      font-size: 15px;
+      padding: 10px 25px;
+    }
+
+    .dropdown-menu .dropdown-footer a {
+      color: #444444;
+      text-decoration: underline;
+    }
+
+    .dropdown-menu .dropdown-footer a:hover {
+      text-decoration: none;
+    }
+
+    .dropdown-menu .dropdown-divider {
+      color: #a5c5fe;
+      margin: 0;
+    }
+
+    .dropdown-menu .dropdown-item {
+      font-size: 14px;
+      padding: 10px 15px;
+      transition: 0.3s;
+    }
+
+    .dropdown-menu .dropdown-item i {
+      margin-right: 10px;
+      font-size: 18px;
+      line-height: 0;
+    }
+
+    .dropdown-menu .dropdown-item:hover {
+      background-color: #f6f9ff;
+    }
+
+    @media (min-width: 768px) {
+      .dropdown-menu-arrow::before {
+        content: "";
+        width: 13px;
+        height: 13px;
+        background: #fff;
+        position: absolute;
+        top: -7px;
+        right: 20px;
+        transform: rotate(45deg);
+        border-top: 1px solid #eaedf1;
+        border-left: 1px solid #eaedf1;
+      }
+    }
+
+    @keyframes dropdown-animate {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+
+      0% {
+        opacity: 0;
+      }
+    }
+
+    #main {
+      /* margin-top: 60px; */
+      padding: 20px 30px;
+      transition: all 0.3s;
+    }
+
+    @media (max-width: 1199px) {
+      #main {
+        padding: 20px;
+      }
+    }
+
     .description-column {
       width: 100px;
     }
@@ -45,7 +196,8 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
           <li class="flex-sm-fill text-sm-center nav-item nav-link me-5">
-            <a class="nav-link highlight" href="http://localhost:3000/home" style="font-weight: bold; color: #000;">LỊCH ĐẶT</a>
+            <a class="nav-link highlight" href="http://localhost:3000/home" style="font-weight: bold; color: #000;">LỊCH
+              ĐẶT</a>
           </li>
 
           <li class="flex-sm-fill text-sm-center nav-item nav-link me-5">
@@ -56,6 +208,17 @@
           <li class="flex-sm-fill text-sm-center nav-item nav-link me-5">
             <a class="nav-link highlight" href="http://localhost:3000/product"
               style="font-weight: bold; color: #000;">CÁC SẢN PHẨM</a>
+          </li>
+
+          <li class="flex-sm-fill text-sm-center nav-item nav-link dropdown me-5">
+            <a class="nav-link dropdown-toggle" style="font-weight: bold; color: #000;" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              THỐNG KÊ
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="http://localhost:3000/statistic/thongkebanhang">Thống kê bán hàng</a></li>
+              <li><a class="dropdown-item" href="http://localhost:3000/statistic/thongketheolichcat">Thống kê dịch vụ cắt tóc</a></li>
+            </ul>
           </li>
 
           <li class="flex-sm-fill text-sm-center nav-item nav-link me-5">
@@ -70,9 +233,9 @@
               <span class="d-none d-md-block dropdown-toggle ps-2 fw-semibold">
                 <% if (user) { %>
                   <%= user.username %>
-                <% } else { %>
-                  Đăng nhập
-                <% } %>
+                    <% } else { %>
+                      Đăng nhập
+                      <% } %>
               </span>
             </a>
             <!-- End Profile Iamge Icon -->
@@ -82,9 +245,9 @@
                 <h6>
                   <% if (user) { %>
                     <%= user.username %>
-                  <% } else { %>
-                    Đăng nhập
-                  <% } %>
+                      <% } else { %>
+                        Đăng nhập
+                        <% } %>
                 </h6>
                 <span>Admin</span>
               </li>
