@@ -4,23 +4,37 @@
     <div class="container">
         <form action="" method="post" enctype="multipart/form-data">
             <form class="px-4 py-3">
+
+                <label class="form-label">Số lượng nhập</label>
+                <input type="text" name="soluongnhap" placeholder="Số lượng nhập" class="form-control">
+                <br>
+
                 <div class="mb-3">
                     <label class="form-label">Hình ảnh</label>
                     <label for="formFileMultiple" class="form-label"></label>
                     <input class="form-control" type="file" name="file_anh" id="formFileMultiple" multiple>
                 </div>
                 <label class="form-label">Tên sản phẩm</label>
-                <input type="text" name="name" placeholder="Tên sản phẩm" class="form-control"><br>
+                <input type="text" name="name" placeholder="Tên sản phẩm" class="form-control">
+                <br>
                 <label class="form-label">Nhãn hiệu</label>
-                <input type="text" name="trademark" placeholder="Nhãn hiệu" class="form-control"><br>
-                <label class="form-label">Giá</label>
-                <input type="text" name="price" placeholder="Giá" class="form-control"><br>
+                <input type="text" name="trademark" placeholder="Nhãn hiệu" class="form-control">
+                <br>
+                <label class="form-label">Giá nhập</label>
+                <input type="text" name="pricenhap" placeholder="Giá nhập" class="form-control">
+                <br>
+                <label class="form-label">Giá bán</label>
+                <input type="text" name="price" placeholder="Giá bán" class="form-control">
+                <br>
                 <label class="form-label">Mô tả</label>
-                <input type="text" name="describe" placeholder="Mô tả" class="form-control"><br>
+                <input type="text" name="describe" placeholder="Mô tả" class="form-control">
+                <br>
                 <label class="form-label">Nguyên liệu</label>
-                <input type="text" name="ingredient" placeholder="Nguyên liệu" class="form-control"><br>
+                <input type="text" name="ingredient" placeholder="Nguyên liệu" class="form-control">
+                <br>
                 <label class="form-label">Loại</label>
-                <input type="text" name="type" placeholder="Loại" class="form-control"><br>
+                <input type="text" name="type" placeholder="Loại" class="form-control">
+                <br>
                 <button class="btn btn-warning" type="submit">Lưu</button>
                 <%= msg %>
             </form>

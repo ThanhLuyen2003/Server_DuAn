@@ -17,4 +17,5 @@ router.get('/productsalon/Combo',users_api.productsalonCombo);
 router.get('/productsalon/NuocHoa',users_api.productsalonNuocHoa);
 //Kem danh rang
 router.get('/productsalon/KemDanhRang',users_api.productsalonKemDanhRang);
+
 module.exports = router;

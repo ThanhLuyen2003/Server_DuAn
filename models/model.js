@@ -55,9 +55,11 @@ const UsersSchema = new db.mongoose.Schema(
 let userModel = db.mongoose.model('userModel', UsersSchema);
 
 const ProductModel = new db.mongoose.Schema({
+    soluongnhap: { type: String, required: true },
     avatar: { type: String, required: true },
     name: { type: String, required: true },
     trademark: { type: String, required: true },
+    pricenhap: { type: String, required: true },
     price: { type: String, required: true },
     describe: { type: String, required: true },
     ingredient: { type: String, required: true },
