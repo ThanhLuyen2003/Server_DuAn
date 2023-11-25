@@ -10,9 +10,6 @@ router.get('/',check_login.yeu_cau_dang_nhap, productController.list);
 router.get('/add',check_login.yeu_cau_dang_nhap, productController.addPro);
 router.post('/add',check_login.yeu_cau_dang_nhap, uploader.single('file_anh'), productController.addPro);
 
-router.get('/thongke',check_login.yeu_cau_dang_nhap, productController.thongkeproduct);
-// router.post('/thongke',check_login.yeu_cau_dang_nhap, productController.thongkeproduct);
-
 router.get('/edit/:idp',check_login.yeu_cau_dang_nhap, productController.editPro);
 router.post('/edit/:idp',check_login.yeu_cau_dang_nhap,uploader.single('file_anh'), productController.editPro);
 
