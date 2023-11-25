@@ -1,76 +1,131 @@
 <%- include('../inc/header.ejs') %>
 
-<div class="container">
+  <div class="container">
     <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Danh sách lịch đặt</h1>
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
-          <form class="d-flex" role="search">
-            <div class="d-flex justify-content-around align-items-center mb-2">
-                <a type="button" class="btn btn-warning" style="width: 160px; margin-right: 55px;" href="#">Duyệt lịch
-                </a>
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Sắp xếp theo
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Tên</a></li>
-                  <li><a class="dropdown-item" href="#">Giá</a></li>
-                </ul>
-              </div>
+        <form class="d-flex" role="search">
+          <div class="d-flex justify-content-around align-items-center mb-2">
+            <a type="button" class="btn btn-warning" style="width: 160px; margin-right: 55px;" href="#">Duyệt lịch
+            </a>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Sắp xếp theo
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Tên</a></li>
+                <li><a class="dropdown-item" href="#">Giá</a></li>
+              </ul>
             </div>
-          </form>
-        </div>
-    </nav>
-</div>
 
-    <div class="container">
-      <table class="table table-bordered table-striped">
-        <tr> 
-          <th>Tên Salon</th> 
-          <th>Địa chỉ</th> 
-          <th>Giờ</th> 
-          <th>Ngày</th> 
-          <th>SĐT</th> 
-          <th>Ảnh Salon</th> 
-          <th>Dịch vụ</th> 
-          <th>Chi phí</th> 
-          <th style="width: 95px;">Trạng thái</th> 
-          <th style="width: 120px;">Người đặt</th>
-        </tr>
-        <% listBill.forEach( ( row )=>{  %>
-            <tr>
-                
-                <td> <%= row.nameSalon %></td>
-                <td> <%= row.addressSalon %></td>
-                <td> <%= row.hour %></td>
-                <td> <%= row.day %></td>
-                <td> <%= row.phone %></td>
-                <td>  <img src="<%=row.imageSalon %>" alt="" style="width: 60px; height: 60px;"></td>
-                <td> <%= row.services %></td>
-                <td> <%= row.price %></td>
-                <td> <%= row.status %></td>
-                <td><%= row.idUser.name %> </td>
-            </tr>
-        
-        
-            <% } ) %>
-        </table>
+          </div>
+        </form>
+      </div>
+    </nav>
   </div>
 
-    
-    <div style="margin-left: 850px; margin-top: 50px;">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=1&limit=5">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=1&limit=5">1</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=2&limit=5">2</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=3&limit=5">3</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=4&limit=5">4</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=4&limit=5">Next</a></li>
-        </ul>
-      </nav>
-    </div>
-  
+  <div class="container">
+    <table class="table table-bordered table-striped">
+      <tr>
+        <th>Tên Salon</th>
+        <th>Địa chỉ</th>
+        <th>Giờ</th>
+        <th>Ngày</th>
+        <th>SĐT</th>
+        <th>Ảnh Salon</th>
+        <th>Dịch vụ</th>
+        <th>Chi phí</th>
+        <th style="width: 95px;">Trạng thái</th>
+        <th style="width: 120px;">Người đặt</th>
+        <th style="width: 120px;"></th>
+      </tr>
+      <% listBill.forEach( ( row )=>{ %>
+        <tr>
+          <td>
+            <%= row.nameSalon %>
+          </td>
+          <td>
+            <%= row.addressSalon %>
+          </td>
+          <td>
+            <%= row.hour %>
+          </td>
+          <td>
+            <%= row.day %>
+          </td>
+          <td>
+            <%= row.phone %>
+          </td>
+          <td> <img src="<%=row.imageSalon %>" alt="" style="width: 60px; height: 60px;"></td>
+          <td>
+            <%= row.services %>
+          </td>
+          <td>
+            <%= row.price %>
+          </td>
+          <td>
+            <% if (row.status === 'Sắp tới') { %>
+              <p style="color: rgb(187, 181, 0);"> <%= row.status %> </p>
+            <% } else if (row.status === 'Đã hoàn thành') { %>
+              <p style="color: rgb(0, 255, 68);"> <%= row.status %> </p>
+            <% } else if (row.status === 'Đã hủy lịch') { %>
+              <p style="color: rgb(255, 0, 0);"> <%= row.status %> </p>
+            <% } %>
+          </td>
+          
+          <td>
+            <%= row.idUser.name %>
+          </td>
+          <td>
+            <div>
+              <% if (row.status === 'Sắp tới') { %>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal<%= row._id %>">
+                  Xác nhận
+                </button>
+              <% } else if (row.status === 'Đã hoàn thành') { %>
+              <% } else if (row.status === 'Đã hủy lịch') { %>
+              <% } %>
+
+              <div class="modal fade" id="exampleModal<%= row._id %>" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true" data-bs-target="#exampleModal<%= row._id %>">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Xác nhận lịch hẹn</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Bạn có muốn xác nhận lịch hẹn của <%= row.idUser.name %> - <%= row.phone %> - <%= row.nameSalon %>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                      <!-- <button type="button" class="btn btn-success">Save changes</button> -->
+                      <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Hoàn thành</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </td>
+        </tr>
+
+
+        <% } ) %>
+    </table>
+  </div>
+
+
+  <div style="margin-left: 850px; margin-top: 50px;">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=1&limit=5">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=1&limit=5">1</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=2&limit=5">2</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=3&limit=5">3</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=4&limit=5">4</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=4&limit=5">Next</a></li>
+      </ul>
+    </nav>
+  </div>
+
   <%- include('../inc/footer.ejs') %>
-
-

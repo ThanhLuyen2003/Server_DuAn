@@ -39,7 +39,12 @@ const UsersSchema = new db.mongoose.Schema(
         pass: { type: String, required: true },
         avatar: { type: String, default: "" },
         address: { type: String, default: "" },
+
         otp: { type: String, default: "" },
+
+        otp:{ type: String, default: "" },
+        balance:{type:Number,default:0}
+
     },
     {
         collection: 'AccountUsers'

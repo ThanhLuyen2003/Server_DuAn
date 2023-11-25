@@ -20,6 +20,29 @@ app.get('/login/:phone', (req, res) => {
 
 })
 
+app.put('/changePass/:email', (req, res) => {
+
+    const email = req.params.email;
+
+    console.log(req.body.pass);
+
+    md.userModel.updateOne({ email: email }, { $set: { pass: req.body.pass } })
+        .then((data) => {
+            if (data) {
+                res.status(200).json({
+                    message: "Dữ liệu cập nhật",
+                    data: data,
+                });
+            } else {
+                res.status(404).json({ error: "Không tìm thấy dữ liệu" });
+            }
+        })
+        .catch((error) => {
+            res.status(500).json({ error: "Đã xảy ra lỗi khi cập nhật dữ liệu" });
+        });
+
+})
+
 app.get('/getCart/:id', (req, res) => {
 
     var idUser = req.params.id;
