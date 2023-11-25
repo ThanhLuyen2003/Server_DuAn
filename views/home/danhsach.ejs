@@ -1,29 +1,38 @@
 <%- include('../inc/header.ejs') %>
 
-  <div class="container">
-    <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Danh sách lịch đặt</h1>
-    <nav class="navbar navbar-expand-lg">
+  <div class="container mt-3 mb-3 ">
+    <h2 class="mb-5 d-flex justify-content-center">DANH SÁCH LỊCH ĐẶT</h2>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <form class="d-flex" role="search">
-          <div class="d-flex justify-content-around align-items-center mb-2">
-            <a type="button" class="btn btn-warning" style="width: 160px; margin-right: 55px;" href="#">Duyệt lịch
-            </a>
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Sắp xếp theo
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Tên</a></li>
-                <li><a class="dropdown-item" href="#">Giá</a></li>
-              </ul>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-flex" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-grow-1">
+            <div class="input-group rounded flex-grow-1">
+              <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                aria-describedby="search-addon" />
+              <span class="input-group-text border-0" id="search-addon">
+                <i class="fas fa-search"></i>
+              </span>
             </div>
-
+          </ul>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Sắp xếp theo
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Tên</a></li>
+              <li><a class="dropdown-item" href="#">Giá</a></li>
+            </ul>
           </div>
-        </form>
+        </div>  
       </div>
     </nav>
   </div>
+
 
   <div class="container">
     <table class="table table-bordered table-striped">
@@ -65,47 +74,57 @@
             <%= row.price %>
           </td>
           <td>
-            <% if (row.status === 'Sắp tới') { %>
-              <p style="color: rgb(187, 181, 0);"> <%= row.status %> </p>
-            <% } else if (row.status === 'Đã hoàn thành') { %>
-              <p style="color: rgb(0, 255, 68);"> <%= row.status %> </p>
-            <% } else if (row.status === 'Đã hủy lịch') { %>
-              <p style="color: rgb(255, 0, 0);"> <%= row.status %> </p>
-            <% } %>
+            <% if (row.status==='Sắp tới' ) { %>
+              <p style="color: rgb(187, 181, 0);">
+                <%= row.status %>
+              </p>
+              <% } else if (row.status==='Đã hoàn thành' ) { %>
+                <p style="color: rgb(0, 255, 68);">
+                  <%= row.status %>
+                </p>
+                <% } else if (row.status==='Đã hủy lịch' ) { %>
+                  <p style="color: rgb(255, 0, 0);">
+                    <%= row.status %>
+                  </p>
+                  <% } %>
           </td>
-          
+
           <td>
             <%= row.idUser.name %>
           </td>
           <td>
             <div>
-              <% if (row.status === 'Sắp tới') { %>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal<%= row._id %>">
+              <% if (row.status==='Sắp tới' ) { %>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal<%= row._id %>">
                   Xác nhận
                 </button>
-              <% } else if (row.status === 'Đã hoàn thành') { %>
-              <% } else if (row.status === 'Đã hủy lịch') { %>
-              <% } %>
+                <% } else if (row.status==='Đã hoàn thành' ) { %>
+                  <% } else if (row.status==='Đã hủy lịch' ) { %>
+                    <% } %>
 
-              <div class="modal fade" id="exampleModal<%= row._id %>" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true" data-bs-target="#exampleModal<%= row._id %>">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Xác nhận lịch hẹn</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      Bạn có muốn xác nhận lịch hẹn của <%= row.idUser.name %> - <%= row.phone %> - <%= row.nameSalon %>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                      <!-- <button type="button" class="btn btn-success">Save changes</button> -->
-                      <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Hoàn thành</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                      <div class="modal fade" id="exampleModal<%= row._id %>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true"
+                        data-bs-target="#exampleModal<%= row._id %>">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Xác nhận lịch hẹn</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              Bạn có muốn xác nhận lịch hẹn của <%= row.idUser.name %> - <%= row.phone %> - <%=
+                                    row.nameSalon %>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                              <!-- <button type="button" class="btn btn-success">Save changes</button> -->
+                              <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Hoàn thành</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
           </td>
         </tr>
 
