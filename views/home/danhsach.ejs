@@ -28,7 +28,7 @@
               <li><a class="dropdown-item" href="#">Giá</a></li>
             </ul>
           </div>
-        </div>  
+        </div>
       </div>
     </nav>
   </div>
@@ -74,7 +74,7 @@
             <%= row.price %>
           </td>
           <td>
-            <% if (row.status==='Sắp tới' ) { %>
+            <% if (row.status==='Sắp tới' || row.status==='Khách đang cắt' ) { %>
               <p style="color: rgb(187, 181, 0);">
                 <%= row.status %>
               </p>
@@ -82,7 +82,7 @@
                 <p style="color: rgb(0, 255, 68);">
                   <%= row.status %>
                 </p>
-                <% } else if (row.status==='Đã hủy lịch' ) { %>
+                <% } else if (row.status==='Đã hủy lịch' || row.status==='Khách đến muộn') { %>
                   <p style="color: rgb(255, 0, 0);">
                     <%= row.status %>
                   </p>
@@ -94,7 +94,7 @@
           </td>
           <td>
             <div>
-              <% if (row.status==='Sắp tới' ) { %>
+              <% if (row.status==='Sắp tới' || row.status==='Khách đang cắt' ||row.status==='Khách đến muộn' ) { %>
                 <button type="button" class="btn btn-success" data-bs-toggle="modal"
                   data-bs-target="#exampleModal<%= row._id %>">
                   Xác nhận
@@ -113,15 +113,26 @@
                               <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
-                              Bạn có muốn xác nhận lịch hẹn của <%= row.idUser.name %> - <%= row.phone %> - <%=
-                                    row.nameSalon %>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                              <!-- <button type="button" class="btn btn-success">Save changes</button> -->
-                              <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Hoàn thành</a>
-                            </div>
+                            <% if (row.status==='Sắp tới' ) { %>
+
+                              <div class="modal-body">
+                                Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> - <%=
+                                      row.nameSalon %> vào sử dụng dịch vụ không
+                              </div>
+
+                              <div class="modal-footer">
+                                <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác nhận</a>
+                              </div>
+                              <% }else if(row.status==='Khách đang cắt' ) { %>
+                                <div class="modal-body">
+                                  Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> - <%=
+                                        row.nameSalon %> Hoàn thành dịch vụ.
+                                </div>
+
+                                <div class="modal-footer">
+                                  <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác nhận</a>
+                                </div>
+                                <% } %>
                           </div>
                         </div>
                       </div>
