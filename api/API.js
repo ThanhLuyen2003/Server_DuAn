@@ -141,6 +141,7 @@ app.get('/getBill/:idUser/:status', (req, res) => {
 
 
 
+
 app.delete('/delCart/:id', (req, res) => {
 
     var id = req.params.id;
@@ -231,8 +232,21 @@ app.get('/getNhuom', (req, res) => {
         })
 })
 
+app.get('/time', (req, res) => {
 
+    md.timeModel.find()
+        .then(data => {
+            res.status(200).json(data);
+        })
+})
 
+app.get('/getBill', (req, res) => {
+
+    Bill.find({ status: 'Sắp tới' })
+        .then(data => {
+            res.status(200).json(data);
+        })
+})
 
 
 module.exports = app;
