@@ -96,19 +96,12 @@
             <%= row.type %>
           </td>
           <td>
-            <% if (row.status==='Có đơn' || row.status==='Đang giao hàng' ) { %>
-              <p style="color: rgb(187, 181, 0);">
-                <%= row.status %>
-              </p>
-              <% } else if (row.status==='Đã giao hàng' ) { %>
-                <p style="color: rgb(0, 255, 68);">
-                  <%= row.status %>
-                </p>
-                <% } else if (row.status==='Hủy đơn' || row.status==='Khách hủy đơn') { %>
-                  <p style="color: rgb(255, 0, 0);">
-                    <%= row.status %>
-                  </p>
-                  <% } %>
+            <% if (row.soluongnhap <= 0) { %>
+              <p style="color: red;">Hết hàng</p>
+            <% } else { %>
+              Còn hàng
+            <% } %>
+
           </td>
           <td>
             <div class="d-flex">
@@ -116,47 +109,6 @@
               <a href="/product/edit/<%=row._id%>">
                 <button type="button" class="btn btn-warning" style="margin-right: 10px;">Sửa</button>
               </a>
-
-              <% if (row.status==='Có đơn' || row.status==='Đang giao hàng' ) { %>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                  data-bs-target="#exampleModal<%= row._id %>">
-                  Xác nhận
-                </button>
-                <% } else if (row.status==='Đã giao hàng' ) { %>
-                  <% } else if (row.status==='Hủy đơn' ) { %>
-                    <% } %>
-
-                      <div class="modal fade" id="exampleModal<%= row._id %>" tabindex="-1"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true"
-                        data-bs-target="#exampleModal<%= row._id %>">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Xác nhận đơn</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                            </div>
-                            <% if (row.status==='Có đơn' ) { %>
-
-                              <div class="modal-body">
-                                Bạn có muốn xác nhận đơn hàng 
-                              </div>
-
-                              <div class="modal-footer">
-                                <a class="btn btn-success" href="/product/duyetproduct/<%= row._id%>">Xác nhận</a>
-                              </div>
-                              <% }else if(row.status==='Đang giao hàng' ) { %>
-                                <div class="modal-body">
-                                  Bạn có muốn xác nhận giao hàng thành công
-                                </div>
-
-                                <div class="modal-footer">
-                                  <a class="btn btn-success" href="/product/duyetproduct/<%= row._id%>">Xác nhận</a>
-                                </div>
-                                <% } %>
-                          </div>
-                        </div>
-                      </div>
 
             </div>
           </td>

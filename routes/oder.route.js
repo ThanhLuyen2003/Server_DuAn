@@ -7,4 +7,6 @@ router.get('/',check_login.yeu_cau_dang_nhap, oderController.list);
 
 router.get('/duyetoders/:ids', check_login.yeu_cau_dang_nhap, oderController.duyetSP);
 
+router.get('/huyoders/:ids', check_login.yeu_cau_dang_nhap, oderController.huySP);
+
 module.exports = router;

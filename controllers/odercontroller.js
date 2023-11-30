@@ -33,7 +33,7 @@ exports.duyetSP = async (req,res,next) =>{
     let billStatus = objBill.status;
   
     if (billStatus === 'Có đơn') {
-      objBill.status = 'Đang giao hàng';
+      objBill.status = 'Đang giao hàng' ;
     }
   
     if (billStatus === 'Đang giao hàng') {
@@ -51,4 +51,36 @@ exports.duyetSP = async (req,res,next) =>{
     }
   
     res.redirect('/oder');
+}
+exports.huySP = async (req, res, next) =>{
+  console.log('Xác nhận đơn hàng');
+  let ids = req.params.ids;
+
+  console.log(ids + 'aaaaaaa');
+  let objBill = await myMD.OrderModel.findById(ids);
+
+  console.log('BEFORE' + objBill.status);
+  let billStatus = objBill.status;
+
+  if (billStatus === 'Có đơn') {
+    objBill.status = 'Hủy đơn' ;
+  }
+
+  if (billStatus === 'Đang giao hàng') {
+    objBill.status = 'Hủy đơn';
+  }
+
+  objBill._id = ids;
+
+  try {
+    console.log('AFTER' + objBill.status);
+    await myMD.OrderModel.findByIdAndUpdate({ _id: ids }, objBill);
+    console.log('AFTER UPDATE' + objBill.status);
+  } catch (error) {
+    console.log(error);
+  }
+
+
+  res.redirect('/oder');
+
 }

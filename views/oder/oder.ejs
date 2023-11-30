@@ -1,7 +1,7 @@
 <%- include('../inc/header.ejs') %>
 
-  <div class="container">
-    <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Danh sách đơn hàng
+<div class="container">
+    <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Danh sách đơn hàng</h1>
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <form class="d-flex" role="search"> 
@@ -85,16 +85,20 @@
             <%= row.time %>
           </td>
           <td>
-            <% if (row.status==='Có đơn' || row.status==='Đang giao hàng' ) { %>
-              <p style="color: rgb(187, 181, 0);">
+            <% if (row.status==='Có đơn') { %>
+              <p style="color: #ffc107; font-weight: bold;">
                 <%= row.status %>
               </p>
+              <% } else if (row.status==='Đang giao hàng' ) { %>
+                <p style="color: #0000ff; font-weight: bold;">
+                  <%= row.status %>
+                </p>
               <% } else if (row.status==='Đã giao hàng' ) { %>
-                <p style="color: rgb(0, 255, 68);">
+                <p style="color: rgb(9, 0, 128); font-weight: bold;">
                   <%= row.status %>
                 </p>
                 <% } else if (row.status==='Hủy đơn' || row.status==='Khách hủy đơn') { %>
-                  <p style="color: rgb(255, 0, 0);">
+                  <p style="color: red; font-weight: bold;">
                     <%= row.status %>
                   </p>
                   <% } %>
@@ -107,6 +111,7 @@
                   data-bs-target="#exampleModal<%= row._id %>">
                   Xác nhận
                 </button>
+
                 <% } else if (row.status==='Đã giao hàng' ) { %>
                   <% } else if (row.status==='Hủy đơn' ) { %>
                     <% } %>
@@ -118,8 +123,7 @@
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title" id="exampleModalLabel">Xác nhận đơn</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"aria-label="Close"></button>
                             </div>
                             <% if (row.status==='Có đơn' ) { %>
 
@@ -128,15 +132,18 @@
                               </div>
 
                               <div class="modal-footer">
-                                <a class="btn btn-success" href="/oder/duyetoders/<%= row._id%>">Xác nhận</a>
+                                    <a class="btn btn-danger" href="/oder/huyoders/<%= row._id%>">Hủy đơn</a>
+                                    <a class="btn btn-success" href="/oder/duyetoders/<%= row._id%>">Xác nhận</a>
                               </div>
+
                               <% }else if(row.status==='Đang giao hàng' ) { %>
                                 <div class="modal-body">
                                   Bạn có muốn xác nhận giao hàng thành công
                                 </div>
 
                                 <div class="modal-footer">
-                                  <a class="btn btn-success" href="/oder/duyetoders/<%= row._id%>">Xác nhận</a>
+                                    <a class="btn btn-danger" href="/oder/huyoders/<%= row._id%>">Hủy đơn</a>
+                                    <a class="btn btn-success" href="/oder/duyetoders/<%= row._id%>">Xác nhận</a>
                                 </div>
                                 <% } %>
                           </div>
