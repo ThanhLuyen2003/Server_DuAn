@@ -49,6 +49,7 @@
         <th style="width: 120px;">Người đặt</th>
         <th style="width: 120px;"></th>
       </tr>
+      
       <% listBill.forEach( ( row )=>{ %>
         <tr>
           <td>
@@ -94,7 +95,7 @@
           </td>
           <td>
             <div>
-              <% if (row.status==='Sắp tới' || row.status==='Khách đang cắt' ||row.status==='Khách đến muộn' ) { %>
+              <% if (row.status==='Sắp tới' || row.status==='Khách đang cắt' || row.status==='Khách đến muộn' ) { %>
                 <button type="button" class="btn btn-success" data-bs-toggle="modal"
                   data-bs-target="#exampleModal<%= row._id %>">
                   Xác nhận
@@ -136,6 +137,7 @@
                           </div>
                         </div>
                       </div>
+            </div>
           </td>
         </tr>
 

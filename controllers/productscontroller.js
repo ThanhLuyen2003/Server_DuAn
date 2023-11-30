@@ -1,4 +1,5 @@
 var myMD = require('../models/model');
+var productModel = require('../models/model');
 var fs = require ('fs');
 const mongoose = require('mongoose');
 exports.list = async (req,res,next) =>{
@@ -78,12 +79,13 @@ exports.editPro = async(req,res,next) => {
         objP.describe = req.body.describe;
         objP.ingredient = req.body.ingredient;
         objP.type = req.body.type;
+        objP.status = req.body.status;
         objP._id = idp;
         try{
             await myMD.productModel.findByIdAndUpdate({_id: idp}, objP );
-            msg = 'đã sửa';
+            msg = ' Đã sửa';
         } catch(error){
-            msg = 'Error'+ error.message();
+            msg = ' Error'+ error.message();
             console.log(error);
         }
     }
@@ -97,6 +99,37 @@ exports.deletePro =async (req,res,next) =>{
     } catch (error) {
         
     }
+    res.redirect('/product');
+}
+
+exports.duyetSP = async (req,res,next) =>{
+    console.log('Xác nhận đơn hàng');
+    let ids = req.params.ids;
+
+    console.log(ids + 'aaaaaaa');
+    let objBill = await myMD.productModel.findById(ids);
+  
+    console.log('BEFORE' + objBill.status);
+    let billStatus = objBill.status;
+  
+    if (billStatus === 'Sắp tới') {
+      objBill.status = 'Đang giao hàng';
+    }
+  
+    if (billStatus === 'Đang giao hàng') {
+      objBill.status = 'Đã giao hàng';
+    }
+  
+    objBill._id = ids;
+  
+    try {
+      console.log('AFTER' + objBill.status);
+      await myMD.productModel.findByIdAndUpdate({ _id: ids }, objBill);
+      console.log('AFTER UPDATE' + objBill.status);
+    } catch (error) {
+      console.log(error);
+    }
+  
     res.redirect('/product');
 }
 

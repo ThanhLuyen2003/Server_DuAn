@@ -7,6 +7,8 @@ var productController = require('../controllers/productscontroller');
 
 router.get('/',check_login.yeu_cau_dang_nhap, productController.list);
 
+router.get('/duyetproduct/:ids', check_login.yeu_cau_dang_nhap,productController.duyetSP);
+
 router.get('/add',check_login.yeu_cau_dang_nhap, productController.addPro);
 router.post('/add',check_login.yeu_cau_dang_nhap, uploader.single('file_anh'), productController.addPro);
 

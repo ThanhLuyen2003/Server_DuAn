@@ -1,7 +1,5 @@
 <%- include('../inc/header.ejs') %>
 
-
-
   <div class="container">
     <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Danh sách sản phẩm</h1>
     <nav class="navbar navbar-expand-lg">
@@ -12,12 +10,27 @@
             <a type="button" class="btn btn-warning" style="width: 160px; margin-right: 30px;"
               href="http://localhost:3000/product/add">+ Thêm sản phẩm
             </a>
+            <div class="dropdown">
+              <button style="margin-right: 30px;" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Lọc danh mục
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item category-filter" href="#" data-category="Kem đánh răng">Kem danh rang</a></li>
+                <li><a class="dropdown-item category-filter" href="#" data-category="Chăm sóc da">Cham soc da</a></li>
+                <li><a class="dropdown-item category-filter" href="#" data-category="Chăm sóc cơ thể">Cham soc co the</a></li>
+                <li><a class="dropdown-item category-filter" href="#" data-category="Combo">Combo</a></li>
+                <li><a class="dropdown-item category-filter" href="#" data-category="Nước hoa">Nuoc hoa</a></li>
+                <li><a class="dropdown-item category-filter" href="#" data-category="Sáp">Sap</a></li>
+              </ul>
+            </div>
 
             <div class="dropdown">
-              <button style="margin-right: 700px;" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+              <button style="margin-right: 20px;" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Sắp xếp theo
               </button>
+              
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="/product/sxtheotensp">Tên</a></li>
                 <li><a class="dropdown-item" href="/product/sxtheogiasp">Giá</a></li>
@@ -28,46 +41,9 @@
 
           <!-- thanh tìm kiếm -->
           <form class="form-inline my-2 my-lg-0" action="/search" method="GET">
-            <input class="form-control mr-sm-2" type="text" name="query" id="searchInput" placeholder="Tìm kiếm..." aria-label="Search">
-            <button class="btn btn-warning my-2 my-sm-0" type="submit">Tìm</button>
+            <button style="height: 38px;" class="btn btn-warning my-2 my-sm-0" type="submit">Tìm</button>
+            <input style="height: 38px; width: 700px;" class="form-control mr-sm-2" type="text" name="query" id="searchInput" placeholder="Tìm kiếm..." aria-label="Search">
           </form>
-
-          
-
-          <script>
-            const searchInput = document.getElementById('searchInput');
-            const searchResultsTableBody = document.getElementById('searchResultsTableBody');
-      
-            searchInput.addEventListener('input', () => {
-              const query = searchInput.value;
-      
-              // Gửi yêu cầu tìm kiếm bằng AJAX
-              const xhr = new XMLHttpRequest();
-              xhr.open('GET', `/search?query=${query}`, true);
-              xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                  const searchResults = JSON.parse(xhr.responseText);
-      
-                  // Xóa nội dung hiện tại trong bảng
-                  searchResultsTableBody.innerHTML = '';
-      
-                  // Hiển thị kết quả tìm kiếm trong bảng
-                  searchResults.forEach(result => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                      <td>${result.id}</td>
-                      <td>${result.name}</td>
-                      <td>${result.age}</td>
-                    `;
-                    searchResultsTableBody.appendChild(row);
-                  });
-                }
-              };
-              xhr.send();
-            });
-          </script>
-          <!--  code thanh tìm kiếm bên trên -->
-
 
         </form>
         
@@ -80,7 +56,7 @@
     <table id="productTable" class="table table-bordered table-striped">
       <tr class="text-sm-center">
         <th style="width: 30px;"> Số lượng nhập</th>
-        <th style="width: 70px;">Ảnh</th>
+        <th>Ảnh</th>
         <th style="width: 300px;">Tên sản phẩm</th>
         <th>Nhãn hiệu</th>
         <th>Giá nhập</th>
@@ -95,7 +71,7 @@
       <% listProducts.forEach( ( row )=>{ %>
         <tr>
           <td>
-            <%= row.soluongnhap %>
+            <%= row.soluongnhap < 0 ? 0 : row.soluongnhap %>
           </td>
           <td> <img src="<%=row.avatar %>" alt="" style="width: 60px; height: 60px; margin-left: 25px;"></td>
           <td>
@@ -119,26 +95,111 @@
           <td>
             <%= row.type %>
           </td>
-          <td></td>
+          <td>
+            <% if (row.status==='Sắp tới' || row.status==='Đang giao hàng' ) { %>
+              <p style="color: rgb(187, 181, 0);">
+                <%= row.status %>
+              </p>
+              <% } else if (row.status==='Đã giao hàng' ) { %>
+                <p style="color: rgb(0, 255, 68);">
+                  <%= row.status %>
+                </p>
+                <% } else if (row.status==='Đã hủy đơn' || row.status==='Khách hủy đơn') { %>
+                  <p style="color: rgb(255, 0, 0);">
+                    <%= row.status %>
+                  </p>
+                  <% } %>
+          </td>
           <td>
             <div class="d-flex">
+
               <a href="/product/edit/<%=row._id%>">
                 <button type="button" class="btn btn-warning" style="margin-right: 10px;">Sửa</button>
               </a>
 
+              <% if (row.status==='Sắp tới' || row.status==='Đang giao hàng' ) { %>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal<%= row._id %>">
+                  Xác nhận
+                </button>
+                <% } else if (row.status==='Đã giao hàng' ) { %>
+                  <% } else if (row.status==='Đã hủy đơn' ) { %>
+                    <% } %>
+
+                      <div class="modal fade" id="exampleModal<%= row._id %>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true"
+                        data-bs-target="#exampleModal<%= row._id %>">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Xác nhận đơn</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                            </div>
+                            <% if (row.status==='Sắp tới' ) { %>
+
+                              <div class="modal-body">
+                                Bạn có muốn xác nhận đơn hàng 
+                              </div>
+
+                              <div class="modal-footer">
+                                <a class="btn btn-success" href="/product/duyetproduct/<%= row._id%>">Xác nhận</a>
+                              </div>
+                              <% }else if(row.status==='Đang giao hàng' ) { %>
+                                <div class="modal-body">
+                                  Bạn có muốn xác nhận giao hàng thành công
+                                </div>
+
+                                <div class="modal-footer">
+                                  <a class="btn btn-success" href="/product/duyetproduct/<%= row._id%>">Xác nhận</a>
+                                </div>
+                                <% } %>
+                          </div>
+                        </div>
+                      </div>
+
             </div>
           </td>
+
         </tr>
 
 
-        <% } ) %>
+      <% }) %>
 
-
-
-
+        
     </table>
-  </div>
+  </div> 
 
+
+<script src="/controllers/productcontroller.js"></script>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const categoryFilters = document.querySelectorAll('.category-filter');
+
+    categoryFilters.forEach(function(filter) {
+      filter.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const category = this.getAttribute('data-category');
+
+        // Lặp qua từng dòng trong bảng và ẩn/cắt bớt dòng không khớp với danh mục được chọn
+        const tableRows = document.querySelectorAll('#your-table-id tbody tr');
+        tableRows.forEach(function(row) {
+          const categoryCell = row.querySelector('td:nth-child(9)'); // Thay đổi chỉ mục (index) tùy thuộc vào vị trí của cột danh mục trong bảng
+
+          if (categoryCell.innerText === category) {
+            row.style.display = ''; // Hiển thị dòng nếu danh mục khớp
+          } else {
+            row.style.display = 'none'; // Ẩn dòng nếu danh mục không khớp
+          }
+        });
+      });
+    });
+  });
+</script>
 
   <div style="margin-left: 850px; margin-top: 50px;">
     <nav aria-label="Page navigation example">
@@ -153,18 +214,5 @@
     </nav>
   </div>
 
-  <script>
-    const productTable = document.getElementById('productTable');
-    const rows = productTable.getElementsByTagName('tr');
-  
-    for (let i = 1; i < rows.length; i++) {
-      const row = rows[i];
-      const quantityInput = row.cells[0].textContent.trim();
-  
-      const statusCell = row.cells[row.cells.length - 2];
-      const status = quantityInput === '0' || quantityInput === '' ? 'Không còn hàng' : 'Còn hàng';
-      statusCell.textContent = status;
-    }
-  </script>
 
 <%- include('../inc/footer.ejs') %>
