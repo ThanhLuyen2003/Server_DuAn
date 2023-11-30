@@ -56,6 +56,7 @@ exports.addPro = async(req,res,next) => {
     }
     res.render('product/add',{msg:msg, listProducts: listProducts});
 }
+
 exports.editPro = async(req,res,next) => {
     let msg ='';
      var listProducts = await myMD.productModel.find();
@@ -102,37 +103,6 @@ exports.deletePro =async (req,res,next) =>{
     }
     res.redirect('/product');
 }
-
-// exports.duyetSP = async (req,res,next) =>{
-//     console.log('Xác nhận đơn hàng');
-//     let ids = req.params.ids;
-
-//     console.log(ids + 'aaaaaaa');
-//     let objBill = await myMD.productModel.findById(ids);
-  
-//     console.log('BEFORE' + objBill.status);
-//     let billStatus = objBill.status;
-  
-//     if (billStatus === 'Chờ lấy hàng') {
-//       objBill.status = 'Chờ giao hàng';
-//     }
-  
-//     if (billStatus === 'Chờ giao hàng') {
-//       objBill.status = 'Đã giao';
-//     }
-  
-//     objBill._id = ids;
-  
-//     try {
-//       console.log('AFTER' + objBill.status);
-//       await myMD.productModel.findByIdAndUpdate({ _id: ids }, objBill);
-//       console.log('AFTER UPDATE' + objBill.status);
-//     } catch (error) {
-//       console.log(error);
-//     }
-  
-//     res.redirect('/product');
-// }
 
 exports.sxTheoTenSP = async (req,res,next) =>{
     const page = parseInt(req.query.page) || 1;

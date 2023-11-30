@@ -1,0 +1,103 @@
+<%- include('../inc/header.ejs') %>
+  <div class="container">
+    <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Danh sách hàng nhập về</h1>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <form class="d-flex" role="search">
+          <div class="d-flex justify-content-around align-items-center mb-9">
+            <a type="button" class="btn btn-warning" href="http://localhost:3000/import/add"
+              style="width: auto; margin-right: 20px;">+ Thêm sản phẩm cần nhập
+            </a>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Sắp xếp theo
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="">Tên</a></li>
+                <li><a class="dropdown-item" href="">Giá</a></li>
+              </ul>
+            </div>
+      
+          </div>
+        </form>
+      </div>
+    </nav>
+  </div>
+
+  <div class="container">
+    <table class="table table-bordered table-striped">
+      <tr>
+        <th>Tên sản phẩm</th>
+        <th>Ảnh</th>
+        <th>Giá</th>
+        <th>Số lượng nhập</th>
+        <th>Tổng giá</th>
+        <th></th>
+      </tr>
+      <% listimport.forEach( ( row )=>{ %>
+        <tr>
+          <td>
+            <%= row.name %>
+          </td>
+          <td> <img src="<%=row.img %>" alt="" style="width: 60px; height: 60px;margin-left: 10px;"></td>
+          <td>
+            <%= row.price %>
+          </td>
+          <td>
+            <%= row.soluongnhap %>
+          </td>
+          <td>
+            <% 
+              const price = row.price;
+              const quantity = row.soluongnhap;
+              const result = price * quantity;
+            %>
+            <%= result %> 
+          </td>
+          <td>
+            <div class="d-flex">
+              <a href="/import/edit/<%=row._id%>">
+                <button type="button" class="btn btn-warning" style="margin-right: 10px;">Sửa</button>
+              </a>
+
+            </div>
+          </td>
+        </tr>
+        <% } ); %>
+        <% 
+        let total = 0;
+        listimport.forEach((row) => {
+          const price = row.price;
+          const quantity = row.soluongnhap;
+          const result = price * quantity;
+          total += result;
+        });
+      %>
+      
+      <p style="font-weight: bold;">Tổng tiền nhập hàng: <%= total %>đ</p>
+        
+    </table>
+  </div>
+
+  
+
+  <div style="margin-left: 850px; margin-top: 50px;">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link"
+            href="http://localhost:3000/import?currentPage-1&limit=5">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/import=1&limit=5">1</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/import?page=2&limit=5">2</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/import?page=3&limit=5">3</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/import?page=4&limit=5">4</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/import?currentPage+1&limit=5">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+
+  
+
+  <%- include('../inc/footer.ejs') %>

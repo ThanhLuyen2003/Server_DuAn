@@ -1,0 +1,30 @@
+<%- include('../inc/header.ejs') %>
+    <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Sửa Sản Phẩm Cần Nhập</h1>
+
+    <div class="container">
+        <form action="" method="post" enctype="multipart/form-data">
+            <form class="px-4 py-3">
+
+                <label class="form-label">Số lượng nhập</label>
+                <input type="text" name="soluongnhap" placeholder="Số lượng nhập" class="form-control" value="<%=objP.soluongnhap %>"><br>
+
+                <div class="mb-3">
+                    <label class="form-label">Hình ảnh</label>
+                    <label for="formFileMultiple" class="form-label"></label>
+                    <input class="form-control" type="file" name="img" id="formFileMultiple"
+                        value="<%=objP.img %>" multiple>
+                </div>
+
+                <label class="form-label">Tên sản phẩm</label>
+                <input type="text" name="name" placeholder="Tên sản phẩm" class="form-control"
+                    value="<%=objP.name %>"><br>
+
+                <label class="form-label">Giá bán</label>
+                <input type="text" name="price" placeholder="Giá" class="form-control" value="<%=objP.price %>"><br>
+                
+                <button class="btn btn-warning" type="submit">Lưu</button>
+                <%= msg %>
+            </form>
+        </form>
+    </div>
+<%- include('../inc/footer.ejs') %>

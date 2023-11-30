@@ -158,6 +158,22 @@ const orderModel = new db.mongoose.Schema({
 
 let OrderModel = db.mongoose.model('orderModel', orderModel)
 
+
+// model hàng nhập về
+const importModel = new db.mongoose.Schema({
+    soluongnhap: { type: String, required: true},
+    name: { type: String, required: true },
+    price: { type: String, required: true },
+    img: { type: String, required: true },
+
+},
+    {
+        collection: 'Import'
+    })
+
+let ImportModel = db.mongoose.model('importModel', importModel)
+
+
 // model nhân viên
 
 const staffSchema = new db.mongoose.Schema({
@@ -176,4 +192,4 @@ let StaffModel = db.mongoose.model('staff', staffSchema);
 
 
 
-module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel, CommentModel, BillDetailModel, CartModel, AdminModel, OrderModel, StaffModel };
+module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel, CommentModel, BillDetailModel, CartModel, AdminModel, OrderModel, StaffModel, ImportModel };

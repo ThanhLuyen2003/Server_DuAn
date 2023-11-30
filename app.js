@@ -13,6 +13,8 @@ var oderRouter = require('./routes/oder.route');
 var productRouter = require('./routes/products.route');
 var serviceRouter = require('./routes/dichvu.route');
 var settingRouter = require('./routes/settings.route');
+var userRouter = require('./routes/user.route');
+var importRouter = require('./routes/import.route');
 var apiSalonRouter = require('./routes/salon.apiRoute');
 var apiTimeRouter = require('./routes/time.apiRoute');
 var apiUsersRouter = require('./routes/users.apiRoute');
@@ -45,6 +47,8 @@ app.use('/salon', salonRouter);
 app.use('/oder', oderRouter);
 app.use('/product', productRouter);
 app.use('/settings', settingRouter);
+app.use('/user', userRouter);
+app.use('/import', importRouter);
 app.use('/statistic', statisticRouter)
 app.use('/apisalon', apiSalonRouter);
 app.use('/apitime', apiTimeRouter);
