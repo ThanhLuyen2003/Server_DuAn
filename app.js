@@ -9,6 +9,7 @@ var homeRouter = require('./routes/home.route');
 var homepageRouter = require('./routes/homepage.route');
 var statisticRouter = require('./routes/statistic.route');
 var salonRouter = require('./routes/salon.route');
+var oderRouter = require('./routes/oder.route');
 var productRouter = require('./routes/products.route');
 var serviceRouter = require('./routes/dichvu.route');
 var settingRouter = require('./routes/settings.route');
@@ -41,6 +42,7 @@ app.use('/', homepageRouter);
 app.use('/home', homeRouter);
 app.use('/dichvu', serviceRouter);
 app.use('/salon', salonRouter);
+app.use('/oder', oderRouter);
 app.use('/product', productRouter);
 app.use('/settings', settingRouter);
 app.use('/statistic', statisticRouter)

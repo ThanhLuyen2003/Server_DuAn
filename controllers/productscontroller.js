@@ -2,6 +2,7 @@ var myMD = require('../models/model');
 var productModel = require('../models/model');
 var fs = require ('fs');
 const mongoose = require('mongoose');
+
 exports.list = async (req,res,next) =>{
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 5;
@@ -102,36 +103,36 @@ exports.deletePro =async (req,res,next) =>{
     res.redirect('/product');
 }
 
-exports.duyetSP = async (req,res,next) =>{
-    console.log('Xác nhận đơn hàng');
-    let ids = req.params.ids;
+// exports.duyetSP = async (req,res,next) =>{
+//     console.log('Xác nhận đơn hàng');
+//     let ids = req.params.ids;
 
-    console.log(ids + 'aaaaaaa');
-    let objBill = await myMD.productModel.findById(ids);
+//     console.log(ids + 'aaaaaaa');
+//     let objBill = await myMD.productModel.findById(ids);
   
-    console.log('BEFORE' + objBill.status);
-    let billStatus = objBill.status;
+//     console.log('BEFORE' + objBill.status);
+//     let billStatus = objBill.status;
   
-    if (billStatus === 'Sắp tới') {
-      objBill.status = 'Đang giao hàng';
-    }
+//     if (billStatus === 'Chờ lấy hàng') {
+//       objBill.status = 'Chờ giao hàng';
+//     }
   
-    if (billStatus === 'Đang giao hàng') {
-      objBill.status = 'Đã giao hàng';
-    }
+//     if (billStatus === 'Chờ giao hàng') {
+//       objBill.status = 'Đã giao';
+//     }
   
-    objBill._id = ids;
+//     objBill._id = ids;
   
-    try {
-      console.log('AFTER' + objBill.status);
-      await myMD.productModel.findByIdAndUpdate({ _id: ids }, objBill);
-      console.log('AFTER UPDATE' + objBill.status);
-    } catch (error) {
-      console.log(error);
-    }
+//     try {
+//       console.log('AFTER' + objBill.status);
+//       await myMD.productModel.findByIdAndUpdate({ _id: ids }, objBill);
+//       console.log('AFTER UPDATE' + objBill.status);
+//     } catch (error) {
+//       console.log(error);
+//     }
   
-    res.redirect('/product');
-}
+//     res.redirect('/product');
+// }
 
 exports.sxTheoTenSP = async (req,res,next) =>{
     const page = parseInt(req.query.page) || 1;
