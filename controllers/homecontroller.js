@@ -3,13 +3,17 @@ var fs = require('fs');
 const moment = require('moment');
 
 exports.home = async (req, res, next) => {
+  let loc = null;
+    if(typeof( req.query.phone) !='undefined'){
+        loc = {phone: req.query.phone};
+    }
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 5;
   const skip = (page - 1) * limit;
 
   try {
     // Lấy danh sách lịch đặt và sắp xếp theo ngày và giờ
-    let listBill = await billDB.find().sort({ day: 1, hour: 1 }).skip(skip).limit(limit).populate('idUser');
+    let listBill = await billDB.find(loc).sort({ day: 1, hour: 1 }).skip(skip).limit(limit).populate('idUser');
 
     // Lấy ngày hiện tại
     const currentDate = moment().format('YYYY-MM-DD');
