@@ -6,6 +6,7 @@ var check_login = require('../middlewares/check_login');
 var productController = require('../controllers/productscontroller');
 
 router.get('/',check_login.yeu_cau_dang_nhap, productController.list);
+// router.post('/',check_login.yeu_cau_dang_nhap, productController.list);
 
 router.get('/add',check_login.yeu_cau_dang_nhap, productController.addPro);
 router.post('/add',check_login.yeu_cau_dang_nhap, uploader.single('file_anh'), productController.addPro);
