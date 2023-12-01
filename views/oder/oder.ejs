@@ -57,7 +57,7 @@
         <th>Lời nhắn</th>
         <th>Tên khách hàng</th>
         <th>Giá</th>
-        <th>Mô tả sản phẩm</th>
+        <th>Mô tả đơn hàng</th>
         <th>Thời gian đặt</th>
         <th>Trạng thái</th>
         <th></th>
@@ -80,10 +80,22 @@
           <td>
             <%= row.price %>
           </td>
-          <td> <%= row.products %></td>
+
+
+          <td>
+            <% row.products.forEach((product) => { %>
+              <p>Tên SP: <%= product.name %></p>
+              <p>Giá: <%= product.price %></p>
+              <p>Số lượng mua: <%= product.quantity %></p>
+              <p>idPro: <%= product.idPro %></p>
+            <% }) %>
+          </td>
+
+
           <td>
             <%= row.time %>
           </td>
+          
           <td>
             <% if (row.status==='Có đơn') { %>
               <p style="color: #ffc107; font-weight: bold;">
