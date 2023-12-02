@@ -11,28 +11,43 @@ exports.list = async (req, res, next) => {
     const sortOrder = req.query.sortOrder || 'asc';
 
     var dieu_kien_loc = null;
-    if(typeof(req.query.productsp222)!= 'undefined'){
+    if(typeof(req.query.productsp222) !== 'undefined'){
         dieu_kien_loc = { name: { $regex: new RegExp(req.query.productsp222, 'i') } };
     }
     console.log("Search Parameter:", req.query.productsp222);
-console.log("Filter Condition:", dieu_kien_loc);
+    console.log("Filter Condition:", dieu_kien_loc);
+
     try {
         const sortOptions = {};
         sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+
         var listProducts = await myMD.productModel.find(dieu_kien_loc).skip(skip).limit(limit).sort(sortOptions);
         var totalProducts = await myMD.productModel.countDocuments();
 
+        // if (listProducts.length === 0) {
+        //     // Thông báo khi không tìm thấy dữ liệu
+        //     return res.render('product/list', {
+        //         message: 'Không tìm thấy dữ liệu.',
+        //         currentPage: page,
+        //         totalPages: Math.ceil(totalProducts / limit),
+        //         totalProducts
+        //     });
+        // }
+
     } catch (err) {
         console.error('Error retrieving users:', err);
-        res.status(500).json({ error: 'Internal server error' });
+        return res.status(500).json({ error: 'Internal server error' });
     }
+
+    // Hiển thị dữ liệu nếu có
     res.render('product/list', {
         listProducts: listProducts,
-         currentPage: page,
+        currentPage: page,
         totalPages: Math.ceil(totalProducts / limit),
         totalProducts
     });
 }
+
 
 
 

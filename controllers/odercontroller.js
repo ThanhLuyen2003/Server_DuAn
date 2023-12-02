@@ -7,10 +7,15 @@ exports.list = async (req,res,next) =>{
     const skip = (page - 1) * limit;
     const sortBy = req.query.sortBy || 'nameU';
     const sortOrder = req.query.sortOrder || 'asc';
+
+    var dieu_kien_loc = null;
+    if(typeof(req.query.billSearch) !== 'undefined'){
+        dieu_kien_loc = { nameU: { $regex: new RegExp(req.query.billSearch, 'i') } };
+    }
     try {
         const sortOptions = {};
     sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
-        var listOders = await myMD.OrderModel.find().skip(skip).limit(limit).sort(sortOptions);
+        var listOders = await myMD.OrderModel.find(dieu_kien_loc).skip(skip).limit(limit).sort(sortOptions);
         var totalOders = await myMD.OrderModel.countDocuments();
     
       } catch (err) {
