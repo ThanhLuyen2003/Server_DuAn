@@ -47,6 +47,7 @@
         <th>Chi phí</th>
         <th style="width: 95px;">Trạng thái</th>
         <th style="width: 120px;">Người đặt</th>
+        <th>Ghi chú</th>
         <th style="width: 120px;"></th>
       </tr>
       
@@ -83,15 +84,21 @@
                 <p style="color: rgb(0, 255, 68);">
                   <%= row.status %>
                 </p>
-                <% } else if (row.status==='Đã hủy lịch' || row.status==='Khách đến muộn') { %>
+                <% } else if (row.status==='Đã hủy lịch') { %>
                   <p style="color: rgb(255, 0, 0);">
                     <%= row.status %>
                   </p>
-                  <% } %>
+                  <% } else if (row.status==='Khách đến muộn') { %>
+                    <p style="color: rgb(86, 39, 255);">
+                      <%= row.status %>
+                    </p>
+                    <% } %>
           </td>
-
           <td>
             <%= row.idUser.name %>
+          </td>
+          <td>
+            <%= row.note %>
           </td>
           <td>
             <div>
@@ -115,12 +122,10 @@
                                 aria-label="Close"></button>
                             </div>
                             <% if (row.status==='Sắp tới' ) { %>
-
                               <div class="modal-body">
                                 Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> - <%=
                                       row.nameSalon %> vào sử dụng dịch vụ không
                               </div>
-
                               <div class="modal-footer">
                                 <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác nhận</a>
                               </div>
@@ -129,7 +134,14 @@
                                   Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> - <%=
                                         row.nameSalon %> Hoàn thành dịch vụ.
                                 </div>
-
+                                <div class="modal-footer">
+                                  <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác nhận</a>
+                                </div>
+                                <% }else if(row.status==='Khách đến muộn' ) { %>
+                                  <div class="modal-body">
+                                    Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> - <%=
+                                          row.nameSalon %> Vào sử dụng dịch vụ
+                                  </div>
                                 <div class="modal-footer">
                                   <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác nhận</a>
                                 </div>
