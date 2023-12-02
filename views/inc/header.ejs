@@ -7,8 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv=“refresh” content=“30”>
   <title>Poly Barber</title>
-  <link rel="shortcut icon" type="image/png" href="../../public/uploads/logo.png"/>
-  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <link rel="shortcut icon" type="image/png" href="../../public/uploads/logo.png" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
     integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -53,6 +54,19 @@
       padding: 8px 15px;
     }
 
+    /* Info Cards */
+    .info-card {
+      padding-bottom: 10px;
+    }
+
+    .info-card h6 {
+      font-size: 28px;
+      color: #012970;
+      font-weight: 700;
+      margin: 0;
+      padding: 0;
+    }
+
     .card-icon {
       font-size: 32px;
       line-height: 0;
@@ -77,51 +91,127 @@
       background: #ffecdf;
     }
 
-    .dropdown-menu {
-      border-radius: 4px;
-      padding: 10px 0;
-      animation-name: dropdown-animate;
-      animation-duration: 0.2s;
-      animation-fill-mode: both;
-      border: 0;
-      box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
-    }
-
-    .dropdown-menu .dropdown-header,
-    .dropdown-menu .dropdown-footer {
-      text-align: center;
-      font-size: 15px;
-      padding: 10px 25px;
-    }
-
-    .dropdown-menu .dropdown-footer a {
-      color: #444444;
-      text-decoration: underline;
-    }
-
-    .dropdown-menu .dropdown-footer a:hover {
-      text-decoration: none;
-    }
-
-    .dropdown-menu .dropdown-divider {
-      color: #a5c5fe;
-      margin: 0;
-    }
-
-    .dropdown-menu .dropdown-item {
+    /* Activity */
+    .activity {
       font-size: 14px;
-      padding: 10px 15px;
+    }
+
+    .activity .activity-item .activite-label {
+      color: #888;
+      position: relative;
+      flex-shrink: 0;
+      flex-grow: 0;
+      min-width: 64px;
+    }
+
+    .activity .activity-item .activite-label::before {
+      content: "";
+      position: absolute;
+      right: -11px;
+      width: 4px;
+      top: 0;
+      bottom: 0;
+      background-color: #eceefe;
+    }
+
+    .activity .activity-item .activity-badge {
+      margin-top: 3px;
+      z-index: 1;
+      font-size: 11px;
+      line-height: 0;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 3px solid #fff;
+      flex-grow: 0;
+    }
+
+    .activity .activity-item .activity-content {
+      padding-left: 10px;
+      padding-bottom: 20px;
+    }
+
+    .activity .activity-item:first-child .activite-label::before {
+      top: 5px;
+    }
+
+    .activity .activity-item:last-child .activity-content {
+      padding-bottom: 0;
+    }
+
+    /* News & Updates */
+    .news .post-item+.post-item {
+      margin-top: 15px;
+    }
+
+    .news img {
+      width: 80px;
+      float: left;
+      border-radius: 5px;
+    }
+
+    .news h4 {
+      font-size: 15px;
+      margin-left: 95px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .news h4 a {
+      color: #012970;
       transition: 0.3s;
     }
 
-    .dropdown-menu .dropdown-item i {
-      margin-right: 10px;
-      font-size: 18px;
-      line-height: 0;
+    .news h4 a:hover {
+      color: #4154f1;
     }
 
-    .dropdown-menu .dropdown-item:hover {
-      background-color: #f6f9ff;
+    .news p {
+      font-size: 14px;
+      color: #777777;
+      margin-left: 95px;
+    }
+
+    /* Recent Sales */
+    .recent-sales {
+      font-size: 14px;
+    }
+
+    .recent-sales .table thead {
+      background: #f6f6fe;
+    }
+
+    .recent-sales .table thead th {
+      border: 0;
+    }
+
+    .recent-sales .dataTable-top {
+      padding: 0 0 10px 0;
+    }
+
+    .recent-sales .dataTable-bottom {
+      padding: 10px 0 0 0;
+    }
+
+    /* Top Selling */
+    .top-selling {
+      font-size: 14px;
+    }
+
+    .top-selling .table thead {
+      background: #f6f6fe;
+    }
+
+    .top-selling .table thead th {
+      border: 0;
+    }
+
+    .top-selling .table tbody td {
+      vertical-align: middle;
+    }
+
+    .top-selling img {
+      border-radius: 5px;
+      max-width: 60px;
     }
 
     @media (min-width: 768px) {
@@ -218,8 +308,10 @@
               THỐNG KÊ
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="http://localhost:3000/statistic/thongkebanhang">Thống kê bán hàng</a></li>
-              <li><a class="dropdown-item" href="http://localhost:3000/statistic/thongketheolichcat">Thống kê dịch vụ cắt tóc</a></li>
+              <li><a class="dropdown-item" href="http://localhost:3000/statistic/thongkebanhang">Thống kê bán hàng</a>
+              </li>
+              <li><a class="dropdown-item" href="http://localhost:3000/statistic/thongketheolichcat">Thống kê dịch vụ
+                  cắt tóc</a></li>
             </ul>
           </li>
 
@@ -242,7 +334,7 @@
             </a>
             <!-- End Profile Iamge Icon -->
 
-          
+
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
               <li class="dropdown-header">
                 <h6>

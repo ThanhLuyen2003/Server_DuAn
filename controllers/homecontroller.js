@@ -26,6 +26,13 @@ exports.home = async (req, res, next) => {
       }
     });
 
+    // Sắp xếp danh sách ngày hôm nay để đưa lên đầu tiên
+    todayAppointments.sort((a, b) => {
+      const timeA = moment(`${a.day} ${a.hour}`, 'YYYY-MM-DD HH:mm');
+      const timeB = moment(`${b.day} ${b.hour}`, 'YYYY-MM-DD HH:mm');
+      return timeA - timeB;
+    });
+
     // Ghép lại danh sách sao cho ngày hôm nay lên đầu
     listBill = [...todayAppointments, ...otherAppointments];
 
@@ -39,9 +46,13 @@ exports.home = async (req, res, next) => {
         // Kiểm tra và cập nhật trạng thái
         if (minutesDiff > 30) {
           bill.status = 'Đã hủy lịch';
+          bill.note = 'Khách không đến theo lịch hẹn (quá 30p)';
         } else if (minutesDiff > 10) {
           bill.status = 'Khách đến muộn';
         }
+
+        // Cập nhật trạng thái vào cơ sở dữ liệu
+        await billDB.updateOne({ _id: bill._id }, { $set: { status: bill.status, note: bill.note } });
       }
     }
 
@@ -67,25 +78,32 @@ exports.xac_nhan_lich_dat = async (req, res, next) => {
   let ids = req.params.ids;
   // console.log(await bill.findById(ids));
   console.log(ids + 'aaaaaaa');
+  
   let objBill = await billDB.findById(ids);
 
-  console.log('BEFORE' + objBill.status);
   let billStatus = objBill.status;
 
   if (billStatus === 'Sắp tới') {
     objBill.status = 'Khách đang cắt';
   }
 
+  console.log('Trạng thái trước khi kiểm tra điều kiện', billStatus);
+  if (billStatus === 'Khách đến muộn') {
+    objBill.status = 'Khách đang cắt';
+    console.log('Trạng thái sau khi kiểm tra điều kiện', objBill.status);
+  }
+
   if (billStatus === 'Khách đang cắt') {
+    console.log('Trạng thái', + billStatus);
     objBill.status = 'Đã hoàn thành';
   }
 
   objBill._id = ids;
 
   try {
-    console.log('AFTER' + objBill.status);
-    await billDB.findByIdAndUpdate({ _id: ids }, objBill);
-    console.log('AFTER UPDATE' + objBill.status);
+    console.log('Trạng thái  2', objBill.status);
+    await billDB.findByIdAndUpdate(ids, objBill);
+    console.log('Trạng thái  3', objBill.status);
   } catch (error) {
     console.log(error);
   }
