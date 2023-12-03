@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const useSchema = new mongoose.Schema({
 
+
     nameSalon: { type: String,  },
     addressSalon: { type: String,  },
     hour: { type: String,  },
@@ -12,6 +13,7 @@ const useSchema = new mongoose.Schema({
     status: { type: String,  },
     note: {type: String, },
     idUser: { type: mongoose.Schema.Types.ObjectId,ref:'userModel' }
+
 
 },
     {
