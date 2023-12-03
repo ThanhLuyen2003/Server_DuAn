@@ -19,10 +19,10 @@ exports.productsalon = async (req, res, next) => {
     }
 }
 // SAP
-exports.productsalonSap = async(req,res,next)=>{
+exports.productsalonSap = async (req, res, next) => {
     try {
         // Find products where the 'type' field is 'Sap'
-        const sapProducts = await md.productModel.find({ type: 'Sap' });
+        const sapProducts = await md.productModel.find({ type: 'Sáp' });
 
         if (sapProducts.length > 0) {
             res.status(200).json(sapProducts);
@@ -35,10 +35,10 @@ exports.productsalonSap = async(req,res,next)=>{
     }
 }
 // Cham soc da
-exports.productsalonChamSocDa = async(req,res,next)=>{
+exports.productsalonChamSocDa = async (req, res, next) => {
     try {
         // Find products where the 'type' field is 'Sap'
-        const ChamSocDaProducts = await md.productModel.find({ type: 'Cham soc da' });
+        const ChamSocDaProducts = await md.productModel.find({ type: 'Chăm sóc da' });
 
         if (ChamSocDaProducts.length > 0) {
             res.status(200).json(ChamSocDaProducts);
@@ -51,10 +51,10 @@ exports.productsalonChamSocDa = async(req,res,next)=>{
     }
 }
 // Cham soc co the
-exports.productsalonChamSocCoThe = async(req,res,next)=>{
+exports.productsalonChamSocCoThe = async (req, res, next) => {
     try {
         // Find products where the 'type' field is 'Sap'
-        const ChamSocCoTheProducts = await md.productModel.find({ type: 'Cham soc co the' });
+        const ChamSocCoTheProducts = await md.productModel.find({ type: 'Chăm sóc cơ thể' });
 
         if (ChamSocCoTheProducts.length > 0) {
             res.status(200).json(ChamSocCoTheProducts);
@@ -67,7 +67,7 @@ exports.productsalonChamSocCoThe = async(req,res,next)=>{
     }
 }
 //Combo
-exports.productsalonCombo = async(req,res,next)=>{
+exports.productsalonCombo = async (req, res, next) => {
     try {
         // Find products where the 'type' field is 'Sap'
         const ComboProducts = await md.productModel.find({ type: 'Combo' });
@@ -83,10 +83,10 @@ exports.productsalonCombo = async(req,res,next)=>{
     }
 }
 //Nuoc hoa
-exports.productsalonNuocHoa = async(req,res,next)=>{
+exports.productsalonNuocHoa = async (req, res, next) => {
     try {
         // Find products where the 'type' field is 'Sap'
-        const NuocHoaProducts = await md.productModel.find({ type: 'Nuoc hoa' });
+        const NuocHoaProducts = await md.productModel.find({ type: 'Nước hoa' });
 
         if (NuocHoaProducts.length > 0) {
             res.status(200).json(NuocHoaProducts);
@@ -99,10 +99,10 @@ exports.productsalonNuocHoa = async(req,res,next)=>{
     }
 }
 //kem danh rang
-exports.productsalonKemDanhRang = async(req,res,next)=>{
+exports.productsalonKemDanhRang = async (req, res, next) => {
     try {
         // Find products where the 'type' field is 'Sap'
-        const KemDanhRangProducts = await md.productModel.find({ type: 'Kem danh rang' });
+        const KemDanhRangProducts = await md.productModel.find({ type: 'Kem đánh răng' });
 
         if (KemDanhRangProducts.length > 0) {
             res.status(200).json(KemDanhRangProducts);
