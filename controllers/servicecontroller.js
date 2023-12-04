@@ -12,7 +12,7 @@ exports.list = async (req, res, next) => {
         dieu_kien_loc = { name: { $regex: new RegExp(req.query.servit2, 'i') } };
     }
     console.log("Search Parameter:", req.query.productsp222);
-console.log("Filter Condition:", dieu_kien_loc);
+    console.log("Filter Condition:", dieu_kien_loc);
 
     try {
         //     const sortOptions = {};
@@ -52,7 +52,7 @@ exports.addService = async (req, res, next) => {
             console.log(new_se);
             msg = 'Lưu thành công';
         } catch (error) {
-            msg = 'Error' + error.message();
+            msg = 'Error' + error.message;
             console.log(error);
         }
     }
@@ -83,7 +83,7 @@ exports.editService = async (req, res, next) => {
             await myMD.ServiceModel.findByIdAndUpdate({ _id: idse }, objSe);
             msg = 'đã sửa';
         } catch (error) {
-            msg = 'Error' + error.message();
+            msg = 'Error' + error.message;
             console.log(error);
         }
     }

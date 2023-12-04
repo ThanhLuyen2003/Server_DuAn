@@ -64,7 +64,6 @@ const ProductModel = new db.mongoose.Schema({
     describe: { type: String, required: true },
     ingredient: { type: String, required: true },
     type: { type: String, required: true },
-    status: { type: String, required: true },
 },
     {
         collection: 'ProductSalon'

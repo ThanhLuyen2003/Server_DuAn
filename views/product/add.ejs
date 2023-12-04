@@ -3,41 +3,44 @@
 
     <div class="container">
         <form action="" method="post" enctype="multipart/form-data">
-            <form class="px-4 py-3">
+            <label class="form-label">Số lượng nhập</label>
+            <input type="number" name="soluongnhap" placeholder="Số lượng nhập" class="form-control">
+            <br>
 
-                <label class="form-label">Số lượng nhập</label>
-                <input type="number" name="soluongnhap" placeholder="Số lượng nhập" class="form-control">
-                <br>
-
-                <div class="mb-3">
-                    <label class="form-label">Hình ảnh</label>
-                    <label for="formFileMultiple" class="form-label"></label>
-                    <input class="form-control" type="file" name="file_anh" id="formFileMultiple" multiple>
-                </div>
-                <label class="form-label">Tên sản phẩm</label>
-                <input type="text" name="name" placeholder="Tên sản phẩm" class="form-control">
-                <br>
-                <label class="form-label">Nhãn hiệu</label>
-                <input type="text" name="trademark" placeholder="Nhãn hiệu" class="form-control">
-                <br>
-                <label class="form-label">Giá nhập</label>
-                <input type="number" name="pricenhap" placeholder="Giá nhập" class="form-control">
-                <br>
-                <label class="form-label">Giá bán</label>
-                <input type="number" name="price" placeholder="Giá bán" class="form-control">
-                <br>
-                <label class="form-label">Mô tả</label>
-                <input type="text" name="describe" placeholder="Mô tả" class="form-control">
-                <br>
-                <label class="form-label">Nguyên liệu</label>
-                <input type="text" name="ingredient" placeholder="Nguyên liệu" class="form-control">
-                <br>
-                <label class="form-label">Loại</label>
-                <input type="text" name="type" placeholder="Loại" class="form-control">
-                <br>
-                <button class="btn btn-warning" type="submit">Lưu</button>
-                <%= msg %>
-            </form>
+            <div class="mb-3">
+                <label class="form-label">Hình ảnh</label>
+                <input class="form-control" type="file" name="file_anh" id="formFileMultiple" multiple>
+            </div>
+            <label class="form-label">Tên sản phẩm</label>
+            <input type="text" name="name" placeholder="Tên sản phẩm" class="form-control">
+            <br>
+            <label class="form-label">Nhãn hiệu</label>
+            <input type="text" name="trademark" placeholder="Nhãn hiệu" class="form-control">
+            <br>
+            <label class="form-label">Giá nhập</label>
+            <input type="number" name="pricenhap" placeholder="Giá nhập" class="form-control">
+            <br>
+            <label class="form-label">Giá bán</label>
+            <input type="number" name="price" placeholder="Giá bán" class="form-control">
+            <br>
+            <label class="form-label">Mô tả</label>
+            <input type="text" name="describe" placeholder="Mô tả" class="form-control">
+            <br>
+            <label class="form-label">Nguyên liệu</label>
+            <input type="text" name="ingredient" placeholder="Nguyên liệu" class="form-control">
+            <br>
+            <label class="form-label">Loại</label>
+            <select name="type" class="form-control">
+                <option value="Sáp">Sáp</option>
+                <option value="Nước hoa">Nước hoa</option>
+                <option value="Combo">Combo</option>
+                <option value="Chăm sóc cơ thể">Chăm sóc cơ thể</option>
+                <option value="Chăm sóc da">Chăm sóc da</option>
+                <option value="Kem đánh răng">Kem đánh răng</option>         
+            </select>
+            <br>
+            <button class="btn btn-warning" type="submit" name="save">Lưu</button>
+            <%= msg %>
         </form>
     </div>
 <%- include('../inc/footer.ejs') %>

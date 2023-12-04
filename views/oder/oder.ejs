@@ -81,13 +81,11 @@
             <%= row.price %>
           </td>
 
-
+        
           <td>
             <% row.products.forEach((product) => { %>
               <p>Tên SP: <%= product.name %></p>
-              <p>Giá: <%= product.price %></p>
-              <p>Số lượng mua: <%= product.quantity %></p>
-              <p>idPro: <%= product.idPro %></p>
+              <p>Số lượng mua: <%= product.quantity %></p>           
             <% }) %>
           </td>
 
@@ -200,6 +198,40 @@
     });
   });
 </script>
+
+<!-- thông báo về app -->
+<script>
+  if ('serviceWorker' in navigator && 'PushManager' in window) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then((registration) => {
+        return registration.pushManager.getSubscription()
+          .then(async (subscription) => {
+            if (!subscription) {
+              const response = await fetch('/api/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(subscription),
+              });
+              console.log('Đã đăng ký subscription:', response);
+            }
+          });
+      })
+      .catch((error) => {
+        console.error('Lỗi khi đăng ký service worker:', error);
+      });
+  }
+
+  function sendNotification(status) {
+    fetch(`/api/send-notification?status=${status}`)
+      .then((response) => {
+        console.log('Đã gửi thông báo:', response);
+      })
+      .catch((error) => {
+        console.error('Lỗi khi gửi thông báo:', error);
+      });
+  }
+</script>
+
 
   <div style="margin-left: 850px; margin-top: 50px;">
     <nav aria-label="Page navigation example">

@@ -48,7 +48,7 @@ exports.add = async(req,res,next) => {
             console.log(new_p);
             msg = 'Lưu thành công';
         } catch(error){
-            msg = 'Error'+ error.message();
+            msg = 'Error'+ error.message;
             console.log(error);
         }
     }

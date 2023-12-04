@@ -16,7 +16,7 @@ exports.list = async (req, res, next) => {
     }
     console.log("Search Parameter:", req.query.productsp222);
     console.log("Filter Condition:", dieu_kien_loc);
-
+    
     try {
         const sortOptions = {};
         sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
@@ -33,7 +33,6 @@ exports.list = async (req, res, next) => {
         //         totalProducts
         //     });
         // }
-
     } catch (err) {
         console.error('Error retrieving users:', err);
         return res.status(500).json({ error: 'Internal server error' });
@@ -48,42 +47,39 @@ exports.list = async (req, res, next) => {
     });
 }
 
-
-
-
 exports.addPro = async (req, res, next) => {
     let msg = '';
     var listProducts = await myMD.productModel.find().sort({ name: 1 });
     if (req.method == 'POST') {
+    let objP = new myMD.productModel();
 
-        let objP = new myMD.productModel();
-        try {
-            fs.renameSync(req.file.path, './public/uploads/' + req.file.originalname);
-            msg = 'Url ảnh:  http://localhost:3000/uploads/' + req.file.originalname;
-            objP.avatar = '/uploads/' + req.file.originalname;
-        } catch (error) {
-            msg = error.message;
-        }
-        objP.soluongnhap = req.body.soluongnhap;
-        objP.name = req.body.name;
-        objP.trademark = req.body.trademark;
-        objP.pricenhap = req.body.pricenhap;
-        objP.price = req.body.price;
-        objP.describe = req.body.describe;
-        objP.ingredient = req.body.ingredient;
-        objP.type = req.body.type;
+    try {
+    fs.renameSync(req.file.path, './public/uploads/' + req.file.originalname);
+        msg = 'Url ảnh: http://localhost:3000/uploads/' + req.file.originalname;
+        objP.avatar = '/uploads/' + req.file.originalname;
+    } catch (error) {
+        msg = error.message;
+    }
+    objP.soluongnhap = req.body.soluongnhap;
+    objP.name = req.body.name;
+    objP.trademark = req.body.trademark;
+    objP.pricenhap = req.body.pricenhap;
+    objP.price = req.body.price;
+    objP.describe = req.body.describe;
+    objP.ingredient = req.body.ingredient;
+    objP.type = req.body.type;
 
-        try {
-            let new_p = await objP.save();
-            console.log(new_p);
-            msg = 'Lưu thành công';
-        } catch (error) {
-            msg = 'Error' + error.message();
-            console.log(error);
-        }
+    try {
+        let new_p = await objP.save();
+        console.log(new_p);
+        msg = 'Lưu thành công';
+      } catch (error) {
+        msg = 'Error: ' + error.message;
+        console.log(error);
+      }
     }
     res.render('product/add', { msg: msg, listProducts: listProducts });
-}
+};
 
 exports.editPro = async (req, res, next) => {
     let msg = '';
@@ -109,13 +105,12 @@ exports.editPro = async (req, res, next) => {
         objP.describe = req.body.describe;
         objP.ingredient = req.body.ingredient;
         objP.type = req.body.type;
-        objP.status = req.body.status;
         objP._id = idp;
         try {
             await myMD.productModel.findByIdAndUpdate({ _id: idp }, objP);
             msg = ' Đã sửa';
         } catch (error) {
-            msg = ' Error' + error.message();
+            msg = ' Error' + error.message;
             console.log(error);
         }
     }
@@ -178,3 +173,15 @@ exports.sxTheoGiaSP = async (req, res, next) => {
     })
 }
 
+exports.renderPage = async (req, res, next) => {
+    try {
+      const listProducts = await myMD.productModel.find();
+      const listOders = await myMD.OrderModel.find();
+    //   const listOders = res.locals.listOders;
+  
+      res.render('product/list', { listProducts, listOders });
+    } catch (err) {
+      console.error('Error retrieving data:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };

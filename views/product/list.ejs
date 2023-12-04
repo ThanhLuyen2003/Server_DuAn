@@ -16,12 +16,12 @@
                   Lọc danh mục
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item category-filter" href="#" data-category="Kem đánh răng">Kem danh rang</a></li>
-                  <li><a class="dropdown-item category-filter" href="#" data-category="Chăm sóc da">Cham soc da</a></li>
-                  <li><a class="dropdown-item category-filter" href="#" data-category="Chăm sóc cơ thể">Cham soc co the</a></li>
+                  <li><a class="dropdown-item category-filter" href="#" data-category="Kem đánh răng">Kem đánh răng</a></li>
+                  <li><a class="dropdown-item category-filter" href="#" data-category="Chăm sóc da">Chăm sóc da</a></li>
+                  <li><a class="dropdown-item category-filter" href="#" data-category="Chăm sóc cơ thể">Chăm sóc cơ thể</a></li>
                   <li><a class="dropdown-item category-filter" href="#" data-category="Combo">Combo</a></li>
-                  <li><a class="dropdown-item category-filter" href="#" data-category="Nước hoa">Nuoc hoa</a></li>
-                  <li><a class="dropdown-item category-filter" href="#" data-category="Sáp">Sap</a></li>
+                  <li><a class="dropdown-item category-filter" href="#" data-category="Nước hoa">Nước hoa</a></li>
+                  <li><a class="dropdown-item category-filter" href="#" data-category="Sáp">Sáp</a></li>
                 </ul>
               </div>
 
@@ -38,9 +38,6 @@
               </div>
               
             </div>
-
-            <!-- thanh tìm kiếm -->
-           
             <form class="form-inline my-2 my-lg-0" method="post" action="">
               <input class="form-control mr-sm-2" type="search" name="productsp222" id="searchInput" placeholder="Nhập tên sản phẩm..." aria-label="Search">
               <button class="btn btn-warning my-2 my-sm-0" type="submit">Tìm</button>
@@ -70,9 +67,9 @@
         </tr>
 
         <% listProducts.forEach( ( row )=>{  %>
-          <tr>
+          <tr>         
             <td>
-              <%= row.soluongnhap < 0 ? 0 : row.soluongnhap %>
+              <%= row.soluongnhap %>
             </td>
             <td> <img src="<%=row.avatar %>" alt="" style="width: 60px; height: 60px; margin-left: 25px;"></td>
             <td>
@@ -121,6 +118,8 @@
 
           
       </table>
+
+      
     </div> 
 
 
@@ -157,12 +156,13 @@
     <div style="margin-left: 850px; margin-top: 50px;">
       <nav aria-label="Page navigation example">
         <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=1&limit=5">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page-1&limit=5">Previous</a></li>
           <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=1&limit=5">1</a></li>
           <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=2&limit=5">2</a></li>
           <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=3&limit=5">3</a></li>
           <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=4&limit=5">4</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=4&limit=5">Next</a></li>
+          <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page=5&limit=5">5</a></li>
+          <li class="page-item"><a class="page-link" href="http://localhost:3000/product?page+1&limit=5">Next</a></li>
         </ul>
       </nav>
     </div>
