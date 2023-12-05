@@ -1,3 +1,10 @@
+<%
+<!-- Hàm chuyển đổi số thành chuỗi với dấu chấm phân tách sau mỗi 3 chữ số -->
+  function numberWithCommas(number) {
+    return number.toLocaleString();
+  }
+%>
+
 <%- include('../inc/header.ejs') %>
   <div class="container">
     <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Danh sách hàng nhập về</h1>
@@ -71,6 +78,7 @@
           </td>
         </tr>
         <% } ); %>
+
         <% 
         let total = 0;
         listimport.forEach((row) => {
@@ -81,7 +89,7 @@
         });
       %>
       
-      <p style="font-weight: bold;">Tổng tiền nhập hàng: <%= total %>đ</p>
+      <p style="font-weight: bold;">Tổng tiền nhập hàng: <%= numberWithCommas(total) %>đ</p>
         
     </table>
   </div>

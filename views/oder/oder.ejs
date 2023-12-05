@@ -80,15 +80,14 @@
           <td>
             <%= row.price %>
           </td>
-
-        
+   
           <td>
             <% row.products.forEach((product) => { %>
               <p>Tên SP: <%= product.name %></p>
-              <p>Số lượng mua: <%= product.quantity %></p>           
+              <p>Số lượng mua: <%= product.quantity %></p>   
+                      
             <% }) %>
           </td>
-
 
           <td>
             <%= row.time %>
@@ -99,20 +98,21 @@
               <p style="color: #ffc107; font-weight: bold;">
                 <%= row.status %>
               </p>
-              <% } else if (row.status==='Đang giao hàng' ) { %>
-                <p style="color: #0000ff; font-weight: bold;">
-                  <%= row.status %>
-                </p>
-              <% } else if (row.status==='Đã giao hàng' ) { %>
-                <p style="color: rgb(9, 0, 128); font-weight: bold;">
-                  <%= row.status %>
-                </p>
-                <% } else if (row.status==='Hủy đơn' || row.status==='Khách hủy đơn') { %>
-                  <p style="color: red; font-weight: bold;">
-                    <%= row.status %>
-                  </p>
-                  <% } %>
+            <% } else if (row.status==='Đang giao hàng' ) { %>
+              <p style="color: #0000ff; font-weight: bold;">
+                <%= row.status %>
+              </p>
+            <% } else if (row.status==='Đã giao hàng' ) { %>
+              <p style="color: rgb(9, 0, 128); font-weight: bold;">
+                <%= row.status %>
+              </p>
+            <% } else if (row.status==='Hủy đơn' || row.status==='Khách hủy đơn') { %>
+              <p style="color: red; font-weight: bold;">
+                <%= row.status %>
+              </p>
+            <% } %>
           </td>
+
           <td>
             <div class="d-flex">
 

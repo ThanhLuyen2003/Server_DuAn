@@ -93,13 +93,13 @@
             <td>
               <%= row.type %>
             </td>
+
             <td>
               <% if (row.soluongnhap <= 0) { %>
                 <p style="color: red;">Hết hàng</p>
               <% } else { %>
                 Còn hàng
               <% } %>
-
             </td>
             <td>
               <div class="d-flex">
@@ -117,14 +117,10 @@
         <% }) %>
 
           
-      </table>
-
-      
+      </table>   
     </div> 
 
-
   <script src="/controllers/productcontroller.js"></script>
-
 
 
   <script>
