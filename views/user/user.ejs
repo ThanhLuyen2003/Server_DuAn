@@ -33,8 +33,6 @@
         <th>Email</th>
         <th>Ảnh đại diện</th>
         <th>address</th>
-        <th>otp</th>
-        <th>otp</th>
         <th>balance</th>
       </tr>
       <% listUsers.forEach( ( row )=>{ %>
@@ -51,12 +49,6 @@
           <td> <img src="<%=row.image %>" alt="" style="width: 60px; height: 60px;margin-left: 10px;"></td>
           <td>
             <%= row.address %>
-          </td>
-          <td>
-            <%= row.otp %>
-          </td>
-          <td>
-            <%= row.otp %>
           </td>
           <td>
             <%= row.balance %>

@@ -7,24 +7,23 @@ exports.list = async (req,res,next) =>{
     const skip = (page - 1) * limit;
     const sortBy = req.query.sortBy || 'nameU';
     const sortOrder = req.query.sortOrder || 'asc';
-
     var dieu_kien_loc = null;
     if(typeof(req.query.billSearch) !== 'undefined'){
         dieu_kien_loc = { nameU: { $regex: new RegExp(req.query.billSearch, 'i') } };
     }
     try {
         const sortOptions = {};
-    sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+        sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
         var listOders = await myMD.OrderModel.find(dieu_kien_loc).skip(skip).limit(limit).sort(sortOptions);
-        var totalOders = await myMD.OrderModel.countDocuments();
-    
+        var totalOders = await myMD.OrderModel.countDocuments(); 
       } catch (err) {
         console.error('Error retrieving users:', err);
         res.status(500).json({ error: 'Internal server error' });
       }
-    res.render('oder/oder',{listOders: listOders, currentPage: page,
-        totalPages: Math.ceil(totalOders / limit),
-        totalOders});
+    res.render('oder/oder',{listOders: listOders,
+                            currentPage: page,
+                            totalPages: Math.ceil(totalOders / limit),
+                            totalOders});
 }
 
 exports.duyetSP = async (req,res,next) =>{
@@ -89,3 +88,15 @@ exports.huySP = async (req, res, next) =>{
   res.redirect('/oder');
 
 }
+
+exports.renderPage = async (req, res, next) => {
+  try {
+    const listOders = await myMD.OrderModel.find();
+    res.locals.listOders = listOders;
+    
+    res.render('oder/oder');
+  } catch (err) {
+    console.error('Error retrieving data from MongoDB:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

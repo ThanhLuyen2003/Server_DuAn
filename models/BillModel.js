@@ -2,17 +2,17 @@ const mongoose = require('mongoose');
 const useSchema = new mongoose.Schema({
 
 
-    nameSalon: { type: String,  },
-    addressSalon: { type: String,  },
-    hour: { type: String,  },
-    day: { type: String,  },
-    phone: { type: String,  },
-    imageSalon: { type: String,  },
-    services: { type: String,  },
-    price: { type: String,  },
-    status: { type: String,  },
-    note: {type: String, },
-    idUser: { type: mongoose.Schema.Types.ObjectId,ref:'userModel' }
+    nameSalon: { type: String, require: true },
+    addressSalon: { type: String, require: true },
+    hour: { type: String, require: true },
+    day: { type: String, require: true },
+    phone: { type: String, require: true },
+    imageSalon: { type: String, require: true },
+    services: { type: String, require: true },
+    price: { type: String, require: true },
+    status: { type: String, require: true },
+    note: { type: String, },
+    idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'userModel' }
 
 
 },

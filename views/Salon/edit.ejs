@@ -1,26 +1,31 @@
 <%- include('../inc/header.ejs') %>
-<h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Sửa Salon</h1>
+    <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Sửa Salon</h1>
 
-<div class="container">
-<form action="" method="post" enctype="multipart/form-data">
-    <form class="px-4 py-3">
-    <label class="form-label">Tên salon</label>
-    <input type="text" name="name" placeholder="Tên salon" class="form-control" value="<%=objS.name %>"><br>
-    <label class="form-label">Địa chỉ</label>
-    <input type="text" name="address" placeholder="Địa chỉ" class="form-control" value="<%=objS.address %>"><br>
-    <label class="form-label">Mô tả</label>
-    <input type="text" name="describe" placeholder="Mô tả" class="form-control" value="<%=objS.describe %>"><br>
-    <div class="mb-3">
-        <label class="form-label">Hình ảnh</label>
-        <label for="formFileMultiple" class="form-label"></label>
-        <input class="form-control" type="file" name="file_anh" id="formFileMultiple" value="<%=objS.image %>" multiple>
-        </div>
-    <label class="form-label">SĐT</label>
-    <input type="text" name="phone" placeholder="SĐT" class="form-control" value="<%=objS.phone %>"><br>
-    <label class="form-label">Đánh giá</label>
-    <input type="text" name="evalute" placeholder="Đánh giá" class="form-control" value="<%=objS.evalute %>"><br>
-    <button class="btn btn-warning" type="submit">Lưu</button><%= msg %>
-</form>
-</form>
-</div>
-<%- include('../inc/footer.ejs') %>
+    <div class="container">
+        <form action="" method="post" enctype="multipart/form-data">
+            <form class="px-4 py-3">
+                <label class="form-label">Tên salon</label>
+                <input type="text" name="name" placeholder="Tên salon" class="form-control" value="<%=objS.name %>"><br>
+                <label class="form-label">Địa chỉ</label>
+                <input type="text" name="address" placeholder="Địa chỉ" class="form-control"
+                    value="<%=objS.address %>"><br>
+                <label class="form-label">Mô tả</label>
+                <input type="text" name="describe" placeholder="Mô tả" class="form-control"
+                    value="<%=objS.describe %>"><br>
+                <div class="mb-3">
+                    <label class="form-label">Hình ảnh</label>
+                    <label for="formFileMultiple" class="form-label"></label>
+                    <input class="form-control" type="file" name="file_anh" id="formFileMultiple"
+                        value="<%=objS.image %>" multiple>
+                </div>
+                <label class="form-label">SĐT</label>
+                <input type="text" name="phone" placeholder="SĐT" class="form-control" value="<%=objS.phone %>"><br>
+                <label class="form-label">Đánh giá</label>
+                <input type="text" name="evalute" placeholder="Đánh giá" class="form-control"
+                    value="<%=objS.evalute %>"><br>
+                <button class="btn btn-warning" type="submit">Lưu</button>
+                <%= msg %>
+            </form>
+        </form>
+    </div>
+    <%- include('../inc/footer.ejs') %>

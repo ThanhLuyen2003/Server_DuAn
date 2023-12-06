@@ -38,7 +38,15 @@
                     value="<%=objP.ingredient %>"><br>
 
                 <label class="form-label">Loại</label>
-                <input type="text" name="type" placeholder="Loại" class="form-control" value="<%=objP.type %>"><br>
+                <select name="type" class="form-control">
+                    <option value="Sáp">Sáp</option>
+                    <option value="Nước hoa">Nước hoa</option>
+                    <option value="Nước hoa">Combo</option>
+                    <option value="Chăm sóc cơ thể">Chăm sóc cơ thể</option>
+                    <option value="Chăm sóc da">Chăm sóc da</option>
+                    <option value="Kem đánh răng">Kem đánh răng</option>
+                    <!-- Thêm các tùy chọn khác vào đây -->
+                </select><br>
 
 
                 <button class="btn btn-warning" type="submit">Lưu</button>

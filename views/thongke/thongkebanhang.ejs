@@ -1,124 +1,142 @@
+<%
+<!-- Hàm chuyển đổi số thành chuỗi với dấu chấm phân tách sau mỗi 3 chữ số -->
+  function numberWithCommas(number) {
+    return number.toLocaleString();
+  }
+%>
+
 <%- include('../inc/header.ejs') %>
-    <main id="main" class="main">
-        <div class="pagetitle mb-5">
-            <h1>Bảng thống Bán hàng</h1>
+
+<div class="container">
+  <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Thống kê bán hàng</h1>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <form class="d-flex" role="search"> 
+        <div class="d-flex justify-content-around align-items-center mb-2">
+
+          <div class="dropdown">
+            <button style="margin-right: 20px;" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Sắp xếp theo
+            </button>
+            
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="">Tên</a></li>
+              <li><a class="dropdown-item" href="">Giá</a></li>
+            </ul>
+          </div>
+          
         </div>
+        <form class="form-inline my-2 my-lg-0" method="post" action="">
+          <input style="height: 38px; margin-right: 5px;" class="form-control mr-sm-2" type="search" name="productsp222" id="searchInput" placeholder="Nhập tên sản phẩm..." aria-label="Search">
+          <button style="height: 38px;" class="btn btn-warning my-2 my-sm-0" type="submit">Tìm</button>
+      </form>
+      
+      </form>
+      
+    </div>
+    
+  </nav>
+</div>
 
-        <!-- Phần này tùy chỉnh nhé -->
-        <div class="col-lg-8">
-            <div class="row">
-                <!-- Sales Card -->
-                <div class="col-xxl-4 col-md-6">
-                    <div class="card info-card sales-card">
+<div class="container">
+  <table id="productTable" class="table table-bordered table-striped">
+    <tr class="text-sm-center">
+      <th style="width: 300px;">Tên sản phẩm</th>
+      <th style="width: 30px;"> Số lượng nhập</th>
+      <th>Giá nhập</th>
+      <th>Tổng tiền nhập</th>
+      <th>Số lượng đã bán</th>
+      <th>Giá bán</th>
+      <th>Tổng tiền bán</th>
+      <th>Trạng thái</th>
+      <th></th>
+    </tr>
 
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis"
-                                    style="color: #000000;"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
-                                </li>
+    <% listSatistic.forEach( ( row )=>{  %>
+      <tr>         
+        <td>
+          <%= row.name %>
+        </td>
+        <td>
+            <%= row.soluongnhap %>
+          </td>
+        <td>
+          <%= row.pricenhap %>
+        </td>
+        <td>
+            <% 
+              const price = row.pricenhap;
+              const slnhap = row.soluongnhap;
+              const tongtiennhap = price * slnhap;
+            %>
+            <%= tongtiennhap %> 
+        </td>
 
-                                <li><a class="dropdown-item" href="#">Today</a></li>
-                                <li><a class="dropdown-item" href="#">This Month</a></li>
-                                <li><a class="dropdown-item" href="#">This Year</a></li>
-                            </ul>
-                        </div>
+        <td>
+            
+        </td>
 
-                        <div class="card-body">
-                            <h5 class="card-title">Doanh thu</h5>
-
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-cart-shopping" style="color: #2a47f0;"></i>
-                                </div>
-                                <div class="ps-3">
-                                    <h6>145</h6>
-                                    <span class="text-success small pt-1 fw-bold">12%</span> <span
-                                        class="text-muted small pt-2 ps-1">increase</span>
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div><!-- End Sales Card -->
-                <!-- Revenue Card -->
-                <div class="col-xxl-4 col-md-6">
-                    <div class="card info-card revenue-card">
-
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis"
-                                    style="color: #000000;"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
-                                </li>
-
-                                <li><a class="dropdown-item" href="#">Today</a></li>
-                                <li><a class="dropdown-item" href="#">This Month</a></li>
-                                <li><a class="dropdown-item" href="#">This Year</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="card-body">
-                            <h5 class="card-title">Lợi nhuận</span></h5>
-
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-dollar-sign" style="color: #29ca68;"></i>
-                                </div>
-                                <div class="ps-3">
-                                    <h6>$3,264</h6>
-                                    <span class="text-success small pt-1 fw-bold">8%</span> <span
-                                        class="text-muted small pt-2 ps-1">increase</span>
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div><!-- End Revenue Card -->
-
-                <!-- Customers Card -->
-                <div class="col-xxl-4 col-xl-12">
-
-                    <div class="card info-card customers-card">
-
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis"
-                                    style="color: #000000;"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
-                                </li>
-
-                                <li><a class="dropdown-item" href="#">Today</a></li>
-                                <li><a class="dropdown-item" href="#">This Month</a></li>
-                                <li><a class="dropdown-item" href="#">This Year</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="card-body">
-                            <h5 class="card-title">Người dùng</span></h5>
-
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="fa-regular fa-user" style="color: #ff6d00;"></i>
-                                </div>
-                                <div class="ps-3">
-                                    <h6>1244</h6>
-                                    <span class="text-danger small pt-1 fw-bold">12%</span> <span
-                                        class="text-muted small pt-2 ps-1">decrease</span>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div><!-- End Customers Card -->
+        <td>
+            <%= row.price %>
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          <% if (row.soluongnhap <= 0) { %>
+            <p style="color: red;">Hết hàng</p>
+          <% } else { %>
+            Còn hàng
+          <% } %>
+        </td>
+        <td>
+            <div class="d-flex">
+                <a href="/statistic/thongkebanhang/edit/<%=row._id%>">
+                  <button type="button" class="btn btn-warning" style="margin-right: 10px;">Sửa</button>
+                </a> 
             </div>
-        </div>
-    </main>
-    <%- include('../inc/footer.ejs') %>
+        </td>
+
+      </tr>
+
+
+    <% }) %>
+
+
+        <% 
+        let total = 0;
+        listSatistic.forEach((row) => {
+          const price = row.pricenhap;
+          const slnhap = row.soluongnhap;
+          const tongtiennhap = price * slnhap;
+          total += tongtiennhap;
+        });
+      %>
+  
+   <!-- Sử dụng giá trị total từ biến locals -->
+    <p style="font-weight: bold;">Tổng tiền nhập hàng: <%= numberWithCommas(total) %>đ</p>
+
+    <p style="font-weight: bold;">Tổng tiền bán hàng: đ</p>
+
+      
+  </table>   
+</div> 
+
+
+<div style="margin-left: 850px; margin-top: 50px;">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page-1&limit=5">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=1&limit=5">1</a></li>
+      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=2&limit=5">2</a></li>
+      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=3&limit=5">3</a></li>
+      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=4&limit=5">4</a></li>
+      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=5&limit=5">5</a></li>
+      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page+1&limit=5">Next</a></li>
+    </ul>
+  </nav>
+</div>
+
+
+<%- include('../inc/footer.ejs') %>
