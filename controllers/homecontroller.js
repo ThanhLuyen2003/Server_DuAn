@@ -1,12 +1,15 @@
 var billDB = require('../models/BillModel');
 var fs = require('fs');
 const moment = require('moment');
+const { render } = require('../app');
 
 exports.home = async (req, res, next) => {
   let loc = null;
-    if(typeof( req.query.phone) !='undefined'){
-        loc = {phone: req.query.phone};
-    }
+
+  if (typeof (req.query.phone) != 'undefined') {
+    loc = { phone: req.query.phone };
+  }
+
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 5;
   const skip = (page - 1) * limit;
@@ -50,7 +53,7 @@ exports.home = async (req, res, next) => {
         // Kiểm tra và cập nhật trạng thái
         if (minutesDiff > 30) {
           bill.status = 'Đã hủy lịch';
-          bill.note = 'Khách không đến theo lịch hẹn (quá 30p)';
+          // bill.note = ',Khách không đến theo lịch hẹn (quá 30p)';
         } else if (minutesDiff > 10) {
           bill.status = 'Khách đến muộn';
         }
@@ -75,14 +78,12 @@ exports.home = async (req, res, next) => {
 };
 
 
-
-
 exports.xac_nhan_lich_dat = async (req, res, next) => {
   console.log('Xác nhận lịch đặt');
   let ids = req.params.ids;
   // console.log(await bill.findById(ids));
   console.log(ids + 'aaaaaaa');
-  
+
   let objBill = await billDB.findById(ids);
 
   let billStatus = objBill.status;
@@ -114,3 +115,17 @@ exports.xac_nhan_lich_dat = async (req, res, next) => {
 
   res.redirect('/home');
 }
+
+exports.addNote = async (req, res, next) => {
+  const ids = req.params.ids;
+  const newTextNote = req.body.textNote;
+
+  try {
+    await billDB.findByIdAndUpdate(ids, { note: newTextNote });
+    console.log('Ghi chú đã được cập nhật thành công:', newTextNote);
+  } catch (error) {
+    console.log('Lỗi khi cập nhật ghi chú:', error);
+  }
+
+  res.redirect('/home');
+};

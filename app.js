@@ -21,6 +21,7 @@ var apiUsersRouter = require('./routes/users.apiRoute');
 var apiProductRouter = require('./routes/ProductSalon.apiRoute');
 var apiService = require('./routes/Service.route');
 var apiComment = require('./routes/comment.apiRoute');
+var bodyParser = require('body-parser')
 var api = require('./api/API');
 
 var app = express();
@@ -38,7 +39,7 @@ app.use(session({
   secret: 'NDASHUDHAUHD3427328guisfjsdfkjshdjhsafkjsdfkeasdasdasdfsdwe',
   resave: true,
   saveUninitialized: true
-  }));
+}));
 
 app.use('/', homepageRouter);
 app.use('/home', homeRouter);
@@ -56,6 +57,8 @@ app.use('/apiuser', apiUsersRouter);
 app.use('/apiProduct', apiProductRouter);
 app.use('/service', apiService);
 app.use('/apiComment', apiComment);
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 app.use(api);
 
 // catch 404 and forward to error handler
