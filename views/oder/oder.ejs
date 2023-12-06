@@ -60,7 +60,7 @@
         <th>Mô tả đơn hàng</th>
         <th>Thời gian đặt</th>
         <th>Trạng thái</th>
-        <th></th>
+       
       </tr>
 
       <% listOders.forEach( ( row )=>{ %>
@@ -87,7 +87,7 @@
               <p>Tên SP: <%= product.name %></p>
               <p>Giá: <%= product.price %></p>
               <p>Số lượng mua: <%= product.quantity %></p>
-              <p>idPro: <%= product.idPro %></p>
+              
             <% }) %>
           </td>
 
@@ -115,7 +115,7 @@
                   </p>
                   <% } %>
           </td>
-          <td>
+          
             <div class="d-flex">
 
               <% if (row.status==='Có đơn' || row.status==='Đang giao hàng' ) { %>
@@ -163,7 +163,7 @@
                       </div>
 
             </div>
-          </td>
+        
 
         </tr>
 
