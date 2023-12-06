@@ -248,5 +248,49 @@ app.get('/getBill', (req, res) => {
         })
 })
 
+app.put('/huyBill/:idBill', (req, res) => {
+
+    const idBill = req.params.idBill;
+
+    Bill.updateOne({ _id: idBill }, { $set: { status: "Đã hủy lịch" } })
+        .then((data) => {
+            if (data) {
+                res.status(200).json({
+                    message: "Dữ liệu đã xóa",
+                    data: data,
+                });
+            } else {
+                res.status(404).json({ error: "Không tìm thấy dữ liệu" });
+            }
+        })
+        .catch((error) => {
+            res.status(500).json({ error: "Đã xảy ra lỗi khi cập nhật dữ liệu" });
+        });
+
+
+})
+
+app.put('/traHang/:id', (req, res) => {
+
+    const id = req.params.id;
+    console.log(id);
+    md.OrderModel.updateOne({ _id: id }, { $set: { status: "Trả hàng" } })
+        .then((data) => {
+            if (data) {
+                res.status(200).json({
+                    message: "Dữ liệu đã xóa",
+                    data: data,
+                });
+            } else {
+                res.status(404).json({ error: "Không tìm thấy dữ liệu" });
+            }
+        })
+        .catch((error) => {
+            res.status(500).json({ error: "Đã xảy ra lỗi khi cập nhật dữ liệu" });
+        });
+
+
+})
+
 
 module.exports = app;
