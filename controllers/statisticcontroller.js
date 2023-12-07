@@ -4,29 +4,45 @@ var fs = require ('fs');
 
 exports.thongkebanhang = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 5;
-    const skip = (page - 1) * limit;
+    const limit = parseInt(req.query.limit) || 10;
     const sortBy = req.query.sortBy || 'name';
     const sortOrder = req.query.sortOrder || 'asc';
     var dieu_kien_loc = null;
-    if(typeof(req.query.hangnhapSearch) !== 'undefined'){
-        dieu_kien_loc = { name: { $regex: new RegExp(req.query.hangnhapSearch, 'i') } };
+    if (typeof(req.query.hangnhapSearch) !== 'undefined') {
+      dieu_kien_loc = { name: { $regex: new RegExp(req.query.hangnhapSearch, 'i') } };
     }
-    try {
-        const sortOptions = {};
-        sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
-        var listSatistic= await myMD.productModel.find(dieu_kien_loc).skip(skip).limit(limit).sort(sortOptions);
-        var totalSatistic = await myMD.productModel.countDocuments();
     
-      } catch (err) {
-        console.error('Error retrieving users:', err);
-        res.status(500).json({ error: 'Internal server error' });
-      }
-    res.render('thongke/thongkebanhang',{listSatistic: listSatistic, currentPage: page,
-        totalPages: Math.ceil(totalSatistic / limit),
-        totalSatistic});
-}
-
+    try {
+      const sortOptions = {};
+      sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+  
+      const listSatistic = await myMD.productModel.find(dieu_kien_loc).sort(sortOptions).skip((page - 1) * limit).limit(limit);
+      const totalSatistic = await myMD.productModel.countDocuments(dieu_kien_loc);
+  
+      let total = 0;
+      const allListSatistic = await myMD.productModel.find(dieu_kien_loc).sort(sortOptions);
+      allListSatistic.forEach((row) => {
+        const price = row.pricenhap;
+        const slnhap = row.soluongnhap;
+        const tongtiennhap = price * slnhap;
+        total += tongtiennhap;
+      });
+  
+      const totalPages = Math.ceil(totalSatistic / limit);
+  
+      res.render('thongke/thongkebanhang', {
+        listSatistic: listSatistic,
+        currentPage: page,
+        totalPages: totalPages,
+        totalSatistic: totalSatistic,
+        total: total
+      });
+  
+    } catch (err) {
+      console.error('Error retrieving users:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
 
 exports.editbanhang = async (req, res, next) => {
     let msg = '';

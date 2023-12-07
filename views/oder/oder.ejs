@@ -60,6 +60,7 @@
         <th>Mô tả đơn hàng</th>
         <th>Thời gian đặt</th>
         <th>Trạng thái</th>
+        <th></th>
        
       </tr>
 
@@ -84,14 +85,8 @@
           <td>
             <% row.products.forEach((product) => { %>
               <p>Tên SP: <%= product.name %></p>
-<<<<<<< HEAD
               <p>Giá: <%= product.price %></p>
-              <p>Số lượng mua: <%= product.quantity %></p>
-              
-=======
-              <p>Số lượng mua: <%= product.quantity %></p>   
-                      
->>>>>>> dadb04280235e8f78d24edbfd667df350d735bd9
+              <p>Số lượng mua: <%= product.quantity %></p>                 
             <% }) %>
           </td>
 
@@ -118,12 +113,8 @@
               </p>
             <% } %>
           </td>
-<<<<<<< HEAD
           
-=======
-
           <td>
->>>>>>> dadb04280235e8f78d24edbfd667df350d735bd9
             <div class="d-flex">
 
               <% if (row.status==='Có đơn' || row.status==='Đang giao hàng' ) { %>

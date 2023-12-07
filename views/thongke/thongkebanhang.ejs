@@ -102,21 +102,8 @@
 
 
     <% }) %>
-
-
-        <% 
-        let total = 0;
-        listSatistic.forEach((row) => {
-          const price = row.pricenhap;
-          const slnhap = row.soluongnhap;
-          const tongtiennhap = price * slnhap;
-          total += tongtiennhap;
-        });
-      %>
-  
-   <!-- Sử dụng giá trị total từ biến locals -->
-    <p style="font-weight: bold;">Tổng tiền nhập hàng: <%= numberWithCommas(total) %>đ</p>
-
+ 
+   <p style="font-weight: bold;">Tổng tiền nhập hàng: <%= numberWithCommas(total) %>đ</p>
     <p style="font-weight: bold;">Tổng tiền bán hàng: đ</p>
 
       
@@ -127,13 +114,13 @@
 <div style="margin-left: 850px; margin-top: 50px;">
   <nav aria-label="Page navigation example">
     <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page-1&limit=5">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=1&limit=5">1</a></li>
-      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=2&limit=5">2</a></li>
-      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=3&limit=5">3</a></li>
-      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=4&limit=5">4</a></li>
-      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=5&limit=5">5</a></li>
-      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page+1&limit=5">Next</a></li>
+      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page-1&limit=10">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=1&limit=10">1</a></li>
+      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=2&limit=10">2</a></li>
+      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=3&limit=10">3</a></li>
+      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=4&limit=10">4</a></li>
+      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=5&limit=10">5</a></li>
+      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page+1&limit=10">Next</a></li>
     </ul>
   </nav>
 </div>

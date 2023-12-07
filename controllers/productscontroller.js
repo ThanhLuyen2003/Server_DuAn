@@ -23,16 +23,6 @@ exports.list = async (req, res, next) => {
 
         var listProducts = await myMD.productModel.find(dieu_kien_loc).skip(skip).limit(limit).sort(sortOptions);
         var totalProducts = await myMD.productModel.countDocuments();
-
-        // if (listProducts.length === 0) {
-        //     // Thông báo khi không tìm thấy dữ liệu
-        //     return res.render('product/list', {
-        //         message: 'Không tìm thấy dữ liệu.',
-        //         currentPage: page,
-        //         totalPages: Math.ceil(totalProducts / limit),
-        //         totalProducts
-        //     });
-        // }
     } catch (err) {
         console.error('Error retrieving users:', err);
         return res.status(500).json({ error: 'Internal server error' });
