@@ -4,12 +4,24 @@ var fs = require ('fs');
 
 exports.thongkebanhang = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+    const limit = parseInt(req.query.limit) || 5;
     const sortBy = req.query.sortBy || 'name';
     const sortOrder = req.query.sortOrder || 'asc';
+    // tìm kiếm
+    var thong_bao = null;
     var dieu_kien_loc = null;
-    if (typeof(req.query.hangnhapSearch) !== 'undefined') {
-      dieu_kien_loc = { name: { $regex: new RegExp(req.query.hangnhapSearch, 'i') } };
+    if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
+      // Tìm kiếm theo cột 'name'
+      dieu_kien_loc = { 
+          $or: [
+              { name: { $regex: new RegExp(req.query.billSearch, 'i') } },
+              { soluongnhap: parseFloat(req.query.billSearch) || 0 },
+              { price: { $regex: new RegExp(req.query.billSearch, 'i') } },
+              { pricenhap: { $regex: new RegExp(req.query.billSearch, 'i') } }
+          ]
+      };
+    } else {
+      thong_bao = "Không có dữ liệu";
     }
     
     try {
@@ -42,33 +54,8 @@ exports.thongkebanhang = async (req, res, next) => {
       console.error('Error retrieving users:', err);
       res.status(500).json({ error: 'Internal server error' });
     }
-  }
-
-exports.editbanhang = async (req, res, next) => {
-    let msg = '';
-    var listSatistic = await myMD.productModel.find();
-
-    let idp = req.params.idp;
-    let objP = await myMD.productModel.findById(idp);
-    if (req.method == 'POST') {
-
-        let objP = new myMD.productModel();
-
-        objP.soluongnhap = req.body.soluongnhap;
-        objP.name = req.body.name;
-        objP.pricenhap = req.body.pricenhap;
-        objP.price = req.body.price;
-        objP._id = idp;
-        try {
-            await myMD.productModel.findByIdAndUpdate({ _id: idp }, objP);
-            msg = ' Đã sửa';
-        } catch (error) {
-            msg = ' Error' + error.message;
-            console.log(error);
-        }
-    }
-    res.render('thongke/editthongkebanhang', { msg: msg, listSatistic: listSatistic, objP: objP });
 }
+
 
 
 

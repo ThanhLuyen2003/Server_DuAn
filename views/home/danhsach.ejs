@@ -2,27 +2,21 @@
 
   <div class="container mt-3 mb-3 ">
     <h2 class="mb-5 d-flex justify-content-center">DANH SÁCH LỊCH ĐẶT</h2>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse d-flex" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-grow-1">
-            <div class="input-group rounded flex-grow-1">
-              <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-                aria-describedby="search-addon" />
-              <span class="input-group-text border-0" id="search-addon">
-                <i class="fas fa-search"></i>
-              </span>
-            </div>
-          </ul>
-          <button class="btn btn-warning d-flex align-items-center" type="button" data-bs-toggle="collapse"
+        <form class="d-flex" role="search"> 
+
+          <button style="margin-right: 20px;" class="btn btn-warning d-flex align-items-center" type="button" data-bs-toggle="collapse"
             data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
             <div class="pe-1">Bộ lọc</div><i class="fa-solid fa-filter"></i>
           </button>
-        </div>
+              <!-- thanh tìm kiếm -->
+            <form class="form-inline my-2 my-lg-0 d-flex flex-row" action="/search" method="GET">
+              <button style="height: 38px;" class="btn btn-warning my-2 my-sm-0" type="submit">Tìm</button>
+              <input style="height: 38px; width:1100px; margin-left: 5px;" class="form-control mr-sm-2" type="text" name="billSearch" id="searchInput" placeholder="Tìm kiếm..." aria-label="Search">
+            </form>
+
+        </form>
       </div>
     </nav>
   </div>
@@ -84,6 +78,9 @@
 
 
   <div class="container">
+    <% if (listBill.length === 0) { %>
+      <p style="text-align: center; font-size: 30px;">Không có dữ liệu</p>
+    <% } else { %>
     <table class="table table-bordered table-striped">
       <tr>
         <th>Tên khách hàng</th>
@@ -228,6 +225,7 @@
         </tr>
         <% } ) %>
     </table>
+    <% } %>
   </div>
 
 

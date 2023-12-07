@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
+
+
 const useSchema = new mongoose.Schema({
-
-
     nameSalon: { type: String, require: true },
     addressSalon: { type: String, require: true },
     hour: { type: String, require: true },
@@ -13,7 +13,6 @@ const useSchema = new mongoose.Schema({
     status: { type: String, require: true },
     note: { type: String, require: true},
     idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'userModel', require: true }
-
 
 },
     {

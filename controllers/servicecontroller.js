@@ -7,10 +7,25 @@ exports.list = async (req, res, next) => {
     //      const sortBy = req.query.sortBy || 'name';
     //   const sortOrder = req.query.sortOrder || 'asc';
 
+    // tìm kiếm
+    var thong_bao = null;
     var dieu_kien_loc = null;
-    if(typeof(req.query.servit2)!= 'undefined'){
-        dieu_kien_loc = { name: { $regex: new RegExp(req.query.servit2, 'i') } };
+    
+    if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
+        // Tìm kiếm theo cột 'name'
+        dieu_kien_loc = { 
+            $or: [
+                { name: { $regex: new RegExp(req.query.billSearch, 'i') } },
+                { price: { $regex: new RegExp(req.query.billSearch, 'i') } },
+                { type: { $regex: new RegExp(req.query.billSearch, 'i') } },
+                { describe: { $regex: new RegExp(req.query.billSearch, 'i') } }
+            ]
+        };
+    } else {
+        thong_bao = "Không có dữ liệu";
     }
+    
+    
     console.log("Search Parameter:", req.query.productsp222);
     console.log("Filter Condition:", dieu_kien_loc);
 

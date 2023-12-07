@@ -8,10 +8,25 @@ exports.list = async (req, res, next) => {
   const sortBy = req.query.sortBy || 'name';
   const sortOrder = req.query.sortOrder || 'asc';
 
+  // tìm kiếm
+  var thong_bao = null;
   var dieu_kien_loc = null;
-  if (typeof (req.query.userSearch) !== 'undefined') {
-    dieu_kien_loc = { name: { $regex: new RegExp(req.query.userSearch, 'i') } };
+  if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
+    // Tìm kiếm theo cột 'name'
+    dieu_kien_loc = { 
+        $or: [
+            { name: { $regex: new RegExp(req.query.billSearch, 'i') } },
+            { phone: { $regex: new RegExp(req.query.billSearch, 'i') } },
+            { email: { $regex: new RegExp(req.query.billSearch, 'i') } },
+            { address: { $regex: new RegExp(req.query.billSearch, 'i') } },
+            { otp: { $regex: new RegExp(req.query.billSearch, 'i') } },
+            { balance: parseFloat(req.query.billSearch) || 0 }
+        ]
+    };
+  } else {
+    thong_bao = "Không có dữ liệu";
   }
+  
   try {
     const sortOptions = {};
     sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;

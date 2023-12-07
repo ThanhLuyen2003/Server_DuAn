@@ -50,6 +50,9 @@
   </div>
 
   <div class="container">
+    <% if (listOders.length === 0) { %>
+      <p style="text-align: center; font-size: 30px;">Không có dữ liệu</p>
+    <% } else { %>
     <table id="productTable" class="table table-bordered table-striped">
       <tr class="text-sm-center">
         <th style="width: 30px;"> Số điện thoại</th>
@@ -63,7 +66,7 @@
         <th></th>
        
       </tr>
-
+       
       <% listOders.forEach( ( row )=>{ %>
         <tr>
           <td>
@@ -171,6 +174,7 @@
 
         
     </table>
+    <% } %>
   </div> 
 
 

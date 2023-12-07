@@ -7,10 +7,27 @@ exports.list = async (req, res, next) => {
   const skip = (page - 1) * limit;
   const sortBy = req.query.sortBy || 'nameU';
   const sortOrder = req.query.sortOrder || 'asc';
+
+  var thong_bao = null;
   var dieu_kien_loc = null;
-  if (typeof (req.query.billSearch) !== 'undefined') {
-    dieu_kien_loc = { nameU: { $regex: new RegExp(req.query.billSearch, 'i') } };
+  if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
+    // Tìm kiếm theo cột 'name'
+    dieu_kien_loc = { 
+        $or: [
+            { nameU: { $regex: new RegExp(req.query.billSearch, 'i') } },
+            { phoneU: { $regex: new RegExp(req.query.billSearch, 'i') } },
+            { price: { $regex: new RegExp(req.query.billSearch, 'i') } },
+            { addressU: { $regex: new RegExp(req.query.billSearch, 'i') } },
+            { message: { $regex: new RegExp(req.query.billSearch, 'i') } },
+            { addressU: { $regex: new RegExp(req.query.billSearch, 'i') } },
+            { idUser: { $regex: new RegExp(req.query.billSearch, 'i') } },
+            { status: { $regex: new RegExp(req.query.billSearch, 'i') } }
+        ]
+    };
+  } else {
+    thong_bao = "Không có dữ liệu";
   }
+
   try {
     const sortOptions = {};
     sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;

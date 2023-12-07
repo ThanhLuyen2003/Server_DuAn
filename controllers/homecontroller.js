@@ -3,10 +3,32 @@ const moment = require('moment');
 
 exports.home = async (req, res, next) => {
   let loc = null;
+  var thong_bao = null;
+  var dieu_kien_loc = null;
+  if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
+      // Tìm kiếm theo cột 'name'
+      dieu_kien_loc = { 
+          $or: [
+              { nameSalon: { $regex: req.query.billSearch, $options: 'i' } },
+              { addressSalon: { $regex: req.query.billSearch, $options: 'i' } },
+              { day: { $regex: req.query.billSearch, $options: 'i' } },
+              { hour: { $regex: req.query.billSearch, $options: 'i' } },
+              { phone: { $regex: req.query.billSearch, $options: 'i' } },
+              { status: { $regex: req.query.billSearch, $options: 'i' } },
+              { price: { $regex: req.query.billSearch, $options: 'i' } },
+              
+              { note: { $regex: req.query.billSearch, $options: 'i' } }
+          ]
+      };
+  } else {
+      thong_bao = "Không có dữ liệu";
+  }
 
   if (typeof (req.query.phone) != 'undefined') {
     loc = { phone: req.query.phone };
   }
+
+  
 
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 5;
@@ -14,8 +36,7 @@ exports.home = async (req, res, next) => {
 
   try {
     // Lấy danh sách lịch đặt và sắp xếp theo ngày và giờ
-    let listBill = await billDB.find(loc).sort({ day: 1, hour: 1 }).skip(skip).limit(limit).populate('idUser');
-
+    let listBill = await billDB.find(Object.assign({}, loc, dieu_kien_loc)).sort({ day: 1, hour: 1 }).skip(skip).limit(limit).populate('idUser');
     // Lấy ngày hiện tại
     const currentDate = moment().format('YYYY-MM-DD');
 

@@ -10,10 +10,27 @@ exports.list = async (req, res, next) => {
     const sortBy = req.query.sortBy || 'name';
     const sortOrder = req.query.sortOrder || 'asc';
 
+    // tìm kiếm
+    var thong_bao = null;
     var dieu_kien_loc = null;
-    if(typeof(req.query.productsp222) !== 'undefined'){
-        dieu_kien_loc = { name: { $regex: new RegExp(req.query.productsp222, 'i') } };
-    }
+    if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
+        // Tìm kiếm theo cột 'name'
+        dieu_kien_loc = { 
+            $or: [
+                { name: { $regex: new RegExp(req.query.billSearch, 'i') } },
+                { soluongnhap: parseFloat(req.query.billSearch) || 0 },
+                { price: { $regex: new RegExp(req.query.billSearch, 'i') } },
+                { trademark: { $regex: new RegExp(req.query.billSearch, 'i') } },
+                { pricenhap: { $regex: new RegExp(req.query.billSearch, 'i') } },
+                { describe: { $regex: new RegExp(req.query.billSearch, 'i') } },
+                { ingredient: { $regex: new RegExp(req.query.billSearch, 'i') } },
+                { type: { $regex: new RegExp(req.query.billSearch, 'i') } }
+            ]
+        };
+      } else {
+        thong_bao = "Không có dữ liệu";
+      }
+    
     console.log("Search Parameter:", req.query.productsp222);
     console.log("Filter Condition:", dieu_kien_loc);
     

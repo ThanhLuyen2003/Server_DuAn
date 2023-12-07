@@ -4,7 +4,6 @@
     return number.toLocaleString();
   }
 %>
-
 <%- include('../inc/header.ejs') %>
 
 <div class="container">
@@ -28,7 +27,7 @@
           
         </div>
         <form class="form-inline my-2 my-lg-0" method="post" action="">
-          <input style="height: 38px; margin-right: 5px;" class="form-control mr-sm-2" type="search" name="productsp222" id="searchInput" placeholder="Nhập tên sản phẩm..." aria-label="Search">
+          <input style="height: 38px; margin-right: 5px;" class="form-control mr-sm-2" type="search" name="billSearch" id="searchInput" placeholder="Nhập tên sản phẩm..." aria-label="Search">
           <button style="height: 38px;" class="btn btn-warning my-2 my-sm-0" type="submit">Tìm</button>
       </form>
       
@@ -40,17 +39,20 @@
 </div>
 
 <div class="container">
+  <% if (listSatistic.length === 0) { %>
+    <p style="text-align: center; font-size: 30px;">Không có dữ liệu</p>
+  <% } else { %>
   <table id="productTable" class="table table-bordered table-striped">
     <tr class="text-sm-center">
-      <th style="width: 300px;">Tên sản phẩm</th>
-      <th style="width: 30px;"> Số lượng nhập</th>
+      <th style="width: 400px;">Tên sản phẩm</th>
+      <th style="width: 150px;"> Số lượng nhập</th>
       <th>Giá nhập</th>
       <th>Tổng tiền nhập</th>
       <th>Số lượng đã bán</th>
       <th>Giá bán</th>
       <th>Tổng tiền bán</th>
       <th>Trạng thái</th>
-      <th></th>
+
     </tr>
 
     <% listSatistic.forEach( ( row )=>{  %>
@@ -90,13 +92,7 @@
             Còn hàng
           <% } %>
         </td>
-        <td>
-            <div class="d-flex">
-                <a href="/statistic/thongkebanhang/edit/<%=row._id%>">
-                  <button type="button" class="btn btn-warning" style="margin-right: 10px;">Sửa</button>
-                </a> 
-            </div>
-        </td>
+
 
       </tr>
 
@@ -107,7 +103,8 @@
     <p style="font-weight: bold;">Tổng tiền bán hàng: đ</p>
 
       
-  </table>   
+  </table> 
+  <% } %>  
 </div> 
 
 
