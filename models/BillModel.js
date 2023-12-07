@@ -8,11 +8,11 @@ const useSchema = new mongoose.Schema({
     day: { type: String, require: true },
     phone: { type: String, require: true },
     imageSalon: { type: String, require: true },
-    services: { type: String, require: true },
+    services: { type: Array, require: true },
     price: { type: String, require: true },
     status: { type: String, require: true },
-    note: { type: String, },
-    idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'userModel' }
+    note: { type: String, require: true},
+    idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'userModel', require: true }
 
 
 },
