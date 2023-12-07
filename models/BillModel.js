@@ -22,3 +22,4 @@ const useSchema = new mongoose.Schema({
 
 const Bill = mongoose.model('Bill', useSchema);
 module.exports = Bill;
+
