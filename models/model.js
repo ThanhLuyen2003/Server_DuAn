@@ -39,9 +39,9 @@ const UsersSchema = new db.mongoose.Schema(
         pass: { type: String, required: true },
         avatar: { type: String, default: "" },
         address: { type: String, default: "" },
-        otp: { type: String, default: "" },
-        balance:{type:Number,default:0},
-        
+        otp: { type: String, default: "" },       
+        balance: { type: Number, default: 0 }
+
     },
     {
         collection: 'AccountUsers'
@@ -99,11 +99,13 @@ let CommentModel = db.mongoose.model('commentModel', commentModel)
 
 
 const billDetailModel = new db.mongoose.Schema({
-    idSalon: { type: String, required: true },
+    idSalon: { type: mongoose.Schema.Types.ObjectId, ref: 'salonModel', required: true },
     hour: { type: String, required: true },
     day: { type: String, required: true },
     idServices: { type: Array, required: true },
-    idUser: { type: String, required: true }
+    idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'userModel', required: true },
+    status: { type: String, required: true },
+    note: { type: String, required: true },
 
 },
     {
@@ -157,7 +159,7 @@ let OrderModel = db.mongoose.model('orderModel', orderModel)
 
 // model hàng nhập về
 const importModel = new db.mongoose.Schema({
-    soluongnhap: { type: String, required: true},
+    soluongnhap: { type: String, required: true },
     name: { type: String, required: true },
     price: { type: String, required: true },
     img: { type: String, required: true },
@@ -181,9 +183,9 @@ const staffSchema = new db.mongoose.Schema({
     role: { type: String, require: true },
     otherInfo: { type: String, require: true },
 },
-{
-    collection: 'staff'
-})
+    {
+        collection: 'staff'
+    })
 let StaffModel = db.mongoose.model('staff', staffSchema);
 
 const billMoney=new db.mongoose.Schema({

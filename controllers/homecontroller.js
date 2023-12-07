@@ -1,7 +1,5 @@
 var billDB = require('../models/BillModel');
-var fs = require('fs');
 const moment = require('moment');
-const { render } = require('../app');
 
 exports.home = async (req, res, next) => {
   let loc = null;
@@ -53,7 +51,6 @@ exports.home = async (req, res, next) => {
         // Kiểm tra và cập nhật trạng thái
         if (minutesDiff > 30) {
           bill.status = 'Đã hủy lịch';
-          // bill.note = ',Khách không đến theo lịch hẹn (quá 30p)';
         } else if (minutesDiff > 10) {
           bill.status = 'Khách đến muộn';
         }
@@ -63,7 +60,7 @@ exports.home = async (req, res, next) => {
       }
     }
 
-    const totalBill = await billDB.countDocuments();
+    const totalBill = await billDB.countDocuments(loc);
 
     res.render('home/danhsach', {
       listBill,

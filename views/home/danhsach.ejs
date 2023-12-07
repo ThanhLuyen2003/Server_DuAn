@@ -25,226 +25,223 @@
         </div>
       </div>
     </nav>
+  </div>
 
-    <div class="collapse" id="collapseExample">
-      <div class="card card-body">
-        <!-- <form id="filterForm" action="/home/filter_data" method="post" enctype="multipart/form-data">
-          <div class="d-flex align-items-center">
-            <div>
-              <label for="startDate">Từ ngày:</label>
-              <div class="input-group">
-                <input type="date" class="form-control" name="startDay">
-              </div>
-            </div>
-            <div class="me-4 ms-4"><i class="fa-solid fa-arrow-right"></i></div>
-            <div>
-              Đến ngày:
-              <div class="input-group">
-                <input type="date" class="form-control" name="endDay">
-              </div>
-            </div>
-          </div>
-
-          <div class="d-flex align-items-center">
-            <div class="me-2">Theo trạng thái: </div>
-            <div class="form-check m-3">
-              <input class="form-check-input" type="checkbox" value="completed" id="success" name="statusSuccess">
-              <label class="form-check-label" for="success" style="color: rgb(0, 255, 68);">
-                Đã hoàn thành
-              </label>
-            </div>
-            <div class="form-check m-3">
-              <input class="form-check-input" type="checkbox" value="inService" id="inService" name="statusInService">
-              <label class="form-check-label" for="inService" style="color: rgb(86, 39, 255);">
-                Khách đang cắt
-              </label>
-            </div>
-            <div class="form-check m-3">
-              <input class="form-check-input" type="checkbox" value="late" id="late" name="statusLate">
-              <label class="form-check-label" for="late" style="color: rgb(255, 0, 0);">
-                Khách đến muộn
-              </label>
-            </div>
-            <div class="form-check m-3">
-              <input class="form-check-input" type="checkbox" value="canceled" id="cancel" name="statusCanceled">
-              <label class="form-check-label" for="cancel" style="color: rgb(255, 0, 0);">
-                Đã hủy
-              </label>
-            </div>
-          </div>
-
+  <div class="collapse container" id="collapseExample">
+    <div class="card card-body">
+      <form id="filterForm" action="/home/filter_data" method="post" enctype="multipart/form-data">
+        <div class="d-flex align-items-center">
           <div>
-            <button class="btn btn-warning" type="submit">Tìm kết quả</button>
+            <label for="startDate">Từ ngày:</label>
+            <div class="input-group">
+              <input type="date" class="form-control" name="startDay">
+            </div>
           </div>
-        </form> -->
-        BUG CHƯA SỬA ĐƯỢC
-      </div>
+          <div class="me-4 ms-4"><i class="fa-solid fa-arrow-right"></i></div>
+          <div>
+            Đến ngày:
+            <div class="input-group">
+              <input type="date" class="form-control" name="endDay">
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <div class="me-2">Theo trạng thái: </div>
+          <div class="form-check m-3">
+            <input class="form-check-input" type="checkbox" value="completed" id="success" name="statusSuccess">
+            <label class="form-check-label" for="success" style="color: rgb(0, 255, 68);">
+              Đã hoàn thành
+            </label>
+          </div>
+          <div class="form-check m-3">
+            <input class="form-check-input" type="checkbox" value="inService" id="inService" name="statusInService">
+            <label class="form-check-label" for="inService" style="color: rgb(86, 39, 255);">
+              Khách đang cắt
+            </label>
+          </div>
+          <div class="form-check m-3">
+            <input class="form-check-input" type="checkbox" value="late" id="late" name="statusLate">
+            <label class="form-check-label" for="late" style="color: rgb(255, 0, 0);">
+              Khách đến muộn
+            </label>
+          </div>
+          <div class="form-check m-3">
+            <input class="form-check-input" type="checkbox" value="canceled" id="cancel" name="statusCanceled">
+            <label class="form-check-label" for="cancel" style="color: rgb(255, 0, 0);">
+              Đã hủy
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <button class="btn btn-warning" type="submit">Tìm kết quả</button>
+        </div>
+      </form>
+      BUG CHƯA SỬA ĐƯỢC
     </div>
+  </div>
 
 
-    <div class="container">
-      <table class="table table-bordered table-striped">
+  <div class="container">
+    <table class="table table-bordered table-striped">
+      <tr>
+        <th>Tên khách hàng</th>
+        <th>Dịch vụ sử dụng</th>
+        <th>Giờ đặt</th>
+        <th>Ngày đặt</th>
+        <th>SĐT Khách Hàng</th>
+        <th>Địa chỉ salon</th>
+        <th>Chi phí</th>
+        <th style="width: 95px;">Trạng thái</th>
+        <th>Ghi chú</th>
+        <th style="width: 120px;"></th>
+      </tr>
+
+      <% listBill.forEach( ( row )=>{ %>
         <tr>
-          <th>Tên Salon</th>
-          <th>Địa chỉ</th>
-          <th>Giờ</th>
-          <th>Ngày</th>
-          <th>SĐT</th>
-          <th>Ảnh Salon</th>
-          <th>Dịch vụ</th>
-          <th>Chi phí</th>
-          <th style="width: 95px;">Trạng thái</th>
-          <th style="width: 120px;">Người đặt</th>
-          <th>Ghi chú</th>
-          <th style="width: 120px;"></th>
-        </tr>
-
-        <% listBill.forEach( ( row )=>{ %>
-          <tr>
-            <td>
-              <%= row.nameSalon %>
-            </td>
-            <td>
-              <%= row.addressSalon %>
-            </td>
-            <td>
-              <%= row.hour %>
-            </td>
-            <td>
-              <%= row.day %>
-            </td>
-            <td>
-              <%= row.phone %>
-            </td>
-            <td> <img src="<%=row.imageSalon %>" alt="" style="width: 60px; height: 60px;"></td>
-            <td>
-              <%= row.services %>
-            </td>
-            <td>
-              <%= row.price %>
-            </td>
-            <!-- HIỂN THỊ TRẠNG THÁI -->
-            <td>
-              <% if (row.status==='Sắp tới' ) { %>
-                <p style="color: rgb(187, 181, 0);">
+          <td>
+            <%= row.idUser.name %>
+          </td>
+          <td>
+            <% 
+              var tenDichVu = row.services.map(dichVu => dichVu.name).join(', ');
+            %>
+            <%= tenDichVu %>
+          </td>
+          <td>
+            <%= row.hour %>
+          </td>
+          <td>
+            <%= row.day %>
+          </td>
+          <td>
+            <%= row.idUser.phone %>
+          </td>
+          <td>  
+            <%= row.nameSalon %>
+          </td>
+          <td>
+            <%= row.price %>
+          </td>
+          <!-- HIỂN THỊ TRẠNG THÁI -->
+          <td>
+            <% if (row.status==='Sắp tới' ) { %>
+              <p style="color: rgb(187, 181, 0);">
+                <%= row.status %>
+              </p>
+              <% } else if (row.status==='Đã hoàn thành' ) { %>
+                <p style="color: rgb(0, 255, 68);">
                   <%= row.status %>
                 </p>
-                <% } else if (row.status==='Đã hoàn thành' ) { %>
-                  <p style="color: rgb(0, 255, 68);">
+                <% } else if (row.status==='Đã hủy lịch' || row.status==='Khách đến muộn' ) { %>
+                  <p style="color: rgb(255, 0, 0);">
                     <%= row.status %>
                   </p>
-                  <% } else if (row.status==='Đã hủy lịch' || row.status==='Khách đến muộn' ) { %>
-                    <p style="color: rgb(255, 0, 0);">
+                  <% } else if (row.status==='Khách đang cắt' ) { %>
+                    <p style="color: rgb(86, 39, 255);">
                       <%= row.status %>
                     </p>
-                    <% } else if (row.status==='Khách đang cắt' ) { %>
-                      <p style="color: rgb(86, 39, 255);">
-                        <%= row.status %>
-                      </p>
-                      <% } %>
-            </td>
-            <td>
-              <%= row.idUser.name %>
-            </td>
-            <!-- PHẦN GHI CHÚ -->
-            <td>
-              <%= row.note %>
-                <a href="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal<%= row._id %>" data-bs-whatever="@getbootstrap"><i class="fa-solid fa-file-pen"></i></a>
-                <div class="modal fade" id="exampleModal<%= row._id %>" tabindex="-1" aria-labelledby="exampleModalLabel"
-                  aria-hidden="true" data-bs-target="#exampleModal<%= row._id %>">
-                  <div class="modal-dialog">
-                    <form id="editNoteForm" action="/home/add-note/<%= row._id %>" method="POST">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="exampleModalLabel">Chỉnh sửa ghi chú</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="mb-3">
-                            <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea class="form-control" id="message-text" name="textNote"></textarea>
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-success">Xác nhận</button>
+                    <% } %>
+          </td>
+          <!-- PHẦN GHI CHÚ -->
+          <td>
+            <%= row.note %>
+              <a href="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal<%= row._id %>"
+                data-bs-whatever="@getbootstrap"><i class="fa-solid fa-file-pen"></i></a>
+              <div class="modal fade" id="exampleModal<%= row._id %>" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true" data-bs-target="#exampleModal<%= row._id %>">
+                <div class="modal-dialog">
+                  <form id="editNoteForm" action="/home/add-note/<%= row._id %>" method="POST">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Chỉnh sửa ghi chú</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="mb-3">
+                          <label for="message-text" class="col-form-label">Message:</label>
+                          <textarea class="form-control" id="message-text" name="textNote"></textarea>
                         </div>
                       </div>
-                    </form>
-
-                  </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Xác nhận</button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
-            </td>
-            <!-- PHẦN XÁC NHẬN TRẠNG THÁI -->
-            <td>
-              <div>
-                <% if (row.status==='Sắp tới' || row.status==='Khách đang cắt' || row.status==='Khách đến muộn' ) { %>
-                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal<%= row._id %>">
-                    Xác nhận
-                  </button>
-                  <% } else if (row.status==='Đã hoàn thành' ) { %>
-                    <% } else if (row.status==='Đã hủy lịch' ) { %>
-                      <% } %>
+              </div>
+          </td>
+          <!-- PHẦN XÁC NHẬN TRẠNG THÁI -->
+          <td>
+            <div>
+              <% if (row.status==='Sắp tới' || row.status==='Khách đang cắt' || row.status==='Khách đến muộn' ) { %>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                  data-bs-target="#accept<%= row._id %>">
+                  Xác nhận
+                </button>
+                <% } else if (row.status==='Đã hoàn thành' ) { %>
+                  <% } else if (row.status==='Đã hủy lịch' ) { %>
+                    <% } %>
 
-                        <div class="modal fade" id="exampleModal<%= row._id %>" tabindex="-1"
-                          aria-labelledby="exampleModalLabel" aria-hidden="true"
-                          data-bs-target="#exampleModal<%= row._id %>">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Xác nhận lịch hẹn</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                  aria-label="Close"></button>
+                      <div class="modal fade" id="accept<%= row._id %>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true"
+                        data-bs-target="#accept<%= row._id %>">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Xác nhận lịch hẹn</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                            </div>
+                            <% if (row.status==='Sắp tới' ) { %>
+                              <div class="modal-body">
+                                Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> - <%=
+                                      row.nameSalon %> vào sử dụng dịch vụ không
                               </div>
-                              <% if (row.status==='Sắp tới' ) { %>
+                              <div class="modal-footer">
+                                <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác nhận</a>
+                              </div>
+                              <% }else if(row.status==='Khách đang cắt' ) { %>
                                 <div class="modal-body">
                                   Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> - <%=
-                                        row.nameSalon %> vào sử dụng dịch vụ không
+                                        row.nameSalon %> Hoàn thành dịch vụ.
                                 </div>
                                 <div class="modal-footer">
                                   <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác nhận</a>
                                 </div>
-                                <% }else if(row.status==='Khách đang cắt' ) { %>
+                                <% }else if(row.status==='Khách đến muộn' ) { %>
                                   <div class="modal-body">
                                     Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> - <%=
-                                          row.nameSalon %> Hoàn thành dịch vụ.
+                                          row.nameSalon %> Vào sử dụng dịch vụ
                                   </div>
                                   <div class="modal-footer">
-                                    <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác nhận</a>
+                                    <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác
+                                      nhận</a>
                                   </div>
-                                  <% }else if(row.status==='Khách đến muộn' ) { %>
-                                    <div class="modal-body">
-                                      Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> - <%=
-                                            row.nameSalon %> Vào sử dụng dịch vụ
-                                    </div>
-                                    <div class="modal-footer">
-                                      <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác
-                                        nhận</a>
-                                    </div>
-                                    <% } %>
-                            </div>
+                                  <% } %>
                           </div>
                         </div>
-              </div>
-            </td>
-          </tr>
+                      </div>
+            </div>
+          </td>
+        </tr>
+        <% } ) %>
+    </table>
+  </div>
 
 
-          <% } ) %>
-      </table>
-    </div>
+  <div style="margin-left: 850px; margin-top: 50px;">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=1&limit=5">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=1&limit=5">1</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=2&limit=5">2</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=3&limit=5">3</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=4&limit=5">4</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=4&limit=5">Next</a></li>
+      </ul>
+    </nav>
+  </div>
 
-
-    <div style="margin-left: 850px; margin-top: 50px;">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=1&limit=5">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=1&limit=5">1</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=2&limit=5">2</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=3&limit=5">3</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=4&limit=5">4</a></li>
-          <li class="page-item"><a class="page-link" href="http://localhost:3000/home/?page=4&limit=5">Next</a></li>
-        </ul>
-      </nav>
-    </div>
-
-    <%- include('../inc/footer.ejs') %>
+  <%- include('../inc/footer.ejs') %>
