@@ -292,5 +292,36 @@ app.put('/traHang/:id', (req, res) => {
 
 })
 
+app.post('/addBillMoney/:idUser', async (req, res) => {
+    const { soDu, date, time,tongSoDu } = req.body;
+    const idUser = req.params.idUser;
 
+    try {
+        // Create a new BillMoney instance
+        const newBillMoney = new md.BillMoney({
+            idUser,
+            soDu,
+            date,
+            time,
+            tongSoDu
+
+        });
+        // Save the new BillMoney record to the database
+        await newBillMoney.save();
+        // Respond with the newly created BillMoney record
+        res.status(200).json(newBillMoney);
+    } catch (error) {
+        // Handle any errors that occur during the process
+        res.status(500).json({ error: error.message });
+    }
+});
+app.get('/getBillMoney/:idUser',async(req, res)=>{
+    const idUser = req.params.idUser;
+    try {
+        const billMoneyRecords = await md.BillMoney.find({ idUser: idUser });
+        res.status(200).json(billMoneyRecords);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+})
 module.exports = app;
