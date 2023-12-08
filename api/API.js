@@ -293,7 +293,7 @@ app.put('/traHang/:id', (req, res) => {
 })
 
 app.post('/addBillMoney/:idUser', async (req, res) => {
-    const { soDu, date, time,tongSoDu } = req.body;
+    const { soDu, date, time, tongSoDu } = req.body;
     const idUser = req.params.idUser;
 
     try {
@@ -304,7 +304,6 @@ app.post('/addBillMoney/:idUser', async (req, res) => {
             date,
             time,
             tongSoDu
-
         });
         // Save the new BillMoney record to the database
         await newBillMoney.save();
@@ -315,13 +314,38 @@ app.post('/addBillMoney/:idUser', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-app.get('/getBillMoney/:idUser',async(req, res)=>{
+
+app.get('/getBillMoney/:idUser', async (req, res) => {
     const idUser = req.params.idUser;
     try {
-        const billMoneyRecords = await md.BillMoney.find({ idUser: idUser });
+        const billMoneyRecords = await md.BillMoney.find({ idUser: idUser }).sort({ _id: -1 });
         res.status(200).json(billMoneyRecords);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 })
+
+app.put('/changeBalance/:idUser/:balance', (req, res) => {
+
+    const balance = req.params.balance;
+    const id = req.params.idUser;
+
+    md.userModel.updateOne({ _id: id }, { $set: { balance: balance } })
+        .then((data) => {
+            if (data) {
+                res.status(200).json({
+                    message: "Dữ liệu đã Cập nhật",
+                    data: data,
+                });
+            } else {
+                res.status(404).json({ error: "Không tìm thấy dữ liệu" });
+            }
+        })
+        .catch((error) => {
+            res.status(500).json({ error: "Đã xảy ra lỗi khi cập nhật dữ liệu" });
+        });
+
+
+})
+
 module.exports = app;
