@@ -39,7 +39,7 @@ const UsersSchema = new db.mongoose.Schema(
         pass: { type: String, required: true },
         avatar: { type: String, default: "" },
         address: { type: String, default: "" },
-        otp: { type: String, default: "" },       
+        otp: { type: String, default: "" },
         balance: { type: Number, default: 0 }
 
     },
@@ -149,6 +149,7 @@ const orderModel = new db.mongoose.Schema({
     products: { type: Array, require: true },
     time: { type: String, require: true },
     status: { type: String, require: true },
+    note: { type: String, require: true }
 },
     {
         collection: 'Order'
@@ -188,14 +189,14 @@ const staffSchema = new db.mongoose.Schema({
     })
 let StaffModel = db.mongoose.model('staff', staffSchema);
 
-const billMoney=new db.mongoose.Schema({
-    idUser:{ type: String, required: true },
-    soDu:{ type: String, required: true },
-    date:{ type: String, required: true },
-    time:{ type: String, required: true },
-    tongSoDu:{ type: String, required: true },
-},{
-    collection:"BillMoney"
+const billMoney = new db.mongoose.Schema({
+    idUser: { type: String, required: true },
+    soDu: { type: String, required: true },
+    date: { type: String, required: true },
+    time: { type: String, required: true },
+    tongSoDu: { type: String, required: true },
+}, {
+    collection: "BillMoney"
 })
 let BillMoney = db.mongoose.model('BillMoney', billMoney);
-module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel, CommentModel, BillDetailModel, CartModel, AdminModel, OrderModel, StaffModel, ImportModel,BillMoney };
+module.exports = { salonModel, timeModel, userModel, productModel, ServiceModel, CommentModel, BillDetailModel, CartModel, AdminModel, OrderModel, StaffModel, ImportModel, BillMoney };
