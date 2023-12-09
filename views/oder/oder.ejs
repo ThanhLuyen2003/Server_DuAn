@@ -27,7 +27,6 @@
                 aria-expanded="false">
                 Sắp xếp theo
               </button>
-              
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="">Tên</a></li>
                 <li><a class="dropdown-item" href="">Giá</a></li>
@@ -47,12 +46,13 @@
       </div>
       
     </nav>
-  </div>
+</div>
 
   <div class="container">
     <% if (listOders.length === 0) { %>
       <p style="text-align: center; font-size: 30px;">Không có dữ liệu</p>
     <% } else { %>
+
     <table id="productTable" class="table table-bordered table-striped">
       <tr class="text-sm-center">
         <th style="width: 30px;"> Số điện thoại</th>
@@ -64,7 +64,6 @@
         <th>Thời gian đặt</th>
         <th>Trạng thái</th>
         <th></th>
-       
       </tr>
        
       <% listOders.forEach( ( row )=>{ %>
@@ -114,6 +113,10 @@
               <p style="color: red; font-weight: bold;">
                 <%= row.status %>
               </p>
+            <% } else if (row.status==='Trả hàng') { %>
+              <p style="color: red; font-weight: bold;">
+              <%= row.status %>
+              </p>
             <% } %>
           </td>
           
@@ -147,7 +150,7 @@
 
                               <div class="modal-footer">
                                     <a class="btn btn-danger" href="/oder/huyoders/<%= row._id%>">Hủy đơn</a>
-                                    <a class="btn btn-success" href="/oder/duyetoders/<%= row._id%>">Xác nhận</a>
+                                    <a class="btn btn-success" href="/oder/duyetoders/<%= row._id%>">Xác nhận giao hàng</a>
                               </div>
 
                               <% }else if(row.status==='Đang giao hàng' ) { %>
@@ -156,8 +159,10 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <a class="btn btn-danger" href="/oder/huyoders/<%= row._id%>">Hủy đơn</a>
-                                    <a class="btn btn-success" href="/oder/duyetoders/<%= row._id%>">Xác nhận</a>
+                                  
+                                  <a class="btn btn-danger" href="/oder/huyoders/<%= row._id%>">Hủy đơn</a>
+                                  <a class="btn btn-danger" href="/oder/huyoders/<%= row._id%>">Trả hàng</a>
+                                  <a class="btn btn-success" href="/oder/duyetoders/<%= row._id%>">Xác nhận giao hàng thành công</a>
                                 </div>
                                 <% } %>
                           </div>
@@ -246,7 +251,9 @@
         <li class="page-item"><a class="page-link" href="http://localhost:3000/oder?page=2&limit=5">2</a></li>
         <li class="page-item"><a class="page-link" href="http://localhost:3000/oder?page=3&limit=5">3</a></li>
         <li class="page-item"><a class="page-link" href="http://localhost:3000/oder?page=4&limit=5">4</a></li>
-        <li class="page-item"><a class="page-link" href="http://localhost:3000/oder?page=4&limit=5">Next</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/oder?page=5&limit=5">5</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/oder?page=6&limit=5">6</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/oder?page=5&limit=5">Next</a></li>
       </ul>
     </nav>
   </div>

@@ -4,7 +4,7 @@ var fs = require ('fs');
 
 exports.thongkebanhang = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 5;
+    const limit = parseInt(req.query.limit) || 10;
     const sortBy = req.query.sortBy || 'name';
     const sortOrder = req.query.sortOrder || 'asc';
     // tìm kiếm
