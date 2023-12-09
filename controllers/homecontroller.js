@@ -3,68 +3,65 @@ const moment = require('moment');
 
 exports.home = async (req, res, next) => {
   let loc = null;
-  var thong_bao = null;
-  var dieu_kien_loc = null;
+  let thong_bao = null;
+  let dieu_kien_loc = null;
+
   if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
-      // Tìm kiếm theo cột 'name'
-      dieu_kien_loc = { 
-          $or: [
-              { nameSalon: { $regex: req.query.billSearch, $options: 'i' } },
-              { addressSalon: { $regex: req.query.billSearch, $options: 'i' } },
-              { day: { $regex: req.query.billSearch, $options: 'i' } },
-              { hour: { $regex: req.query.billSearch, $options: 'i' } },
-              { phone: { $regex: req.query.billSearch, $options: 'i' } },
-              { status: { $regex: req.query.billSearch, $options: 'i' } },
-              { price: { $regex: req.query.billSearch, $options: 'i' } },
-              
-              { note: { $regex: req.query.billSearch, $options: 'i' } }
-          ]
-      };
+    dieu_kien_loc = {
+      $or: [
+        { nameSalon: { $regex: req.query.billSearch, $options: 'i' } },
+        { addressSalon: { $regex: req.query.billSearch, $options: 'i' } },
+        { day: { $regex: req.query.billSearch, $options: 'i' } },
+        { hour: { $regex: req.query.billSearch, $options: 'i' } },
+        { phone: { $regex: req.query.billSearch, $options: 'i' } },
+        { status: { $regex: req.query.billSearch, $options: 'i' } },
+        { price: { $regex: req.query.billSearch, $options: 'i' } },
+        { note: { $regex: req.query.billSearch, $options: 'i' } }
+      ]
+    };
   } else {
-      thong_bao = "Không có dữ liệu";
+    thong_bao = "Không có dữ liệu";
   }
 
-  if (typeof (req.query.phone) != 'undefined') {
+  if (typeof req.query.phone !== 'undefined') {
     loc = { phone: req.query.phone };
   }
 
-  
-
   const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 5;
-  const skip = (page - 1) * limit;
+  const limitPerPage = 7;
+  const skip = (page - 1) * limitPerPage;
 
   try {
-    // Lấy danh sách lịch đặt và sắp xếp theo ngày và giờ
-    let listBill = await billDB.find(Object.assign({}, loc, dieu_kien_loc)).sort({ day: 1, hour: 1 }).skip(skip).limit(limit).populate('idUser');
+    // Lấy danh sách lịch đặt và sắp xếp ngay trong truy vấn
+    let listBill = await billDB.find(Object.assign({}, loc, dieu_kien_loc))
+      .populate('idUser')
+      .sort({ day: 1, hour: 1 });
+
     // Lấy ngày hiện tại
     const currentDate = moment().format('YYYY-MM-DD');
 
     // Tách danh sách thành hai phần: ngày hôm nay và các ngày khác
-    const todayAppointments = [];
-    const otherAppointments = [];
-
-    listBill.forEach((bill) => {
-      if (moment(bill.day).isSame(currentDate, 'day')) {
-        todayAppointments.push(bill);
-      } else {
-        otherAppointments.push(bill);
-      }
-    });
-
-    // Sắp xếp danh sách ngày hôm nay để đưa lên đầu tiên
-    todayAppointments.sort((a, b) => {
-      const timeA = moment(`${a.day} ${a.hour}`, 'YYYY-MM-DD HH:mm');
-      const timeB = moment(`${b.day} ${b.hour}`, 'YYYY-MM-DD HH:mm');
-      return timeA - timeB;
-    });
+    const todayAppointments = listBill.filter(bill => moment(bill.day).isSame(currentDate, 'day'));
+    const otherAppointments = listBill.filter(bill => !moment(bill.day).isSame(currentDate, 'day'));
 
     // Ghép lại danh sách sao cho ngày hôm nay lên đầu
     listBill = [...todayAppointments, ...otherAppointments];
 
+    // Tính toán trang và số lịch đặt để hiển thị trên trang
+    const totalBilla = listBill.length;
+    const totalPages = Math.ceil(totalBilla / limitPerPage);
+    const currentPage = Math.min(page, totalPages); // Đảm bảo không vượt quá tổng số trang
+
+    // Lấy chỉ mục bắt đầu và kết thúc của danh sách lịch trên trang hiện tại
+    const startIndex = (currentPage - 1) * limitPerPage;
+    const endIndex = startIndex + limitPerPage;
+
+    // Lấy danh sách lịch đặt của trang hiện tại
+    const currentList = listBill.slice(startIndex, endIndex);
+
     // Lặp qua từng lịch đặt và cập nhật trạng thái
     for (const bill of listBill) {
-      if (bill.status !== 'Đã hoàn thành' && bill.status !== 'khách đang cắt') {
+      if (bill.status != 'Đã hoàn thành' && bill.status != 'khách đang cắt') {
         const appointmentTime = moment(`${bill.day} ${bill.hour}`, 'YYYY-MM-DD HH:mm');
         const currentTime = moment();
         const minutesDiff = currentTime.diff(appointmentTime, 'minutes');
@@ -82,11 +79,12 @@ exports.home = async (req, res, next) => {
     }
 
     const totalBill = await billDB.countDocuments(loc);
+    console.log(currentList);
 
     res.render('home/danhsach', {
-      listBill,
-      currentPage: page,
-      totalPages: Math.ceil(totalBill / limit),
+      listBill: currentList,
+      currentPage,
+      totalPages,
       totalBill,
     });
   } catch (err) {
@@ -121,12 +119,8 @@ exports.xac_nhan_lich_dat = async (req, res, next) => {
     objBill.status = 'Đã hoàn thành';
   }
 
-  objBill._id = ids;
-
   try {
-    console.log('Trạng thái  2', objBill.status);
     await billDB.findByIdAndUpdate(ids, objBill);
-    console.log('Trạng thái  3', objBill.status);
   } catch (error) {
     console.log(error);
   }
@@ -147,3 +141,4 @@ exports.addNote = async (req, res, next) => {
 
   res.redirect('/home');
 };
+
