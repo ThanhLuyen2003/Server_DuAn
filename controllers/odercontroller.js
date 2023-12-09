@@ -134,14 +134,16 @@ exports.huySP = async (req, res, next) => {
 
 }
 
-exports.renderPage = async (req, res, next) => {
-  try {
-    const listOders = await myMD.OrderModel.find();
-    res.locals.listOders = listOders;
+exports.addNote = async (req, res, next) => {
+  const ids = req.params.ids;
+  const newTextNote = req.body.textNote;
 
-    res.render('oder/oder');
-  } catch (err) {
-    console.error('Error retrieving data from MongoDB:', err);
-    res.status(500).json({ error: 'Internal server error' });
+  try {
+    await myMD.OrderModel.findByIdAndUpdate(ids, { note: newTextNote });
+    console.log('Ghi chú đã được cập nhật thành công:', newTextNote);
+  } catch (error) {
+    console.log('Lỗi khi cập nhật ghi chú:', error);
   }
+
+  res.redirect('/oder');
 };

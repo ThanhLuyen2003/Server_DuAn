@@ -57,11 +57,12 @@
       <tr class="text-sm-center">
         <th style="width: 30px;"> Số điện thoại</th>
         <th>Địa chỉ</th>
-        <th>Lời nhắn</th>
         <th>Tên khách hàng</th>
-        <th>Giá</th>
-        <th>Mô tả đơn hàng</th>
+        <th>Thành tiền</th>
+        <th style="width: 250px;">Mô tả đơn hàng</th>
         <th>Thời gian đặt</th>
+        <th>Lời nhắn</th>
+        <th>Ghi chú</th>
         <th>Trạng thái</th>
         <th></th>
       </tr>
@@ -74,9 +75,7 @@
           <td>
             <%= row.addressU %>
           </td>
-          <td>
-            <%= row.message %>
-          </td>
+          
           <td>
             <%= row.nameU %>
           </td>
@@ -95,7 +94,41 @@
           <td>
             <%= row.time %>
           </td>
-          
+
+          <td>
+            <%= row.message %>
+          </td>
+
+          <!-- Ghi chú -->
+          <td>
+            <%= row.note %>
+            <a href="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal<%= row._id %>"
+              data-bs-whatever="@getbootstrap"><i class="fa-solid fa-file-pen"></i></a>
+            <div class="modal fade" id="exampleModal<%= row._id %>" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true" data-bs-target="#exampleModal<%= row._id %>">
+              <div class="modal-dialog">
+                <form id="editNoteForm" action="/oder/add-note/<%= row._id %>" method="POST">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Chỉnh sửa ghi chú</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text" name="textNote"></textarea>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-success">Xác nhận</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </td>
+
+          <!-- trạng thái -->
           <td>
             <% if (row.status==='Có đơn') { %>
               <p style="color: #ffc107; font-weight: bold;">
@@ -120,6 +153,8 @@
             <% } %>
           </td>
           
+          
+          <!--Set trạng thái -->
           <td>
             <div class="d-flex">
 
@@ -170,7 +205,7 @@
                       </div>
 
             </div>
-        
+          </td>
 
         </tr>
 
