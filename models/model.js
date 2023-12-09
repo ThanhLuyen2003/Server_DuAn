@@ -195,6 +195,7 @@ const billMoney = new db.mongoose.Schema({
     date: { type: String, required: true },
     time: { type: String, required: true },
     tongSoDu: { type: String, required: true },
+    dichVu: { type: String, required: true },
 }, {
     collection: "BillMoney"
 })

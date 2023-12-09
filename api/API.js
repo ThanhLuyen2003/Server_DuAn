@@ -293,7 +293,7 @@ app.put('/traHang/:id', (req, res) => {
 })
 
 app.post('/addBillMoney/:idUser', async (req, res) => {
-    const { soDu, date, time, tongSoDu } = req.body;
+    const { soDu, date, time, tongSoDu,dichVu } = req.body;
     const idUser = req.params.idUser;
 
     try {
@@ -303,7 +303,8 @@ app.post('/addBillMoney/:idUser', async (req, res) => {
             soDu,
             date,
             time,
-            tongSoDu
+            tongSoDu,
+            dichVu
         });
         // Save the new BillMoney record to the database
         await newBillMoney.save();
@@ -328,9 +329,10 @@ app.get('/getBillMoney/:idUser', async (req, res) => {
 app.put('/changeBalance/:idUser/:balance', (req, res) => {
 
     const balance = req.params.balance;
+    const dichVu = req.params.dichVu;
     const id = req.params.idUser;
 
-    md.userModel.updateOne({ _id: id }, { $set: { balance: balance } })
+    md.userModel.updateOne({ _id: id }, { $set: { balance: balance,dichVu:dichVu } })
         .then((data) => {
             if (data) {
                 res.status(200).json({
