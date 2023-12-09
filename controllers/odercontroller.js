@@ -8,8 +8,9 @@ exports.list = async (req, res, next) => {
   const sortBy = req.query.sortBy || 'nameU';
   const sortOrder = req.query.sortOrder || 'asc';
 
+  // tìm kiếm
   var thong_bao = null;
-  var dieu_kien_loc = null;
+  var dieu_kien_loc = {};
   if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
     // Tìm kiếm theo cột 'name'
     dieu_kien_loc = { 
@@ -30,19 +31,42 @@ exports.list = async (req, res, next) => {
 
   try {
     const sortOptions = {};
-    sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
-    var listOders = await myMD.OrderModel.find(dieu_kien_loc).skip(skip).limit(limit).sort(sortOptions);
-    var totalOders = await myMD.OrderModel.countDocuments();
+  
+    const listOders = await myMD.OrderModel.aggregate([
+      { $match: dieu_kien_loc },
+      {
+        $addFields: {
+          orderPriority: {
+            $switch: {
+              branches: [
+                { case: { $eq: ['$status', 'Sắp tới'] }, then: 3 },
+                { case: { $in: ['$status', ['Hủy đơn', 'Đã giao hàng', 'Trả hàng']] }, then: 2 },
+              ],
+              default: 1
+            }
+          }
+        }
+      },
+      { $sort: { orderPriority: sortOrder === 'desc' ? -1 : 1, ...sortOptions } },
+      { $skip: skip },
+      { $limit: limit }
+    ]);
+  
+    const totalOders = await myMD.OrderModel.countDocuments(dieu_kien_loc);
+  
+    res.render('oder/oder', {
+      listOders: listOders,
+      currentPage: page,
+      totalPages: Math.ceil(totalOders / limit),
+      totalOders
+    });
   } catch (err) {
-    console.error('Error retrieving users:', err);
+    console.error('Error retrieving orders:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
-  res.render('oder/oder', {
-    listOders: listOders,
-    currentPage: page,
-    totalPages: Math.ceil(totalOders / limit),
-    totalOders
-  });
+  
+  
+  
 }
 
 exports.duyetSP = async (req, res, next) => {
@@ -75,6 +99,7 @@ exports.duyetSP = async (req, res, next) => {
 
   res.redirect('/oder');
 }
+
 exports.huySP = async (req, res, next) => {
   console.log('Xác nhận đơn hàng');
   let ids = req.params.ids;
@@ -91,6 +116,7 @@ exports.huySP = async (req, res, next) => {
 
   if (billStatus === 'Đang giao hàng') {
     objBill.status = 'Hủy đơn';
+    objBill.status = 'Trả hàng';
   }
 
   objBill._id = ids;
