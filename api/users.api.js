@@ -122,7 +122,7 @@ exports.depositMoney = async (req, res, next) => {
 };
 exports.updatePassword = async (req, res, next) => {
     const userId = req.params.id;
-    const newPassword = req.body.newPassword;
+    const newPassword = req.body.pass;
 
     try {
         // Find the user by ID
@@ -131,7 +131,6 @@ exports.updatePassword = async (req, res, next) => {
         if (!user) {
             return res.status(404).json({ message: 'Không tìm thấy người dùng' });
         }
-
         // Update the password
         user.pass = newPassword;
         await user.save();
