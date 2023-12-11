@@ -164,13 +164,18 @@ exports.homeFilter = async (req, res, next) => {
 
     // Lọc danh sách hóa đơn dựa trên điều kiện
     const filteredBills = listBill.filter(bill => {
-      const billStatus = bill.status;  // Đặt biến billStatus ở đây
-      return (
-        (!startDay || moment(bill.startDate).startOf('day').utc().toDate() >= loc.startDate.$gte) &&
-        (!endDay || moment(bill.endDate).endOf('day').utc().toDate() <= loc.endDate.$lte) &&
-        (!loc.status || (Array.isArray(loc.status.$in) && loc.status.$in.includes(billStatus)))
-      );
+      const billStatus = bill.status;
+
+      // Chuyển đổi ngày thành đối tượng moment để so sánh
+      const billDate = moment(bill.day);
+
+      // So sánh ngày theo khoảng
+      const isWithinDateRange = (!startDay || billDate.isSameOrAfter(startDay)) && (!endDay || billDate.isSameOrBefore(endDay));
+
+      return isWithinDateRange && (!loc.status || (Array.isArray(loc.status.$in) && loc.status.$in.includes(billStatus)));
     });
+
+
     console.log(loc);
     console.log(startDay, endDay);
     console.log(filteredBills);
