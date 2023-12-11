@@ -79,7 +79,6 @@ exports.home = async (req, res, next) => {
     }
 
     const totalBill = await billDB.countDocuments(loc);
-    console.log(currentList);
 
     res.render('home/danhsach', {
       listBill: currentList,
@@ -95,10 +94,8 @@ exports.home = async (req, res, next) => {
 
 
 exports.xac_nhan_lich_dat = async (req, res, next) => {
-  console.log('Xác nhận lịch đặt');
   let ids = req.params.ids;
   // console.log(await bill.findById(ids));
-  console.log(ids + 'aaaaaaa');
 
   let objBill = await billDB.findById(ids);
 
@@ -108,21 +105,17 @@ exports.xac_nhan_lich_dat = async (req, res, next) => {
     objBill.status = 'Khách đang cắt';
   }
 
-  console.log('Trạng thái trước khi kiểm tra điều kiện', billStatus);
   if (billStatus === 'Khách đến muộn') {
     objBill.status = 'Khách đang cắt';
-    console.log('Trạng thái sau khi kiểm tra điều kiện', objBill.status);
   }
 
   if (billStatus === 'Khách đang cắt') {
-    console.log('Trạng thái', + billStatus);
     objBill.status = 'Đã hoàn thành';
   }
 
   try {
     await billDB.findByIdAndUpdate(ids, objBill);
   } catch (error) {
-    console.log(error);
   }
 
   res.redirect('/home');
@@ -141,4 +134,70 @@ exports.addNote = async (req, res, next) => {
 
   res.redirect('/home');
 };
+
+exports.homeFilter = async (req, res, next) => {
+  console.log('Request to /home/filter_data received.');
+  const page = parseInt(req.query.page) || 1;
+  const limitPerPage = 10;
+  const skip = (page - 1) * limitPerPage;
+
+  try {
+    let listBill = await billDB.find()
+      .populate('idUser')
+      .sort({ day: 1, hour: 1 });
+
+    // Lấy dữ liệu từ query parameters thay vì req.body
+    const { startDay, endDay, statusSuccess, statusInService, statusLate, statusCanceled } = req.query;
+    console.log(req.query);
+
+    // Xây dựng các điều kiện lọc
+    const loc = {};
+    if (startDay) loc.startDate = { $gte: moment(startDay, 'YYYY-MM-DD').startOf('day').utc().toDate() };
+    if (endDay) loc.endDate = { $lte: moment(endDay, 'YYYY-MM-DD').endOf('day').utc().toDate() };
+
+    const statusArray = [];
+    if (statusSuccess) statusArray.push('Đã hoàn thành');
+    if (statusInService) statusArray.push('Khách đang cắt');
+    if (statusLate) statusArray.push('Khách đến muộn');
+    if (statusCanceled) statusArray.push('Đã hủy lịch');
+    if (statusArray.length > 0) loc.status = { $in: statusArray };
+
+    // Lọc danh sách hóa đơn dựa trên điều kiện
+    const filteredBills = listBill.filter(bill => {
+      const billStatus = bill.status;  // Đặt biến billStatus ở đây
+      return (
+        (!startDay || moment(bill.startDate).startOf('day').utc().toDate() >= loc.startDate.$gte) &&
+        (!endDay || moment(bill.endDate).endOf('day').utc().toDate() <= loc.endDate.$lte) &&
+        (!loc.status || (Array.isArray(loc.status.$in) && loc.status.$in.includes(billStatus)))
+      );
+    });
+    console.log(loc);
+    console.log(startDay, endDay);
+    console.log(filteredBills);
+
+    // Tính toán trang và số lượng hóa đơn để hiển thị trên trang
+    const totalBills = filteredBills.length;
+    const totalPages = Math.ceil(totalBills / limitPerPage);
+    const currentPage = Math.min(page, totalPages);
+
+    // Lấy chỉ mục bắt đầu và kết thúc của danh sách hóa đơn trên trang hiện tại
+    const startIndex = (currentPage - 1) * limitPerPage;
+    const endIndex = startIndex + limitPerPage;
+
+    // Lấy danh sách hóa đơn của trang hiện tại
+    const currentList = filteredBills.slice(startIndex, endIndex);
+
+    res.render('home/danhsach', {
+      listBill: currentList,
+      currentPage,
+      totalPages,
+      totalBill: totalBills,
+    });
+  } catch (err) {
+    console.error('Lỗi khi lấy danh sách lịch đặt:', err);
+    res.status(500).json({ error: 'Lỗi máy chủ nội bộ' });
+  }
+};
+
+
 
