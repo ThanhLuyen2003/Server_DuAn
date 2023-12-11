@@ -120,3 +120,25 @@ exports.depositMoney = async (req, res, next) => {
         return res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 };
+exports.updatePassword = async (req, res, next) => {
+    const userId = req.params.id;
+    const newPassword = req.body.newPassword;
+
+    try {
+        // Find the user by ID
+        const user = await md.userModel.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'Không tìm thấy người dùng' });
+        }
+
+        // Update the password
+        user.pass = newPassword;
+        await user.save();
+
+        return res.status(200).json({ message: 'Cập nhật mật khẩu thành công', user });
+    } catch (error) {
+        console.error('Error ', error);
+        return res.status(500).json({ message: 'Lỗi server', error: error.message });
+    }
+};
