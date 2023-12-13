@@ -61,12 +61,19 @@ exports.addPro = async (req, res, next) => {
     let objP = new myMD.productModel();
 
     try {
-    fs.renameSync(req.file.path, './public/uploads/' + req.file.originalname);
-        msg = 'Url ảnh: http://localhost:3000/uploads/' + req.file.originalname;
-        objP.avatar = '/uploads/' + req.file.originalname;
+        const uploadedFilePath = './public/uploads/' + req.file.originalname;
+        fs.renameSync(req.file.path, uploadedFilePath);
+        
+        const domain = '192.168.1.7'; // Thay thế bằng địa chỉ domain thực tế của bạn
+        const imageUrl = domain + '/uploads/' + req.file.originalname;
+    
+        msg = 'Url ảnh: ' + imageUrl;
+        objP.avatar = imageUrl;
     } catch (error) {
         msg = error.message;
     }
+    
+    
     objP.soluongnhap = req.body.soluongnhap;
     objP.name = req.body.name;
     objP.trademark = req.body.trademark;
@@ -163,22 +170,26 @@ exports.sxTheoGiaSP = async (req, res, next) => {
     const skip = (page - 1) * limit;
     const sortBy = req.query.sortBy || 'price';
     const sortOrder = req.query.sortOrder || 'asc';
+
     try {
         const sortOptions = {};
         sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
-        var listProducts = await myMD.productModel.find().skip(skip).limit(limit).sort(sortOptions);
-        var totalProducts = await myMD.productModel.countDocuments();
+        
+        const listProducts = await myMD.productModel.find().skip(skip).limit(limit).sort(sortOptions);
+        const totalProducts = await myMD.productModel.countDocuments();
 
+        res.render('product/list', {
+            listProducts: listProducts,
+            currentPage: page,
+            totalPages: Math.ceil(totalProducts / limit),
+            totalProducts
+        });
     } catch (err) {
-        console.error('Error retrieving users:', err);
+        console.error('Error retrieving products:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
-    res.render('product/list', {
-        listProducts: listProducts, currentPage: page,
-        totalPages: Math.ceil(totalProducts / limit),
-        totalProducts
-    })
-}
+};
+
 
 exports.renderPage = async (req, res, next) => {
     try {

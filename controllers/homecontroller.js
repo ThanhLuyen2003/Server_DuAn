@@ -3,9 +3,9 @@ const moment = require('moment');
 
 exports.home = async (req, res, next) => {
   let loc = null;
+  // tim kiem
   let thong_bao = null;
   let dieu_kien_loc = null;
-
   if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
     dieu_kien_loc = {
       $or: [
@@ -91,7 +91,6 @@ exports.home = async (req, res, next) => {
     res.status(500).json({ error: 'Lỗi máy chủ nội bộ' });
   }
 };
-
 
 exports.xac_nhan_lich_dat = async (req, res, next) => {
   let ids = req.params.ids;

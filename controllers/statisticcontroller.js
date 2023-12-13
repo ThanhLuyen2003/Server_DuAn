@@ -31,6 +31,7 @@ exports.thongkebanhang = async (req, res, next) => {
       const listSatistic = await myMD.productModel.find(dieu_kien_loc).sort(sortOptions).skip((page - 1) * limit).limit(limit);
       const totalSatistic = await myMD.productModel.countDocuments(dieu_kien_loc);
   
+      // tính tổng tiền nhập
       let total = 0;
       const allListSatistic = await myMD.productModel.find(dieu_kien_loc).sort(sortOptions);
       allListSatistic.forEach((row) => {
@@ -122,4 +123,24 @@ function formatCash(str) {
     return ((index % 3) ? next : (next + ',')) + prev
   })
 }
+
+// Controller cho listProduct
+// exports.listProduct = async (req, res) => {
+//   try {
+//     // Lấy dữ liệu từ productModel hoặc listProduct
+//     const listSatistic = await myMD.productModel.find();
+
+//     // Lấy dữ liệu từ OderModel hoặc listOder
+//     const listOders = await myMD.OrderModel.find();
+
+//     // Truyền dữ liệu từ listOder sang listProduct
+//     res.locals.listOders = listOders;
+
+//     // Render listProduct và truyền dữ liệu từ listOder vào
+//     res.render('thongke/thongkebanhang', { listSatistic });
+//   } catch (error) {
+//     console.error('Error retrieving data:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// };
 

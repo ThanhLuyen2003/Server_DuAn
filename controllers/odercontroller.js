@@ -1,5 +1,6 @@
 var myMD = require('../models/model');
 var fs = require('fs');
+const moment = require('moment');
 
 exports.list = async (req, res, next) => {
   const page = parseInt(req.query.page) || 1;
@@ -29,6 +30,7 @@ exports.list = async (req, res, next) => {
     thong_bao = "Không có dữ liệu";
   }
 
+  // sắp xếp trạng thái
   try {
     const sortOptions = {};
   
@@ -64,7 +66,6 @@ exports.list = async (req, res, next) => {
     console.error('Error retrieving orders:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
-  
   
   
 }
@@ -146,4 +147,72 @@ exports.addNote = async (req, res, next) => {
   }
 
   res.redirect('/oder');
+};
+
+// lọc
+exports.OderFilter = async (req, res, next) => {
+  console.log('Request to /oder/filter_data received.');
+  const page = parseInt(req.query.page) || 1;
+  const limitPerPage = 10;
+  const skip = (page - 1) * limitPerPage;
+
+  try {
+    let listOders = await myMD.OrderModel.find();
+
+    // Lấy dữ liệu từ query parameters thay vì req.body
+    const { startDay, endDay, statusSuccess, statusInService, statusOrder, statusCanceled } = req.query;
+    console.log(req.query);
+
+    // Xây dựng các điều kiện lọc
+    const loc = {};
+    if (startDay) loc.startDate = { $gte: moment(startDay, 'YYYY-MM-DD').startOf('day').utc().toDate() };
+    if (endDay) loc.endDate = { $lte: moment(endDay, 'YYYY-MM-DD').endOf('day').utc().toDate() };
+
+    const statusArray = [];
+    if (statusSuccess) statusArray.push('Đã giao hàng');
+    if (statusInService) statusArray.push('Đang giao hàng');
+    if (statusOrder) statusArray.push('Có đơn');
+    if (statusCanceled) statusArray.push('Hủy đơn');
+    if (statusArray.length > 0) loc.status = { $in: statusArray };
+
+    // Lọc danh sách hóa đơn dựa trên điều kiện
+    const filteredOder = listOders.filter(oder => {
+    const oderStatus = oder.status;
+
+      // Chuyển đổi ngày thành đối tượng moment để so sánh
+      const oderDate = moment(oder.day);
+
+      // So sánh ngày theo khoảng
+      const isWithinDateRange = (!startDay || oderDate.isSameOrAfter(startDay)) && (!endDay || oderDate.isSameOrBefore(endDay));
+
+      return isWithinDateRange && (!loc.status || (Array.isArray(loc.status.$in) && loc.status.$in.includes(oderStatus)));
+    });
+
+
+    console.log(loc);
+    console.log(startDay, endDay);
+    console.log(filteredOder);
+
+    // Tính toán trang và số lượng hóa đơn để hiển thị trên trang
+    const totalOders = filteredOder.length;
+    const totalPages = Math.ceil(totalOders / limitPerPage);
+    const currentPage = Math.min(page, totalPages);
+
+    // Lấy chỉ mục bắt đầu và kết thúc của danh sách hóa đơn trên trang hiện tại
+    const startIndex = (currentPage - 1) * limitPerPage;
+    const endIndex = startIndex + limitPerPage;
+
+    // Lấy danh sách hóa đơn của trang hiện tại
+    const currentList = filteredOder.slice(startIndex, endIndex);
+
+    res.render('oder/oder', {
+      listBilistOdersll: currentList,
+      currentPage,
+      totalPages,
+      totalOders: totalOders,
+    });
+  } catch (err) {
+    console.error('Lỗi khi lấy danh sách lịch đặt:', err);
+    res.status(500).json({ error: 'Lỗi máy chủ nội bộ' });
+  }
 };
