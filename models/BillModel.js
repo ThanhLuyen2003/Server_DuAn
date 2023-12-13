@@ -6,14 +6,16 @@ const useSchema = new mongoose.Schema({
     addressSalon: { type: String, require: true },
     hour: { type: String, require: true },
     day: { type: String, require: true },
-    phone: { type: String, require: true },
-    imageSalon: { type: String, require: true },
-    services: { type: Array, require: true },
+    phone: { type: String, default: '' },
+    imageSalon: { type: String, default: '' },
+    services: { type: Array, default: [] },
     price: { type: String, require: true },
     status: { type: String, require: true },
-    note: { type: String, require: true},
-    idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'userModel', require: true }
-
+    note: { type: String, default: ''},
+    customerName: { type: String, default: '' },
+    customerPhone: { type: String, default: '' },
+    role: {type: String , default: ''},
+    idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'userModel', default: null }
 },
     {
         collection: 'Bill'

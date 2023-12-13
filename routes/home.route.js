@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var homeController = require('../controllers/homecontroller');
+var billController = require('../controllers/lichdatcontroller');
 var check_login = require('../middlewares/check_login');
 
 
@@ -13,7 +14,9 @@ router.get('/filter_data',check_login.yeu_cau_dang_nhap,homeController.homeFilte
 
 router.get('/xac-nhan-lich-dat/:ids', check_login.yeu_cau_dang_nhap,homeController.xac_nhan_lich_dat);
 
-
 router.post('/add-note/:ids', check_login.yeu_cau_dang_nhap, homeController.addNote);
+
+router.get('/add-bill',check_login.yeu_cau_dang_nhap, billController.addBill);
+router.post('/add-bill',check_login.yeu_cau_dang_nhap, billController.addBill);
 
 module.exports = router;
