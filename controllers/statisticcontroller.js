@@ -57,6 +57,7 @@ exports.thongkebanhang = async (req, res, next) => {
     }
 }
 
+// Hưng 
 exports.thongketheolichcat = async (req, res, next) => {
   try {
     const completedBills = await billMd.find({

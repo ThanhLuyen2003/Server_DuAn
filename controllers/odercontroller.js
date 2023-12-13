@@ -149,7 +149,7 @@ exports.addNote = async (req, res, next) => {
   res.redirect('/oder');
 };
 
-// lọc
+// bộ lọc
 exports.OderFilter = async (req, res, next) => {
   console.log('Request to /oder/filter_data received.');
   const page = parseInt(req.query.page) || 1;
@@ -206,7 +206,7 @@ exports.OderFilter = async (req, res, next) => {
     const currentList = filteredOder.slice(startIndex, endIndex);
 
     res.render('oder/oder', {
-      listBilistOdersll: currentList,
+      listOders: currentList,
       currentPage,
       totalPages,
       totalOders: totalOders,
