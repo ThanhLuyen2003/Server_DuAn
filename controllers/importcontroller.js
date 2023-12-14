@@ -7,19 +7,12 @@ exports.list = async (req, res, next) => {
     const skip = (page - 1) * limit;
     const sortBy = req.query.sortBy || 'name';
     const sortOrder = req.query.sortOrder || 'asc';
-    // tìm kiếm
     var thong_bao = null;
-    var dieu_kien_loc = null;
-    
+    var dieu_kien_loc = {};
+
     if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
-        // Tìm kiếm theo cột 'name', 'soluongnhap', 'price'
-        dieu_kien_loc = { 
-            $or: [
-                { name: { $regex: new RegExp(req.query.billSearch, 'i') } },
-                { soluongnhap: { $eq: parseFloat(req.query.billSearch) } },
-                { price: { $eq: parseFloat(req.query.billSearch) } }
-            ]
-        };
+        // Chỉ áp dụng biểu thức chính quy cho trường 'name'
+        dieu_kien_loc.name = new RegExp(req.query.billSearch.trim(), 'i');
     } else {
         thong_bao = "Không có dữ liệu";
     }
@@ -28,19 +21,28 @@ exports.list = async (req, res, next) => {
     try {
         const sortOptions = {};
         sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
-        var listimport = await myMD.ImportModel.find(dieu_kien_loc).skip(skip).limit(limit).sort(sortOptions);
-        var totalimport = await myMD.ImportModel.countDocuments();
 
+        // Tìm kiếm theo điều kiện lọc và áp dụng phân trang, sắp xếp
+        const listimport = await myMD.ImportModel.find(dieu_kien_loc)
+            .skip(skip)
+            .limit(limit)
+            .sort(sortOptions);
+
+        // Đếm tổng số lượng bản ghi (không áp dụng điều kiện lọc)
+        const totalimport = await myMD.ImportModel.countDocuments();
+
+        res.render('import/import', {
+            listimport: listimport,
+            currentPage: page,
+            totalPages: Math.ceil(totalimport / limit),
+            totalimport,
+            thong_bao: thong_bao // Truyền thông báo vào template nếu cần
+        });
     } catch (err) {
         console.error('Error retrieving users:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
-    res.render('import/import', {
-        listimport: listimport, currentPage: page,
-        totalPages: Math.ceil(totalimport / limit),
-        totalimport
-    });
-}
+};
 
 exports.add = async (req, res, next) => {
     let msg = '';
@@ -105,38 +107,38 @@ exports.edit = async (req, res, next) => {
 exports.sxTheoGia = async (req, res, next) => {
     const sortBy = req.query.sortBy || 'price';
     const sortOrder = req.query.sortOrder || 'asc';
-  
+
     try {
-      const sortOptions = {};
-      sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
-  
-      const listimport = await myMD.ImportModel.find()
-        .sort(sortOptions)
-        .lean()
-        .exec();
-  
-      res.render('import/import', { listimport: listimport });
+        const sortOptions = {};
+        sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+
+        const listimport = await myMD.ImportModel.find()
+            .sort(sortOptions)
+            .lean()
+            .exec();
+
+        res.render('import/import', { listimport: listimport });
     } catch (err) {
-      console.error('Error retrieving services:', err);
-      res.status(500).json({ error: 'Internal server error' });
+        console.error('Error retrieving services:', err);
+        res.status(500).json({ error: 'Internal server error' });
     }
-  };
-  exports.sxTheoSluong= async (req, res, next) => {
+};
+exports.sxTheoSluong = async (req, res, next) => {
     const sortBy = req.query.sortBy || 'soluongnhap';
     const sortOrder = req.query.sortOrder || 'asc';
-  
+
     try {
-      const sortOptions = {};
-      sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
-  
-      const listimport = await myMD.ImportModel.find()
-        .sort(sortOptions)
-        .lean()
-        .exec();
-  
-      res.render('import/import', { listimport: listimport });
+        const sortOptions = {};
+        sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+
+        const listimport = await myMD.ImportModel.find()
+            .sort(sortOptions)
+            .lean()
+            .exec();
+
+        res.render('import/import', { listimport: listimport });
     } catch (err) {
-      console.error('Error retrieving services:', err);
-      res.status(500).json({ error: 'Internal server error' });
+        console.error('Error retrieving services:', err);
+        res.status(500).json({ error: 'Internal server error' });
     }
-  };
+};
