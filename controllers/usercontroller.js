@@ -12,7 +12,6 @@ exports.list = async (req, res, next) => {
   var thong_bao = null;
   var dieu_kien_loc = null;
   if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
-    // Tìm kiếm theo cột 'name'
     dieu_kien_loc = { 
         $or: [
             { name: { $regex: new RegExp(req.query.billSearch, 'i') } },

@@ -10,18 +10,20 @@ exports.list = async (req, res, next) => {
     // tìm kiếm
     var thong_bao = null;
     var dieu_kien_loc = null;
+    
     if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
-        // Tìm kiếm theo cột 'name'
+        // Tìm kiếm theo cột 'name', 'soluongnhap', 'price'
         dieu_kien_loc = { 
             $or: [
                 { name: { $regex: new RegExp(req.query.billSearch, 'i') } },
-                { soluongnhap: { $regex: new RegExp(req.query.billSearch, 'i') } },
-                { price: { $regex: new RegExp(req.query.billSearch, 'i') } }
+                { soluongnhap: { $eq: parseFloat(req.query.billSearch) } },
+                { price: { $eq: parseFloat(req.query.billSearch) } }
             ]
         };
     } else {
         thong_bao = "Không có dữ liệu";
     }
+    
 
     try {
         const sortOptions = {};
@@ -100,12 +102,41 @@ exports.edit = async (req, res, next) => {
     res.render('import/edit', { msg: msg, listimport: listimport, objP: objP });
 }
 
-exports.delete = async (req, res, next) => {
-    let idp = req.params.idp;
+exports.sxTheoGia = async (req, res, next) => {
+    const sortBy = req.query.sortBy || 'price';
+    const sortOrder = req.query.sortOrder || 'asc';
+  
     try {
-        await myMD.ImportModel.findByIdAndDelete({ _id: idp });
-    } catch (error) {
-
+      const sortOptions = {};
+      sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+  
+      const listimport = await myMD.ImportModel.find()
+        .sort(sortOptions)
+        .lean()
+        .exec();
+  
+      res.render('import/import', { listimport: listimport });
+    } catch (err) {
+      console.error('Error retrieving services:', err);
+      res.status(500).json({ error: 'Internal server error' });
     }
-    res.redirect('/import');
-}
+  };
+  exports.sxTheoSluong= async (req, res, next) => {
+    const sortBy = req.query.sortBy || 'soluongnhap';
+    const sortOrder = req.query.sortOrder || 'asc';
+  
+    try {
+      const sortOptions = {};
+      sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+  
+      const listimport = await myMD.ImportModel.find()
+        .sort(sortOptions)
+        .lean()
+        .exec();
+  
+      res.render('import/import', { listimport: listimport });
+    } catch (err) {
+      console.error('Error retrieving services:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };

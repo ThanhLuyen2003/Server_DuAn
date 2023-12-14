@@ -1,5 +1,6 @@
 var myMD = require('../models/model');
 var fs = require('fs');
+
 exports.list = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 5;
@@ -45,6 +46,7 @@ exports.list = async (req, res, next) => {
         totalService
     });
 }
+
 exports.addService = async (req, res, next) => {
     let msg = '';
     var listService = await myMD.ServiceModel.find().sort({ name: 1 });
@@ -73,6 +75,7 @@ exports.addService = async (req, res, next) => {
     }
     res.render('Service/add', { msg: msg, listService: listService });
 }
+
 exports.editService = async (req, res, next) => {
     let msg = '';
     var listService = await myMD.ServiceModel.find();
@@ -104,6 +107,7 @@ exports.editService = async (req, res, next) => {
     }
     res.render('Service/edit', { msg: msg, listService: listService, objSe: objSe });
 }
+
 exports.deleteService = async (req, res, next) => {
     let idse = req.params.idse;
     try {
@@ -117,7 +121,24 @@ exports.sxTheoTenService = async (req, res, next) => {
     var listDichVu = await myMD.ServiceModel.find().sort({ name: 1 });
     res.render('Service/list', { listDichVu: listDichVu })
 }
+
 exports.sxTheoGia = async (req, res, next) => {
-    var listDichVu = await myMD.ServiceModel.find().sort({ price: 1 });
-    res.render('Service/list', { listDichVu: listDichVu })
-}
+    const sortBy = req.query.sortBy || 'price';
+    const sortOrder = req.query.sortOrder || 'asc';
+  
+    try {
+      const sortOptions = {};
+      sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+  
+      const listDichVu = await myMD.ServiceModel.find()
+        .sort(sortOptions)
+        .lean()
+        .exec();
+  
+      res.render('Service/list', { listDichVu: listDichVu });
+    } catch (err) {
+      console.error('Error retrieving services:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+  

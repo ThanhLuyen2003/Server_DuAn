@@ -14,7 +14,13 @@ router.post('/add',check_login.yeu_cau_dang_nhap, uploader.single('file_anh'), i
 router.get('/edit/:idp',check_login.yeu_cau_dang_nhap, importcontroller.edit);
 router.post('/edit/:idp',check_login.yeu_cau_dang_nhap,uploader.single('file_anh'), importcontroller.edit);
 
-router.get('/delete/:idp',check_login.yeu_cau_dang_nhap, importcontroller.delete);
-router.post('/delete/:idp',check_login.yeu_cau_dang_nhap, importcontroller.delete);
+router.get('/sxtheogia',check_login.yeu_cau_dang_nhap, importcontroller.sxTheoGia);
+router.post('/sxtheogia',check_login.yeu_cau_dang_nhap, importcontroller.sxTheoGia);
+
+router.get('/sxtheosl',check_login.yeu_cau_dang_nhap, importcontroller.sxTheoSluong);
+router.post('/sxtheosl',check_login.yeu_cau_dang_nhap, importcontroller.sxTheoSluong);
+
+// router.get('/delete/:idp',check_login.yeu_cau_dang_nhap, importcontroller.delete);
+// router.post('/delete/:idp',check_login.yeu_cau_dang_nhap, importcontroller.delete);
 
 module.exports = router;
