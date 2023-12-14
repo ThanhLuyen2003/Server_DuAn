@@ -77,14 +77,31 @@
 
         <!-- số hàng đã bán -->
         <td>
-          
+          <% 
+          let totalQuantity = 0;
+          listOders.forEach((order) => {
+            if (order.status == 'Đã giao hàng'){
+            order.products.forEach((product) => {
+              if (product.name === row.name) {
+                totalQuantity += parseInt(product.quantity || 0, 10);
+              }
+            });
+          }
+          });
+        %>
+        <%= totalQuantity %>
         </td>
 
         <td>
             <%= row.price %>
         </td>
         <td>
-          
+          <% 
+              const priceban = row.price;
+              const slban = totalQuantity;
+              const tongtienban = priceban * slban;
+            %>
+            <%= tongtienban %>
         </td>
         <td>
           <% if (row.soluongnhap <= 0) { %>
@@ -101,7 +118,7 @@
     <% }) %>
  
    <p style="font-weight: bold;">Tổng tiền nhập hàng: <%= numberWithCommas(total) %>đ</p>
-    <p style="font-weight: bold;">Tổng tiền bán hàng: đ</p>
+    <p style="font-weight: bold;">Tổng tiền bán hàng: <%= numberWithCommas(total) %>đ</p>
 
       
   </table> 

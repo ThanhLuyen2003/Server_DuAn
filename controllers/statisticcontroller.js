@@ -29,6 +29,7 @@ exports.thongkebanhang = async (req, res, next) => {
       sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
   
       const listSatistic = await myMD.productModel.find(dieu_kien_loc).sort(sortOptions).skip((page - 1) * limit).limit(limit);
+      const listOders = await myMD.OrderModel.find();
       const totalSatistic = await myMD.productModel.countDocuments(dieu_kien_loc);
   
       // tính tổng tiền nhập
@@ -45,6 +46,7 @@ exports.thongkebanhang = async (req, res, next) => {
   
       res.render('thongke/thongkebanhang', {
         listSatistic: listSatistic,
+        listOders: listOders,
         currentPage: page,
         totalPages: totalPages,
         totalSatistic: totalSatistic,
