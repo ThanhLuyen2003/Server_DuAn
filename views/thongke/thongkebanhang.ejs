@@ -75,10 +75,10 @@
             <%= tongtiennhap %> 
         </td>
 
-        <!-- số hàng đã bán -->
         <td>
           <% 
           let totalQuantity = 0;
+          let totalSalesValue = 0; // Initialize the total sales value
           listOders.forEach((order) => {
             if (order.status == 'Đã giao hàng'){
             order.products.forEach((product) => {
@@ -86,6 +86,11 @@
                 totalQuantity += parseInt(product.quantity || 0, 10);
               }
             });
+
+          const priceban = row.price;
+          const slban = totalQuantity;
+          const tongtienban = priceban * slban;
+          totalSalesValue += tongtienban; // Accumulate the total sales value
           }
           });
         %>
@@ -118,7 +123,7 @@
     <% }) %>
  
    <p style="font-weight: bold;">Tổng tiền nhập hàng: <%= numberWithCommas(total) %>đ</p>
-    <p style="font-weight: bold;">Tổng tiền bán hàng: <%= numberWithCommas(total) %>đ</p>
+    <p style="font-weight: bold;">Tổng tiền bán hàng: <%= numberWithCommas(totalSales) %>đ</p>
 
       
   </table> 
