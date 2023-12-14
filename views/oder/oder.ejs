@@ -14,14 +14,14 @@
               <div class="pe-1">Bộ lọc</div><i class="fa-solid fa-filter"></i>
               </button>
 
-              <div class="dropdown">
+              <!-- <div style="margin-right: 20px;" class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Sắp xếp theo
                 </button>
                 <div class="dropdown-menu" aria-labelledby="sortDropdown">
                   <a class="dropdown-item" href="#" id="sortByDate">Theo Ngày</a>
                 </div>
-              </div>
+              </div> -->
           </div>
 
           <!-- thanh tìm kiếm -->
@@ -189,10 +189,6 @@
               <p style="color: red; font-weight: bold;">
                 <%= row.status %>
               </p>
-            <% } else if (row.status==='Trả hàng') { %>
-              <p style="color: red; font-weight: bold;">
-              <%= row.status %>
-              </p>
             <% } %>
           </td>
           
@@ -239,7 +235,6 @@
                                 <div class="modal-footer">
                                   
                                   <a class="btn btn-danger" href="/oder/huyoders/<%= row._id%>">Hủy đơn</a>
-                                  <a class="btn btn-danger" href="/oder/huyoders/<%= row._id%>">Trả hàng</a>
                                   <a class="btn btn-success" href="/oder/duyetoders/<%= row._id%>">Xác nhận giao hàng thành công</a>
                                 </div>
                                 <% } %>

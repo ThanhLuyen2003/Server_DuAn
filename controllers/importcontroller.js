@@ -11,8 +11,13 @@ exports.list = async (req, res, next) => {
     var dieu_kien_loc = {};
 
     if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
-        // Chỉ áp dụng biểu thức chính quy cho trường 'name'
-        dieu_kien_loc.name = new RegExp(req.query.billSearch.trim(), 'i');
+        // Tìm kiếm theo tên sản phẩm nếu có
+        const billSearch = req.query.billSearch.trim();
+        dieu_kien_loc.$or = [
+            { name: new RegExp(billSearch, 'i') },
+            { soluongnhap: parseInt(billSearch) || 0 }, // Số lượng nhập
+            { price: parseFloat(billSearch) || 0 }    // Giá nhập
+        ];
     } else {
         thong_bao = "Không có dữ liệu";
     }

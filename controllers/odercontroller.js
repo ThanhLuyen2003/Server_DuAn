@@ -42,7 +42,7 @@ exports.list = async (req, res, next) => {
             $switch: {
               branches: [
                 { case: { $eq: ['$status', 'Sắp tới'] }, then: 3 },
-                { case: { $in: ['$status', ['Hủy đơn', 'Đã giao hàng', 'Trả hàng']] }, then: 2 },
+                { case: { $in: ['$status', ['Hủy đơn', 'Đã giao hàng']] }, then: 2 },
               ],
               default: 1
             }
@@ -117,7 +117,6 @@ exports.huySP = async (req, res, next) => {
 
   if (billStatus === 'Đang giao hàng') {
     objBill.status = 'Hủy đơn';
-    objBill.status = 'Trả hàng';
   }
 
   objBill._id = ids;

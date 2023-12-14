@@ -47,10 +47,10 @@
       <th style="width: 400px;">Tên sản phẩm</th>
       <th style="width: 150px;"> Số lượng nhập</th>
       <th>Giá nhập</th>
-      <th>Tổng tiền nhập</th>
+      <th>Tiền nhập</th>
       <th>Số lượng đã bán</th>
       <th>Giá bán</th>
-      <th>Tổng tiền bán</th>
+      <th>Tiền bán</th>
       <th>Trạng thái</th>
 
     </tr>
@@ -64,7 +64,7 @@
             <%= row.soluongnhap %>
           </td>
         <td>
-          <%= row.pricenhap %>
+          <%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(row.pricenhap) %>
         </td>
         <td>
             <% 
@@ -72,11 +72,12 @@
               const slnhap = row.soluongnhap;
               const tongtiennhap = price * slnhap;
             %>
-            <%= tongtiennhap %> 
+            <%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tongtiennhap) %>
         </td>
 
         <td>
           <% 
+<<<<<<< Updated upstream
           let totalQuantity = 0;
           let totalSalesValue = 0; // Initialize the total sales value
           listOders.forEach((order) => {
@@ -95,19 +96,36 @@
           });
         %>
         <%= totalQuantity %>
+=======
+            let totalQuantity = 0;
+            listOders.forEach((order) => {
+              if (order.status == 'Đã giao hàng'){
+              order.products.forEach((product) => {
+                if (product.name === row.name) {
+                  totalQuantity += parseInt(product.quantity || 0, 10);
+                }
+              });
+            }
+            });
+          %>
+          <%= totalQuantity %>
+>>>>>>> Stashed changes
         </td>
 
         <td>
-            <%= row.price %>
+          <%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(row.price) %>
         </td>
+        <!--  -->
         <td>
-          <% 
+          
+          <%  
               const priceban = row.price;
               const slban = totalQuantity;
               const tongtienban = priceban * slban;
             %>
-            <%= tongtienban %>
+            <%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tongtienban) %>
         </td>
+        
         <td>
           <% if (row.soluongnhap <= 0) { %>
             <p style="color: red;">Hết hàng</p>
@@ -122,8 +140,13 @@
 
     <% }) %>
  
+<<<<<<< Updated upstream
    <p style="font-weight: bold;">Tổng tiền nhập hàng: <%= numberWithCommas(total) %>đ</p>
     <p style="font-weight: bold;">Tổng tiền bán hàng: <%= numberWithCommas(totalSales) %>đ</p>
+=======
+   <p style="font-weight: bold;">Tổng tiền nhập hàng: <%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total) %></p>
+    <p style="font-weight: bold;">Tổng tiền bán hàng: <%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format() %></p>
+>>>>>>> Stashed changes
 
       
   </table> 

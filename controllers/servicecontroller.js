@@ -9,19 +9,18 @@ exports.list = async (req, res, next) => {
     //   const sortOrder = req.query.sortOrder || 'asc';
 
     // tìm kiếm
-    var thong_bao = null;
-    var dieu_kien_loc = null;
+    var thong_bao = '';
+    var dieu_kien_loc = {};
     
     if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
-        // Tìm kiếm theo cột 'name'
-        dieu_kien_loc = { 
-            $or: [
-                { name: { $regex: new RegExp(req.query.billSearch, 'i') } },
-                { price: { $regex: new RegExp(req.query.billSearch, 'i') } },
-                { type: { $regex: new RegExp(req.query.billSearch, 'i') } },
-                { describe: { $regex: new RegExp(req.query.billSearch, 'i') } }
-            ]
-        };
+        // Tìm kiếm theo tên sản phẩm nếu có
+        const billSearch = req.query.billSearch.trim();
+        dieu_kien_loc.$or = [
+            { name: new RegExp(billSearch, 'i') },
+            { type: new RegExp(billSearch, 'i') },
+            { describe: new RegExp(billSearch, 'i') }, // Số lượng nhập
+            { price: parseFloat(billSearch) || 0 }    // Giá nhập
+        ];
     } else {
         thong_bao = "Không có dữ liệu";
     }

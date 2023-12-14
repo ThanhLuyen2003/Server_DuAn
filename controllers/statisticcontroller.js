@@ -64,6 +64,7 @@ exports.thongkebanhang = async (req, res, next) => {
 
 
   
+<<<<<<< Updated upstream
 
     const totalPages = Math.ceil(totalSatistic / limit);
 
@@ -81,6 +82,39 @@ exports.thongkebanhang = async (req, res, next) => {
     console.error('Error retrieving users:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
+=======
+      const listSatistic = await myMD.productModel.find(dieu_kien_loc).sort(sortOptions).skip((page - 1) * limit).limit(limit);
+      const listOders = await myMD.OrderModel.find();
+      const totalSatistic = await myMD.productModel.countDocuments(dieu_kien_loc);
+  
+      // tính tổng tiền nhập
+      let total = 0;
+      const allListSatistic = await myMD.productModel.find(dieu_kien_loc).sort(sortOptions);
+      allListSatistic.forEach((row) => {
+        const price = row.pricenhap;
+        const slnhap = row.soluongnhap;
+        const tongtiennhap = price * slnhap;
+        total += tongtiennhap;
+      });
+
+      
+  
+      const totalPages = Math.ceil(totalSatistic / limit);
+  
+      res.render('thongke/thongkebanhang', {
+        listSatistic: listSatistic,
+        listOders: listOders,
+        currentPage: page,
+        totalPages: totalPages,
+        totalSatistic: totalSatistic,
+        total: total
+      });
+  
+    } catch (err) {
+      console.error('Error retrieving users:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+>>>>>>> Stashed changes
 }
 
 // Hưng 
@@ -151,23 +185,4 @@ function formatCash(str) {
   })
 }
 
-// Controller cho listProduct
-// exports.listProduct = async (req, res) => {
-//   try {
-//     // Lấy dữ liệu từ productModel hoặc listProduct
-//     const listSatistic = await myMD.productModel.find();
-
-//     // Lấy dữ liệu từ OderModel hoặc listOder
-//     const listOders = await myMD.OrderModel.find();
-
-//     // Truyền dữ liệu từ listOder sang listProduct
-//     res.locals.listOders = listOders;
-
-//     // Render listProduct và truyền dữ liệu từ listOder vào
-//     res.render('thongke/thongkebanhang', { listSatistic });
-//   } catch (error) {
-//     console.error('Error retrieving data:', error);
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// };
 
