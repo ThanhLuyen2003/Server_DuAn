@@ -7,38 +7,47 @@ exports.list = async (req, res, next) => {
     const skip = (page - 1) * limit;
     const sortBy = req.query.sortBy || 'name';
     const sortOrder = req.query.sortOrder || 'asc';
-    // tìm kiếm
     var thong_bao = null;
-    var dieu_kien_loc = null;
+    var dieu_kien_loc = {};
+
     if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
-        // Tìm kiếm theo cột 'name'
-        dieu_kien_loc = { 
-            $or: [
-                { name: { $regex: new RegExp(req.query.billSearch, 'i') } },
-                { soluongnhap: { $regex: new RegExp(req.query.billSearch, 'i') } },
-                { price: { $regex: new RegExp(req.query.billSearch, 'i') } }
-            ]
-        };
+        // Tìm kiếm theo tên sản phẩm nếu có
+        const billSearch = req.query.billSearch.trim();
+        dieu_kien_loc.$or = [
+            { name: new RegExp(billSearch, 'i') },
+            { soluongnhap: parseInt(billSearch) || 0 }, // Số lượng nhập
+            { price: parseFloat(billSearch) || 0 }    // Giá nhập
+        ];
     } else {
         thong_bao = "Không có dữ liệu";
     }
+    
 
     try {
         const sortOptions = {};
         sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
-        var listimport = await myMD.ImportModel.find(dieu_kien_loc).skip(skip).limit(limit).sort(sortOptions);
-        var totalimport = await myMD.ImportModel.countDocuments();
 
+        // Tìm kiếm theo điều kiện lọc và áp dụng phân trang, sắp xếp
+        const listimport = await myMD.ImportModel.find(dieu_kien_loc)
+            .skip(skip)
+            .limit(limit)
+            .sort(sortOptions);
+
+        // Đếm tổng số lượng bản ghi (không áp dụng điều kiện lọc)
+        const totalimport = await myMD.ImportModel.countDocuments();
+
+        res.render('import/import', {
+            listimport: listimport,
+            currentPage: page,
+            totalPages: Math.ceil(totalimport / limit),
+            totalimport,
+            thong_bao: thong_bao // Truyền thông báo vào template nếu cần
+        });
     } catch (err) {
         console.error('Error retrieving users:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
-    res.render('import/import', {
-        listimport: listimport, currentPage: page,
-        totalPages: Math.ceil(totalimport / limit),
-        totalimport
-    });
-}
+};
 
 exports.add = async (req, res, next) => {
     let msg = '';
@@ -100,12 +109,41 @@ exports.edit = async (req, res, next) => {
     res.render('import/edit', { msg: msg, listimport: listimport, objP: objP });
 }
 
-exports.delete = async (req, res, next) => {
-    let idp = req.params.idp;
-    try {
-        await myMD.ImportModel.findByIdAndDelete({ _id: idp });
-    } catch (error) {
+exports.sxTheoGia = async (req, res, next) => {
+    const sortBy = req.query.sortBy || 'price';
+    const sortOrder = req.query.sortOrder || 'asc';
 
+    try {
+        const sortOptions = {};
+        sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+
+        const listimport = await myMD.ImportModel.find()
+            .sort(sortOptions)
+            .lean()
+            .exec();
+
+        res.render('import/import', { listimport: listimport });
+    } catch (err) {
+        console.error('Error retrieving services:', err);
+        res.status(500).json({ error: 'Internal server error' });
     }
-    res.redirect('/import');
-}
+};
+exports.sxTheoSluong = async (req, res, next) => {
+    const sortBy = req.query.sortBy || 'soluongnhap';
+    const sortOrder = req.query.sortOrder || 'asc';
+
+    try {
+        const sortOptions = {};
+        sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+
+        const listimport = await myMD.ImportModel.find()
+            .sort(sortOptions)
+            .lean()
+            .exec();
+
+        res.render('import/import', { listimport: listimport });
+    } catch (err) {
+        console.error('Error retrieving services:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};

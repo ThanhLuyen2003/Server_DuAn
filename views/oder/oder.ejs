@@ -7,32 +7,21 @@
         <form class="d-flex" role="search"> 
           <div class="d-flex justify-content-around align-items-center mb-2">
 
-            <div class="dropdown">
-              <button style="margin-right: 30px;" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Lọc danh mục
+              <!-- bộ lọc -->
+              <button style="margin-right: 20px;" class="btn btn-warning d-flex align-items-center" type="button"
+              data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
+              aria-controls="collapseExample">
+              <div class="pe-1">Bộ lọc</div><i class="fa-solid fa-filter"></i>
               </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item category-filter" href="#" data-category="Kem đánh răng">Kem danh rang</a></li>
-                <li><a class="dropdown-item category-filter" href="#" data-category="Chăm sóc da">Cham soc da</a></li>
-                <li><a class="dropdown-item category-filter" href="#" data-category="Chăm sóc cơ thể">Cham soc co the</a></li>
-                <li><a class="dropdown-item category-filter" href="#" data-category="Combo">Combo</a></li>
-                <li><a class="dropdown-item category-filter" href="#" data-category="Nước hoa">Nuoc hoa</a></li>
-                <li><a class="dropdown-item category-filter" href="#" data-category="Sáp">Sap</a></li>
-              </ul>
-            </div>
 
-            <div class="dropdown">
-              <button style="margin-right: 20px;" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Sắp xếp theo
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="">Tên</a></li>
-                <li><a class="dropdown-item" href="">Giá</a></li>
-              </ul>
-            </div>
-            
+              <!-- <div style="margin-right: 20px;" class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Sắp xếp theo
+                </button>
+                <div class="dropdown-menu" aria-labelledby="sortDropdown">
+                  <a class="dropdown-item" href="#" id="sortByDate">Theo Ngày</a>
+                </div>
+              </div> -->
           </div>
 
           <!-- thanh tìm kiếm -->
@@ -45,8 +34,64 @@
         
       </div>
       
+      
     </nav>
 </div>
+<!-- bộ lọc -->
+<div class="collapse container" id="collapseExample">
+  <div class="card card-body">
+    <form id="filterForm" action="/oder/filter_data" method="get" enctype="multipart/form-data">
+      <div class="d-flex align-items-center">
+        <div>
+          <label for="startDate">Từ ngày:</label>
+          <div class="input-group">
+            <input type="date" class="form-control" name="startDay">
+          </div>
+        </div>
+        <div class="me-4 ms-4"><i class="fa-solid fa-arrow-right"></i></div>
+        <div>
+          Đến ngày:
+          <div class="input-group">
+            <input type="date" class="form-control" name="endDay">
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center">
+        <div class="me-2">Theo trạng thái: </div>
+        <div class="form-check m-3">
+          <input class="form-check-input" type="checkbox" value="Có đơn" id="order" name="statusOrder">
+          <label class="form-check-label" for="order" style="color: rgb(255, 0, 0);">
+            Có đơn
+          </label>
+        </div>
+        <div class="form-check m-3">
+          <input class="form-check-input" type="checkbox" value="Đã giao hàng" id="success" name="statusSuccess">
+          <label class="form-check-label" for="success" style="color: rgb(0, 255, 68);">
+            Đã giao hàng
+          </label>
+        </div>
+        <div class="form-check m-3">
+          <input class="form-check-input" type="checkbox" value="Đang giao hàng" id="inService" name="statusInService">
+          <label class="form-check-label" for="inService" style="color: rgb(86, 39, 255);">
+            Đang giao hàng
+          </label>
+        </div>
+        <div class="form-check m-3">
+          <input class="form-check-input" type="checkbox" value="Hủy đơn" id="cancel" name="statusCanceled">
+          <label class="form-check-label" for="cancel" style="color: rgb(255, 0, 0);">
+            Hủy đơn
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <button class="btn btn-warning" type="submit">Tìm kết quả</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 
   <div class="container">
     <% if (listOders.length === 0) { %>
@@ -64,7 +109,7 @@
         <th>Lời nhắn</th>
         <th>Ghi chú</th>
         <th>Trạng thái</th>
-        <th></th>
+        <th style="width: 70px;"></th>
       </tr>
        
       <% listOders.forEach( ( row )=>{ %>
@@ -72,17 +117,15 @@
           <td>
             <%= row.phoneU %>
           </td>
-          <td>
+          <td>00
             <%= row.addressU %>
-          </td>
-          
+          </td>         
           <td>
             <%= row.nameU %>
           </td>
           <td>
             <%= row.price %>
-          </td>
-   
+          </td>   
           <td>
             <% row.products.forEach((product) => { %>
               <p>Tên SP: <%= product.name %></p>
@@ -90,7 +133,7 @@
               <p>Số lượng mua: <%= product.quantity %></p>                 
             <% }) %>
           </td>
-
+          
           <td>
             <%= row.time %>
           </td>
@@ -102,10 +145,10 @@
           <!-- Ghi chú -->
           <td>
             <%= row.note %>
-            <a href="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal<%= row._id %>"
+            <a href="" type="button" data-bs-toggle="modal" data-bs-target="#ghichu<%= row._id %>"
               data-bs-whatever="@getbootstrap"><i class="fa-solid fa-file-pen"></i></a>
-            <div class="modal fade" id="exampleModal<%= row._id %>" tabindex="-1" aria-labelledby="exampleModalLabel"
-              aria-hidden="true" data-bs-target="#exampleModal<%= row._id %>">
+            <div class="modal fade" id="ghichu<%= row._id %>" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true" data-bs-target="#ghichu<%= row._id %>">
               <div class="modal-dialog">
                 <form id="editNoteForm" action="/oder/add-note/<%= row._id %>" method="POST">
                   <div class="modal-content">
@@ -145,10 +188,6 @@
             <% } else if (row.status==='Hủy đơn' || row.status==='Khách hủy đơn') { %>
               <p style="color: red; font-weight: bold;">
                 <%= row.status %>
-              </p>
-            <% } else if (row.status==='Trả hàng') { %>
-              <p style="color: red; font-weight: bold;">
-              <%= row.status %>
               </p>
             <% } %>
           </td>
@@ -196,7 +235,6 @@
                                 <div class="modal-footer">
                                   
                                   <a class="btn btn-danger" href="/oder/huyoders/<%= row._id%>">Hủy đơn</a>
-                                  <a class="btn btn-danger" href="/oder/huyoders/<%= row._id%>">Trả hàng</a>
                                   <a class="btn btn-success" href="/oder/duyetoders/<%= row._id%>">Xác nhận giao hàng thành công</a>
                                 </div>
                                 <% } %>
@@ -243,6 +281,35 @@
     });
   });
 </script>
+
+<!-- sắp xếp theo ngày -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const sortDropdown = document.getElementById('sortDropdown');
+    const sortByDate = document.getElementById('sortByDate');
+    const productTable = document.getElementById('productTable');
+
+    function extractDate(cell) {
+      return cell.textContent.split(' - ')[1];
+    }
+
+    function sortByDateHandler() {
+      const rows = Array.from(productTable.querySelectorAll('tr')).slice(1);
+
+      rows.sort((a, b) => {
+        const dateA = new Date(extractDate(a.cells[5])); // Thay đổi chỉ số cột nếu cần
+        const dateB = new Date(extractDate(b.cells[5])); // Thay đổi chỉ số cột nếu cần
+
+        return dateA - dateB;
+      });
+
+      rows.forEach(row => productTable.appendChild(row));
+    }
+
+    sortByDate.addEventListener('click', sortByDateHandler);
+  });
+</script>
+
 
 <!-- thông báo về app -->
 <script>

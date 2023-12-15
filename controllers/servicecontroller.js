@@ -1,5 +1,6 @@
 var myMD = require('../models/model');
 var fs = require('fs');
+
 exports.list = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 5;
@@ -8,19 +9,18 @@ exports.list = async (req, res, next) => {
     //   const sortOrder = req.query.sortOrder || 'asc';
 
     // tìm kiếm
-    var thong_bao = null;
-    var dieu_kien_loc = null;
+    var thong_bao = '';
+    var dieu_kien_loc = {};
     
     if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
-        // Tìm kiếm theo cột 'name'
-        dieu_kien_loc = { 
-            $or: [
-                { name: { $regex: new RegExp(req.query.billSearch, 'i') } },
-                { price: { $regex: new RegExp(req.query.billSearch, 'i') } },
-                { type: { $regex: new RegExp(req.query.billSearch, 'i') } },
-                { describe: { $regex: new RegExp(req.query.billSearch, 'i') } }
-            ]
-        };
+        // Tìm kiếm theo tên sản phẩm nếu có
+        const billSearch = req.query.billSearch.trim();
+        dieu_kien_loc.$or = [
+            { name: new RegExp(billSearch, 'i') },
+            { type: new RegExp(billSearch, 'i') },
+            { describe: new RegExp(billSearch, 'i') }, // Số lượng nhập
+            { price: parseFloat(billSearch) || 0 }    // Giá nhập
+        ];
     } else {
         thong_bao = "Không có dữ liệu";
     }
@@ -45,6 +45,7 @@ exports.list = async (req, res, next) => {
         totalService
     });
 }
+
 exports.addService = async (req, res, next) => {
     let msg = '';
     var listService = await myMD.ServiceModel.find().sort({ name: 1 });
@@ -73,6 +74,7 @@ exports.addService = async (req, res, next) => {
     }
     res.render('Service/add', { msg: msg, listService: listService });
 }
+
 exports.editService = async (req, res, next) => {
     let msg = '';
     var listService = await myMD.ServiceModel.find();
@@ -104,6 +106,7 @@ exports.editService = async (req, res, next) => {
     }
     res.render('Service/edit', { msg: msg, listService: listService, objSe: objSe });
 }
+
 exports.deleteService = async (req, res, next) => {
     let idse = req.params.idse;
     try {
@@ -117,7 +120,24 @@ exports.sxTheoTenService = async (req, res, next) => {
     var listDichVu = await myMD.ServiceModel.find().sort({ name: 1 });
     res.render('Service/list', { listDichVu: listDichVu })
 }
+
 exports.sxTheoGia = async (req, res, next) => {
-    var listDichVu = await myMD.ServiceModel.find().sort({ price: 1 });
-    res.render('Service/list', { listDichVu: listDichVu })
-}
+    const sortBy = req.query.sortBy || 'price';
+    const sortOrder = req.query.sortOrder || 'asc';
+  
+    try {
+      const sortOptions = {};
+      sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+  
+      const listDichVu = await myMD.ServiceModel.find()
+        .sort(sortOptions)
+        .lean()
+        .exec();
+  
+      res.render('Service/list', { listDichVu: listDichVu });
+    } catch (err) {
+      console.error('Error retrieving services:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+  

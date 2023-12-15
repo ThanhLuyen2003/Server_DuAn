@@ -6,7 +6,7 @@
             <form class="px-4 py-3">
 
                 <label class="form-label">Số lượng nhập</label>
-                <input type="text" name="soluongnhap" placeholder="Số lượng nhập" class="form-control" value="<%=objP.soluongnhap %>"><br>
+                <input type="number" name="soluongnhap" placeholder="Số lượng nhập" class="form-control" value="<%=objP.soluongnhap %>"><br>
 
                 <div class="mb-3">
                     <label class="form-label">Hình ảnh</label>
@@ -20,7 +20,7 @@
                     value="<%=objP.name %>"><br>
 
                 <label class="form-label">Giá bán</label>
-                <input type="text" name="price" placeholder="Giá" class="form-control" value="<%=objP.price %>"><br>
+                <input type="number" name="price" placeholder="Giá" class="form-control" value="<%=objP.price %>"><br>
                 
                 <button class="btn btn-warning" type="submit">Lưu</button>
                 <%= msg %>

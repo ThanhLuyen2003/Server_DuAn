@@ -15,20 +15,20 @@
             <a type="button" class="btn btn-warning" href="http://localhost:3000/import/add"
               style="width: auto; margin-right: 20px;">+ Thêm sản phẩm cần nhập
             </a>
-            <div class="dropdown">
+            <div style="margin-right: 10px;" class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Sắp xếp theo
               </button>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="">Tên</a></li>
-                <li><a class="dropdown-item" href="">Giá</a></li>
+                <li><a class="dropdown-item" href="/import/sxtheogia">Giá</a></li>
+                <li><a class="dropdown-item" href="/import/sxtheosl">Số lượng nhập</a></li>
               </ul>
             </div>
            <div class="d-flex justify-content-around align-items-center mb-9">
             <form class="form-inline my-2 my-lg-0" method="post" action="">
-              <input class="form-control mr-sm-2" type="search" name="billSearch" id="searchInput" placeholder="Nhập tên sản phẩm..." aria-label="Search">
               <button class="btn btn-warning my-2 my-sm-0" type="submit">Tìm</button>
+              <input class="form-control mr-sm-2" type="search" name="billSearch" id="searchInput" placeholder="Nhập tên sản phẩm..." aria-label="Search">
           </form>
            </div>
           </div>

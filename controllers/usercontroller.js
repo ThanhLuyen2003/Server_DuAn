@@ -9,24 +9,21 @@ exports.list = async (req, res, next) => {
   const sortOrder = req.query.sortOrder || 'asc';
 
   // tìm kiếm
-  var thong_bao = null;
-  var dieu_kien_loc = null;
+  var thong_bao = '';
+  var dieu_kien_loc = {};
+
   if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
-    // Tìm kiếm theo cột 'name'
-    dieu_kien_loc = { 
-        $or: [
-            { name: { $regex: new RegExp(req.query.billSearch, 'i') } },
-            { phone: { $regex: new RegExp(req.query.billSearch, 'i') } },
-            { email: { $regex: new RegExp(req.query.billSearch, 'i') } },
-            { address: { $regex: new RegExp(req.query.billSearch, 'i') } },
-            { otp: { $regex: new RegExp(req.query.billSearch, 'i') } },
-            { balance: parseFloat(req.query.billSearch) || 0 }
-        ]
-    };
+    const billSearch = req.query.billSearch.trim();
+    dieu_kien_loc.$or = [
+      { name: new RegExp(billSearch, 'i') },
+      { phone: new RegExp(billSearch, 'i')},
+      { email: new RegExp(billSearch, 'i')},
+      { address: new RegExp(billSearch, 'i')},
+    ];
   } else {
     thong_bao = "Không có dữ liệu";
   }
-  
+
   try {
     const sortOptions = {};
     sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;

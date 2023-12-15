@@ -71,7 +71,7 @@ let productModel = db.mongoose.model('productModel', ProductModel)
 
 const serviceModel = new db.mongoose.Schema({
     name: { type: String, required: true },
-    price: { type: String, required: true },
+    price: { type: Number, required: true },
     type: { type: String, required: true },
     image: { type: String, required: true },
     describe: { type: String, required: true },
@@ -160,9 +160,9 @@ let OrderModel = db.mongoose.model('orderModel', orderModel)
 
 // model hàng nhập về
 const importModel = new db.mongoose.Schema({
-    soluongnhap: { type: String, required: true },
+    soluongnhap: { type: Number, required: true },
     name: { type: String, required: true },
-    price: { type: String, required: true },
+    price: { type: Number, required: true },
     img: { type: String, required: true },
 
 },
