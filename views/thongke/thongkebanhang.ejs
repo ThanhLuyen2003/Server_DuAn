@@ -1,159 +1,153 @@
-<%
-<!-- Hàm chuyển đổi số thành chuỗi với dấu chấm phân tách sau mỗi 3 chữ số -->
+<% <!-- Hàm chuyển đổi số thành chuỗi với dấu chấm phân tách sau mỗi 3 chữ số -->
   function numberWithCommas(number) {
-    return number.toLocaleString();
+  return number.toLocaleString();
   }
-%>
-<%- include('../inc/header.ejs') %>
+  %>
+  <%- include('../inc/header.ejs') %>
 
-<div class="container">
-  <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Thống kê bán hàng</h1>
-  <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-      <form class="d-flex" role="search"> 
-        <div class="d-flex justify-content-around align-items-center mb-2">
+    <div class="container">
+      <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Thống kê bán hàng</h1>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <form class="d-flex" role="search">
+            <div class="d-flex justify-content-around align-items-center mb-2">
 
-          <div class="dropdown">
-            <button style="margin-right: 20px;" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Sắp xếp theo
-            </button>
-            
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="">Tên</a></li>
-              <li><a class="dropdown-item" href="">Giá</a></li>
-            </ul>
-          </div>
-          
+              <div class="dropdown">
+                <button style="margin-right: 20px;" class="btn btn-secondary dropdown-toggle" type="button"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  Sắp xếp theo
+                </button>
+
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="">Tên</a></li>
+                  <li><a class="dropdown-item" href="">Giá</a></li>
+                </ul>
+              </div>
+
+            </div>
+            <form class="form-inline my-2 my-lg-0" method="post" action="">
+              <input style="height: 38px; margin-right: 5px;" class="form-control mr-sm-2" type="search"
+                name="billSearch" id="searchInput" placeholder="Nhập tên sản phẩm..." aria-label="Search">
+              <button style="height: 38px;" class="btn btn-warning my-2 my-sm-0" type="submit">Tìm</button>
+            </form>
+
+          </form>
+
         </div>
-        <form class="form-inline my-2 my-lg-0" method="post" action="">
-          <input style="height: 38px; margin-right: 5px;" class="form-control mr-sm-2" type="search" name="billSearch" id="searchInput" placeholder="Nhập tên sản phẩm..." aria-label="Search">
-          <button style="height: 38px;" class="btn btn-warning my-2 my-sm-0" type="submit">Tìm</button>
-      </form>
-      
-      </form>
-      
+
+      </nav>
     </div>
-    
-  </nav>
-</div>
 
-<div class="container">
-  <% if (listSatistic.length === 0) { %>
-    <p style="text-align: center; font-size: 30px;">Không có dữ liệu</p>
-  <% } else { %>
-  <table id="productTable" class="table table-bordered table-striped">
-    <tr class="text-sm-center">
-      <th style="width: 400px;">Tên sản phẩm</th>
-      <th style="width: 150px;"> Số lượng nhập</th>
-      <th>Đơn giá nhập</th>
-      <th>Tiền nhập</th>
-      <th>Số lượng đã bán</th>
-      <th>Đơn giá bán</th>
-      <th>Tiền bán</th>
-      <th>Số lượng còn lại</th>
-      <th>Trạng thái</th>
+    <div class="container">
+      <% if (listSatistic.length===0) { %>
+        <p style="text-align: center; font-size: 30px;">Không có dữ liệu</p>
+        <% } else { %>
+          <table id="productTable" class="table table-bordered table-striped">
+            <tr class="text-sm-center">
+              <th style="width: 400px;">Tên sản phẩm</th>
+              <th style="width: 150px;"> Số lượng nhập</th>
+              <th>Đơn giá nhập</th>
+              <th>Tiền nhập</th>
+              <th>Số lượng đã bán</th>
+              <th>Đơn giá bán</th>
+              <th>Tiền bán</th>
+              <th>Số lượng còn lại</th>
+              <th>Trạng thái</th>
 
-    </tr>
+            </tr>
 
-    <% listSatistic.forEach( ( row )=>{  %>
-      <tr>         
-        <td>
-          <%= row.name %>
-        </td>
-        <td>
-            <%= row.soluongnhap %>
-          </td>
-        <td>
-          <%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(row.pricenhap) %>
-        </td>
-        <td>
-            <% 
-              const price = row.pricenhap;
-              const slnhap = row.soluongnhap;
-              const tongtiennhap = price * slnhap;
-            %>
-            <%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tongtiennhap) %>
-        </td>
+            <% listSatistic.forEach( ( row )=>{ %>
+              <tr>
+                <td>
+                  <%= row.name %>
+                </td>
+                <td>
+                  <%= row.soluongnhap %>
+                </td>
+                <td>
+                  <%= new Intl.NumberFormat('vi-VN', { style: 'currency' , currency: 'VND' }).format(row.pricenhap) %>
+                </td>
+                <td>
+                  <% const price=row.pricenhap; const slnhap=row.soluongnhap; const tongtiennhap=price * slnhap; %>
+                    <%= new Intl.NumberFormat('vi-VN', { style: 'currency' , currency: 'VND' }).format(tongtiennhap) %>
+                </td>
 
-        <td>
-          <% 
-          let totalQuantity = 0;
-          let totalSalesValue = 0; // Initialize the total sales value
-          listOders.forEach((order) => {
-            if (order.status == 'Đã giao hàng'){
-            order.products.forEach((product) => {
-              if (product.name === row.name) {
-                totalQuantity += parseInt(product.quantity || 0, 10);
-              }
-            });
+                <td>
+                  <% let totalQuantity=0; let totalSalesValue=0; // Initialize the total sales value
+                    listOders.forEach((order)=> {
+                    if (order.status == 'Đã giao hàng'){
+                    order.products.forEach((product) => {
+                    if (product.name === row.name) {
+                    totalQuantity += parseInt(product.quantity || 0, 10);
+                    }
+                    });
 
-          const priceban = row.price;
-          const slban = totalQuantity;
-          const tongtienban = priceban * slban;
-          totalSalesValue += tongtienban; // Accumulate the total sales value
-          }
-          });
-        %>
-        <%= totalQuantity %>
+                    const priceban = row.price;
+                    const slban = totalQuantity;
+                    const tongtienban = priceban * slban;
+                    totalSalesValue += tongtienban; // Accumulate the total sales value
+                    }
+                    });
+                    %>
+                    <%= totalQuantity %>
 
-        </td>
+                </td>
 
-        <td>
-          <%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(row.price) %>
-        </td>
-        <!--  -->
-        <td>
-          
-          <%  
-              const priceban = row.price;
-              const slban = totalQuantity;
-              const tongtienban = priceban * slban;
-            %>
-            <%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tongtienban) %>
-        </td>
-        <td>
-          <%  
-          const soluongton = slnhap - slban;
-        %>
-        <%= soluongton %>
-        </td>
-        <td>
-          <% if (soluongton <= 0) { %>
-            <p style="color: red;">Hết hàng</p>
-          <% } else { %>
-            Còn hàng
+                <td>
+                  <%= new Intl.NumberFormat('vi-VN', { style: 'currency' , currency: 'VND' }).format(row.price) %>
+                </td>
+                <!--  -->
+                <td>
+
+                  <% const priceban=row.price; const slban=totalQuantity; const tongtienban=priceban * slban; %>
+                    <%= new Intl.NumberFormat('vi-VN', { style: 'currency' , currency: 'VND' }).format(tongtienban) %>
+                </td>
+                <td>
+                  <% const soluongton=slnhap - slban; %>
+                    <%= soluongton %>
+                </td>
+                <td>
+                  <% if (soluongton <=0) { %>
+                    <p style="color: red;">Hết hàng</p>
+                    <% } else { %>
+                      Còn hàng
+                      <% } %>
+                </td>
+
+
+              </tr>
+
+
+              <% }) %>
+
+                <p style="font-weight: bold;">Tổng tiền nhập hàng: <%= numberWithCommas(total) %>đ</p>
+                <p style="font-weight: bold;">Tổng tiền bán hàng: <%= numberWithCommas(totalSales) %>đ</p>
+
+
+
+          </table>
           <% } %>
-        </td>
+    </div>
 
 
-      </tr>
+    <div style="margin-left: 850px; margin-top: 50px;">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link"
+              href="http://localhost:3000/statistic/thongkebanhang?page-1&limit=10">Previous</a></li>
+          <li class="page-item"><a class="page-link"
+              href="http://localhost:3000/statistic/thongkebanhang?page=1&limit=10">1</a></li>
+          <li class="page-item"><a class="page-link"
+              href="http://localhost:3000/statistic/thongkebanhang?page=2&limit=10">2</a></li>
+          <li class="page-item"><a class="page-link"
+              href="http://localhost:3000/statistic/thongkebanhang?page=3&limit=10">3</a></li>
+          <li class="page-item"><a class="page-link"
+              href="http://localhost:3000/statistic/thongkebanhang?page=4&limit=10">4</a></li>
+          <li class="page-item"><a class="page-link"
+              href="http://localhost:3000/statistic/thongkebanhang?page+1&limit=10">Next</a></li>
+        </ul>
+      </nav>
+    </div>
 
 
-    <% }) %>
- 
-   <p style="font-weight: bold;">Tổng tiền nhập hàng: <%= numberWithCommas(total) %>đ</p>
-    <p style="font-weight: bold;">Tổng tiền bán hàng: <%= numberWithCommas(totalSales) %>đ</p>
-
-
-      
-  </table> 
-  <% } %>  
-</div> 
-
-
-<div style="margin-left: 850px; margin-top: 50px;">
-  <nav aria-label="Page navigation example">
-    <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page-1&limit=10">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=1&limit=10">1</a></li>
-      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=2&limit=10">2</a></li>
-      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=3&limit=10">3</a></li>
-      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page=4&limit=10">4</a></li>
-      <li class="page-item"><a class="page-link" href="http://localhost:3000/statistic/thongkebanhang?page+1&limit=10">Next</a></li>
-    </ul>
-  </nav>
-</div>
-
-
-<%- include('../inc/footer.ejs') %>
+    <%- include('../inc/footer.ejs') %>
