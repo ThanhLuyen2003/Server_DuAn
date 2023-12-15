@@ -193,7 +193,7 @@ app.get('/getOrder/:id/:status', (req, res) => {
 
 app.get('/getOrder', (req, res) => {
 
-    md.OrderModel.find()
+    md.OrderModel.find({ status: 'Đã giao hàng' })
         .then(data => {
             res.status(200).json(data);
         })
