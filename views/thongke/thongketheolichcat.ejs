@@ -1,9 +1,30 @@
 <%- include('../inc/header.ejs') %>
   <main id="main" class="main">
-    <div class="pagetitle mb-5">
+    <div class="pagetitle mb-4">
       <h1>Bảng thống kê dịch vụ</h1>
     </div>
-
+    <div class="card card-body mb-4">
+      <form id="filterForm" action="/statistic/thongketheolichcat" method="get" enctype="multipart/form-data" class="d-flex align-items-center">
+        <div class="d-flex align-items-center">
+          <div>
+            <label for="startDate">Từ ngày:</label>
+            <div class="input-group">
+              <input type="date" class="form-control" name="startDay" id="startDay" value="<%= formattedStartDate %>">
+            </div>
+          </div>
+          <div class="me-4 ms-4"><i class="fa-solid fa-arrow-right" ></i></div>
+          <div>
+            Đến ngày:
+            <div class="input-group">
+              <input type="date" class="form-control" name="endDay" id="endDay" value="<%= formattedEndDate %>">
+            </div>
+          </div>
+        </div>
+        <div class="ms-4">
+          <button class="btn btn-warning fw-medium" type="submit">Tìm kết quả</button>
+        </div>
+      </form>
+    </div>
     <section class="section dashboard">
       <div class="row">
 
@@ -22,7 +43,8 @@
                     </div>
                     <div class="ps-3">
                       <h6>
-                        <%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalAmount) %>
+                        <%= new Intl.NumberFormat('vi-VN', { style: 'currency' , currency: 'VND' }).format(totalAmount)
+                          %>
                       </h6>
                       <span class="text-success small pt-1 fw-bold">12%</span> <span
                         class="text-muted small pt-2 ps-1">increase</span>
@@ -272,15 +294,15 @@
         <!-- Right side columns -->
         <div class="col-lg-4">
           <!-- Recent Activity -->
+          <!-- Bảng hiển thị Top 10 dịch vụ theo số lần sử dụng -->
           <div class="card mb-3">
             <div class="card-body">
-              <h5 class="card-title fs-3 mb-4">Top dịch vụ ưa thích</h5>
+              <h5 class="card-title fs-3 mb-4">Top dịch vụ ưa thích theo số lần sử dụng</h5>
               <div class="activity">
-                <!-- Sử dụng vòng lặp để hiển thị từng dịch vụ trong danh sách top 10 -->
-                <% topService.forEach((service, index)=> { %>
+                <% topServiceByCount.forEach((service, index)=> { %>
                   <div class="activity-item d-flex">
-                    <!-- Thời gian hoặc số lần sử dụng dịch vụ có thể được thay đổi tùy thuộc vào yêu cầu của bạn -->
                     <div class="activite-label">
+                      <!-- Các điều kiện màu sắc có thể được thay đổi tùy thuộc vào yêu cầu của bạn -->
                       <% if (index===0) { %>
                         <span class="text-warning fw-bold fs-4">Top <%= index + 1 %></span>
                         <% } else if (index===1) { %>
@@ -293,24 +315,23 @@
                     </div>
                     <i class='bi bi-circle-fill activity-badge align-self-start'></i>
                     <div class="activity-content">
-                      <%= service[0] %> - <%= service[1] %> lần<!-- Tên dịch vụ -->
+                      <%= service[0] %> - <%= service[1] %> lần
                     </div>
-                  </div><!-- End activity item-->
+                  </div>
                   <% }); %>
               </div>
             </div>
           </div>
 
-          <!-- Budget Report -->
+          <!-- Thống kê top 10 dịch vụ theo doanh thu -->
           <div class="card mb-3">
             <div class="card-body">
-              <h5 class="card-title fs-3 mb-4">Top Khách hàng</h5>
+              <h5 class="card-title fs-3 mb-4">Top dịch vụ ưa thích theo doanh thu</h5>
               <div class="activity">
-                <!-- Sử dụng vòng lặp để hiển thị từng dịch vụ trong danh sách top 10 -->
-                <% topUser.forEach((user, index)=> { %>
+                <% topServiceByRevenue.forEach((service, index)=> { %>
                   <div class="activity-item d-flex">
-                    <!-- Thời gian hoặc số lần sử dụng dịch vụ có thể được thay đổi tùy thuộc vào yêu cầu của bạn -->
                     <div class="activite-label">
+                      <!-- Các điều kiện màu sắc có thể được thay đổi tùy thuộc vào yêu cầu của bạn -->
                       <% if (index===0) { %>
                         <span class="text-warning fw-bold fs-4">Top <%= index + 1 %></span>
                         <% } else if (index===1) { %>
@@ -323,13 +344,16 @@
                     </div>
                     <i class='bi bi-circle-fill activity-badge align-self-start'></i>
                     <div class="activity-content">
-                      <%= user[0] %> - <%= user[1] %> lần<!-- Tên dịch vụ -->
+                      <%= service[0] %> - <%= new Intl.NumberFormat().format(service[1]) %> VND
                     </div>
-                  </div><!-- End activity item-->
+                  </div>
                   <% }); %>
               </div>
             </div>
           </div>
+
+
+
           <!-- Website Traffic -->
           <div class="card">
             <div class="filter">
@@ -467,4 +491,14 @@
       </div>
     </section>
   </main>
+
+
+  <script>
+    // Lấy ngày hiện tại
+    var today = new Date().toISOString().split('T')[0];
+  
+    // Đặt giá trị mặc định cho input
+    document.getElementById('startDay').value = today;
+    document.getElementById('endDay').value = today;
+  </script>
   <%- include('../inc/footer.ejs') %>

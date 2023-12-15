@@ -1,0 +1,29 @@
+<!-- Budget Report -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title fs-3 mb-4">Top Khách hàng</h5>
+              <div class="activity">
+                <!-- Sử dụng vòng lặp để hiển thị từng dịch vụ trong danh sách top 10 -->
+                <% topUser.forEach((user, index)=> { %>
+                  <div class="activity-item d-flex">
+                    <!-- Thời gian hoặc số lần sử dụng dịch vụ có thể được thay đổi tùy thuộc vào yêu cầu của bạn -->
+                    <div class="activite-label">
+                      <% if (index===0) { %>
+                        <span class="text-warning fw-bold fs-4">Top <%= index + 1 %></span>
+                        <% } else if (index===1) { %>
+                          <span class="text-success fw-semibold fs-5">Top <%= index + 1 %></span>
+                          <% } else if (index===2) { %>
+                            <span class="text-info fw-medium fs-6">Top <%= index + 1 %></span>
+                            <% } else { %>
+                              <span class="text-secondary">Top <%= index + 1 %></span>
+                              <% } %>
+                    </div>
+                    <i class='bi bi-circle-fill activity-badge align-self-start'></i>
+                    <div class="activity-content">
+                      <%= user[0] %> - <%= user[1] %> lần<!-- Tên dịch vụ -->
+                    </div>
+                  </div><!-- End activity item-->
+                  <% }); %>
+              </div>
+            </div>
+          </div>

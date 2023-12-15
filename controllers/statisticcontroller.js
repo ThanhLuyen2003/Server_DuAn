@@ -57,9 +57,9 @@ exports.thongkebanhang = async (req, res, next) => {
         });
       }
     });
-      
 
-   
+
+
     console.log('Tổng tiền bán hàng:', totalSales);
 
     const totalPages = Math.ceil(totalSatistic / limit);
@@ -84,36 +84,60 @@ exports.thongkebanhang = async (req, res, next) => {
 // Hưng 
 exports.thongketheolichcat = async (req, res, next) => {
   try {
-    const completedBills = await billMd.find({
-      status: 'Đã hoàn thành',
-    });
+    let filter = { status: 'Đã hoàn thành' };
+
+    // Kiểm tra xem có query parameters startDay và endDay hay không
+    if (req.query.startDay && req.query.endDay) {
+      const startDay = moment(req.query.startDay);
+      const endDay = moment(req.query.endDay);
+
+      // Chuyển đổi ngày về định dạng 'YYYY-MM-DD'
+      const formattedStartDate = startDay.format('YYYY-MM-DD');
+      const formattedEndDate = endDay.format('YYYY-MM-DD');
+
+      // Thêm điều kiện tìm kiếm theo ngày
+      filter.day = {
+        $gte: formattedStartDate,
+        $lte: formattedEndDate,
+      };
+    }
+    const formattedToday = new Date().toISOString().slice(0, 10);
+    // Thực hiện truy vấn với điều kiện tìm kiếm
+    const completedBills = await billMd.find(filter);
     // tổng tiền
-    const totalAmount = completedBills.reduce((acc, bill) => acc + parseInt(bill.price), 0);
+    const totalAmount = totalAmountFunc(completedBills);
 
     // Trích xuất tất cả các dịch vụ từ các hóa đơn đã hoàn thành
     const allServices = completedBills.flatMap(bill => bill.services);
-    const allUser = completedBills.flatMap(bill => bill.idUser);
 
-    const top10Services = TopList(allServices, 'name');
+    // Thống kê top 10 dịch vụ theo số lần sử dụng
+    const top10ServicesByCount = TopList(allServices, 'name');
 
-    // Check if allUser is an array of objects or userIds
-    const users = Array.isArray(allUser)
-      ? await myMD.userModel.find({ _id: { $in: allUser } })
-      : [];
+    // Thống kê top 10 dịch vụ theo doanh thu
+    const serviceRevenueMap = new Map();
+    for (const bill of completedBills) {
+      for (const service of bill.services) {
+        const serviceInfo = await myMD.ServiceModel.findOne({ name: service.name });
 
-    // Tạo một đối tượng Map để ánh xạ ID người dùng với tên của họ
-    const userNamesMap = new Map(users.map(user => [user._id.toString(), user.name]));
+        if (serviceInfo) {
+          const revenue = serviceInfo.price;
+          serviceRevenueMap.set(service.name, (serviceRevenueMap.get(service.name) || 0) + revenue);
+        }
+      }
+    }
 
-    // Lấy tên của khách hàng từ ID người dùng
-    const userNames = Array.isArray(allUser)
-      ? allUser.map(userId => userNamesMap.get(userId.toString()))
-      : [];
+    // Sắp xếp và lấy top 10 dịch vụ theo doanh thu
+    const sortedServiceRevenueList = [...serviceRevenueMap.entries()].sort((a, b) => b[1] - a[1]).slice(0, 10);
+    console.log(sortedServiceRevenueList);
 
-    const top10Users = TopList(userNames, 'name');
-    console.log(top10Services);
-    console.log(top10Users);
 
-    res.render('thongke/thongketheolichcat', { totalAmount: totalAmount, topService: top10Services, topUser: top10Users });
+    res.render('thongke/thongketheolichcat', {
+      formattedStartDate: formattedToday,
+      formattedEndDate: formattedToday,
+      totalAmount: totalAmount,
+      topServiceByCount: top10ServicesByCount,
+      topServiceByRevenue: sortedServiceRevenueList,
+    });
   } catch (error) {
     console.error('Lỗi khi lấy và tính tổng tiền các hóa đơn:', error);
     next(error);
@@ -141,11 +165,31 @@ function TopList(data, propertyName) {
   return sortList.slice(0, 10);
 }
 
+function TopListByRevenue(data, propertyName, pricePropertyName) {
+  const RevenueMap = data.reduce((map, item) => {
+    const itemName = typeof item === 'object' ? item[propertyName] : item;
+    const itemPrice = typeof item === 'object' ? parseFloat(item[pricePropertyName]) : undefined;
+    console.log(itemPrice);
 
-function formatCash(str) {
-  return str.split('').reverse().reduce((prev, next, index) => {
-    return ((index % 3) ? next : (next + ',')) + prev
-  })
+    // Skip items with undefined values or incomplete status
+    if (itemName !== undefined && itemPrice !== undefined) {
+      const revenue = itemPrice * (map.has(itemName) ? map.get(itemName) + 1 : 1);
+      map.set(itemName, revenue);
+    }
+
+    return map;
+  }, new Map());
+
+  const sortList = [...RevenueMap.entries()].sort((a, b) => b[1] - a[1]);
+
+  return sortList.slice(0, 10);
 }
 
+
+
+
+
+function totalAmountFunc(listBill) {
+  return listBill.reduce((acc, bill) => acc + parseInt(bill.price), 0);
+}
 
