@@ -46,11 +46,12 @@
     <tr class="text-sm-center">
       <th style="width: 400px;">Tên sản phẩm</th>
       <th style="width: 150px;"> Số lượng nhập</th>
-      <th>Giá nhập</th>
+      <th>Đơn giá nhập</th>
       <th>Tiền nhập</th>
       <th>Số lượng đã bán</th>
-      <th>Giá bán</th>
+      <th>Đơn giá bán</th>
       <th>Tiền bán</th>
+      <th>Số lượng còn lại</th>
       <th>Trạng thái</th>
 
     </tr>
@@ -111,9 +112,14 @@
             %>
             <%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tongtienban) %>
         </td>
-        
         <td>
-          <% if (row.soluongnhap <= 0) { %>
+          <%  
+          const soluongton = slnhap - slban;
+        %>
+        <%= soluongton %>
+        </td>
+        <td>
+          <% if (soluongton <= 0) { %>
             <p style="color: red;">Hết hàng</p>
           <% } else { %>
             Còn hàng
