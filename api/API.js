@@ -191,6 +191,14 @@ app.get('/getOrder/:id/:status', (req, res) => {
         })
 })
 
+app.get('/getOrder', (req, res) => {
+
+    md.OrderModel.find()
+        .then(data => {
+            res.status(200).json(data);
+        })
+})
+
 app.get('/getCat', (req, res) => {
 
     md.ServiceModel.find({ type: 'cat' })
@@ -293,7 +301,7 @@ app.put('/traHang/:id', (req, res) => {
 })
 
 app.post('/addBillMoney/:idUser', async (req, res) => {
-    const { soDu, date, time, tongSoDu,dichVu } = req.body;
+    const { soDu, date, time, tongSoDu, dichVu } = req.body;
     const idUser = req.params.idUser;
 
     try {
@@ -332,7 +340,7 @@ app.put('/changeBalance/:idUser/:balance', (req, res) => {
     const dichVu = req.params.dichVu;
     const id = req.params.idUser;
 
-    md.userModel.updateOne({ _id: id }, { $set: { balance: balance,dichVu:dichVu } })
+    md.userModel.updateOne({ _id: id }, { $set: { balance: balance, dichVu: dichVu } })
         .then((data) => {
             if (data) {
                 res.status(200).json({
