@@ -199,7 +199,7 @@
                           <!-- PHẦN XÁC NHẬN TRẠNG THÁI -->
                           <td>
                             <div>
-                              <% if (row.status==='Sắp tới' && row.status==='Khách đang cắt' &&
+                              <% if (row.status==='Sắp tới' || row.status==='Khách đang cắt' ||
                                 row.status==='Khách đến muộn' ) { %>
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                   data-bs-target="#accept<%= row._id %>">Xác nhận</button>
@@ -232,9 +232,8 @@
                                                       <%= row.nameSalon %> vào sử dụng dịch vụ.
                                                 </div>
                                                 <div class="modal-footer">
-                                                  <a class="btn btn-success"
-                                                    href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác
-                                                    nhận</a>
+                                                  <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác nhận</a>
+                                                  <a class="btn btn-success" href="/home/huy-lich/<%= row._id%>">Hủy lịch</a>
                                                 </div>
                                                 <% }else if(row.status=='Khách đang cắt' ) { %>
                                                   <div class="modal-body">
