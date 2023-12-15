@@ -84,9 +84,26 @@ exports.thongkebanhang = async (req, res, next) => {
 // Hưng 
 exports.thongketheolichcat = async (req, res, next) => {
   try {
-    const completedBills = await billMd.find({
-      status: 'Đã hoàn thành',
-    });
+    let filter = { status: 'Đã hoàn thành' };
+
+    // Kiểm tra xem có query parameters startDay và endDay hay không
+    if (req.query.startDay && req.query.endDay) {
+      const startDay = moment(req.query.startDay);
+      const endDay = moment(req.query.endDay);
+
+      // Chuyển đổi ngày về định dạng 'YYYY-MM-DD'
+      const formattedStartDate = startDay.format('YYYY-MM-DD');
+      const formattedEndDate = endDay.format('YYYY-MM-DD');
+
+      // Thêm điều kiện tìm kiếm theo ngày
+      filter.day = {
+        $gte: formattedStartDate,
+        $lte: formattedEndDate,
+      };
+    }
+    const formattedToday = new Date().toISOString().slice(0, 10);
+    // Thực hiện truy vấn với điều kiện tìm kiếm
+    const completedBills = await billMd.find(filter);
     // tổng tiền
     const totalAmount = totalAmountFunc(completedBills);
 
@@ -115,6 +132,8 @@ exports.thongketheolichcat = async (req, res, next) => {
 
 
     res.render('thongke/thongketheolichcat', {
+      formattedStartDate: formattedToday,
+      formattedEndDate: formattedToday,
       totalAmount: totalAmount,
       topServiceByCount: top10ServicesByCount,
       topServiceByRevenue: sortedServiceRevenueList,
