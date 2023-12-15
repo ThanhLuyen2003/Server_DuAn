@@ -24,19 +24,30 @@
   <div class="collapse container" id="collapseExample">
     <div class="card card-body">
       <form id="filterForm" action="/home/filter_data" method="get" enctype="multipart/form-data">
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center mb-3">
           <div>
-            <label for="startDate">Từ ngày:</label>
-            <div class="input-group">
+            <label for="startDate" class="fw-bolder">Từ ngày:</label>
+            <div class="input-group mt-2">
               <input type="date" class="form-control" name="startDay">
             </div>
           </div>
           <div class="me-4 ms-4"><i class="fa-solid fa-arrow-right"></i></div>
-          <div>
+          <div class="fw-bolder">
             Đến ngày:
-            <div class="input-group">
+            <div class="input-group mt-2">
               <input type="date" class="form-control" name="endDay">
             </div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4 mb-3">
+          <label class="ms-3 mb-2 fs-5 fw-bolder">Giờ</label>
+          <div class="d-flex flex-row justify-content-between align-items-center">
+            <select class="form-control" id="inputStartTimeMinute" name="startMinute" required>
+              <% listTime.forEach((itemTime) => { %>
+                <option value="<%= itemTime.time %>"><%= itemTime.time %></option>
+              <% }) %>
+            </select>
           </div>
         </div>
 
@@ -107,8 +118,7 @@
                   <% } %>
 
                     <td>
-                      <% var tenDichVu=row.services.map(dichVu=> dichVu.name).join(', ');
-                        %>
+                      <% var tenDichVu=row.services.map(dichVu=> dichVu.name).join(', ');%>
                         <%= tenDichVu %>
                     </td>
                     <td>
@@ -130,7 +140,8 @@
                             <%= row.nameSalon %>
                           </td>
                           <td>
-                            <%= row.price %>
+                            <%= new Intl.NumberFormat('vi-VN', { style: 'currency' , currency: 'VND'
+                              }).format(row.price)%>
                           </td>
                           <!-- HIỂN THỊ TRẠNG THÁI -->
                           <td>
@@ -219,7 +230,8 @@
                                             </div>
                                             <% if (row.status=='Sắp tới' ) { %>
                                               <div class="modal-body">
-                                                Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> -
+                                                Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone
+                                                    %> -
                                                     <%= row.nameSalon %> vào sử dụng dịch vụ không
                                               </div>
                                               <div class="modal-footer">
@@ -228,16 +240,20 @@
                                               </div>
                                               <% }else if(row.status=='Khách đến muộn' ) { %>
                                                 <div class="modal-body">
-                                                  Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> -
+                                                  Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone
+                                                      %> -
                                                       <%= row.nameSalon %> vào sử dụng dịch vụ.
                                                 </div>
                                                 <div class="modal-footer">
-                                                  <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác nhận</a>
-                                                  <a class="btn btn-success" href="/home/huy-lich/<%= row._id%>">Hủy lịch</a>
+                                                  <a class="btn btn-danger" href="/home/huy-lich/<%= row._id%>">Hủy
+                                                    lịch</a>
+                                                  <a class="btn btn-success"
+                                                    href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác nhận</a>
                                                 </div>
                                                 <% }else if(row.status=='Khách đang cắt' ) { %>
                                                   <div class="modal-body">
-                                                    Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> -
+                                                    Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%=
+                                                        row.phone %> -
                                                         <%= row.nameSalon %> hoàn thành dịch vụ.
                                                   </div>
                                                   <div class="modal-footer">

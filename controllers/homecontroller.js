@@ -1,4 +1,5 @@
 var billDB = require('../models/BillModel');
+var myMD = require('../models/model');
 const moment = require('moment');
 
 exports.home = async (req, res, next) => {
@@ -32,6 +33,7 @@ exports.home = async (req, res, next) => {
   const skip = (page - 1) * limitPerPage;
 
   try {
+    let listTime = await myMD.timeModel.find();
     // Lấy danh sách lịch đặt và sắp xếp ngay trong truy vấn
     let listBill = await billDB.find(Object.assign({}, loc, dieu_kien_loc))
       .populate('idUser')
@@ -81,6 +83,7 @@ exports.home = async (req, res, next) => {
 
     res.render('home/danhsach', {
       listBill: currentList,
+      listTime: listTime,
       currentPage,
       totalPages,
       totalBill,
