@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
+var bodyParser = require('body-parser')
 var homepageRouter = require('./routes/homepage.route');
 var homeRouter = require('./routes/home.route');
 var homepageRouter = require('./routes/homepage.route');
@@ -33,12 +34,15 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'NDASHUDHAUHD3427328guisfjsdfkjshdjhsafkjsdfkeasdasdasdfsdwe',
   resave: true,
   saveUninitialized: true
 }));
+
 
 app.use('/', homepageRouter);
 app.use('/home', homeRouter);

@@ -4,24 +4,24 @@
     <h2 class="mb-5 d-flex justify-content-center">DANH SÁCH LỊCH ĐẶT</h2>
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
-        <form class="d-flex" role="search">
-
-          <button style="margin-right: 20px;" class="btn btn-warning d-flex align-items-center" type="button"
-            data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
-            aria-controls="collapseExample">
+        <div class="d-flex" role="search">
+          <!-- thanh tìm kiếm -->
+          <form class="form my-2 my-lg-0 d-flex flex-grow-1" action="/search" method="GET">
+            <button style="height: 38px;" class="btn btn-warning my-2 my-sm-0" type="submit">Tìm</button>
+            <input style="height: 38px; width: 950px; margin-left: 5px;" class="form-control mr-sm-2 flex-grow-1"
+              type="text" name="billSearch" id="searchInput" placeholder="Tìm kiếm..." aria-label="Search">
+          </form>
+          <button class="btn btn-warning d-flex align-items-center ms-2" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
             <div class="pe-1">Bộ lọc</div><i class="fa-solid fa-filter"></i>
           </button>
-          <!-- thanh tìm kiếm -->
-          <form class="form-inline my-2 my-lg-0 d-flex flex-row" action="/search" method="GET">
-            <button style="height: 38px;" class="btn btn-warning my-2 my-sm-0" type="submit">Tìm</button>
-            <input style="height: 38px; width:1100px; margin-left: 5px;" class="form-control mr-sm-2" type="text"
-              name="billSearch" id="searchInput" placeholder="Tìm kiếm..." aria-label="Search">
-          </form>
-        </form>
+          <a class="btn btn-warning p-2 ms-2" href="/home/add-bill">+ Thêm lịch cắt</a>
+        </div>
       </div>
     </nav>
   </div>
-<div class="collapse container" id="collapseExample">
+
+  <div class="collapse container" id="collapseExample">
     <div class="card card-body">
       <form id="filterForm" action="/home/filter_data" method="get" enctype="multipart/form-data">
         <div class="d-flex align-items-center">
@@ -49,7 +49,8 @@
             </label>
           </div>
           <div class="form-check m-3">
-            <input class="form-check-input" type="checkbox" value="Khách đang cắt" id="inService" name="statusInService">
+            <input class="form-check-input" type="checkbox" value="Khách đang cắt" id="inService"
+              name="statusInService">
             <label class="form-check-label" for="inService" style="color: rgb(86, 39, 255);">
               Khách đang cắt
             </label>
@@ -74,8 +75,6 @@
       </form>
     </div>
   </div>
-  
-
 
   <div class="container">
     <% if (listBill.length===0) { %>
@@ -97,139 +96,161 @@
 
           <% listBill.forEach( ( row )=>{ %>
             <tr>
-              <td>
-                <%= row.idUser.name %>
-              </td>
-              <td>
-                <% var tenDichVu=row.services.map(dichVu=> dichVu.name).join(', ');
-                  %>
-                  <%= tenDichVu %>
-              </td>
-              <td>
-                <%= row.hour %>
-              </td>
-              <td>
-                <%= row.day %>
-              </td>
-              <td>
-                <%= row.idUser.phone %>
-              </td>
-              <td>
-                <%= row.nameSalon %>
-              </td>
-              <td>
-                <%= row.price %>
-              </td>
-              <!-- HIỂN THỊ TRẠNG THÁI -->
-              <td>
-                <% if (row.status==='Sắp tới' ) { %>
-                  <div class="bg-warning align-items-center justify-content-center" style="border-radius: 10px;">
-                    <p style="color: white;padding-left: 15px; font-weight: 500;">
-                      <%= row.status %>
-                    </p>
-                  </div>
-                  <% } else if (row.status==='Đã hoàn thành' ) { %>
-                    <div class="bg-success align-items-center justify-content-center" style="border-radius: 10px;">
-                      <p style="color: white;padding-left: 15px; font-weight: 500;">
-                        <%= row.status %>
-                      </p>
-                    </div>
-                    <% } else if (row.status==='Đã hủy lịch' || row.status==='Khách đến muộn' ) { %>
-                      <div class="bg-danger align-items-center justify-content-center" style="border-radius: 10px;">
-                        <p style="color: white;padding-left: 15px; font-weight: 500;">
-                          <%= row.status %>
-                        </p>
-                      </div>
-                      <% } else if (row.status==='Khách đang cắt' ) { %>
-                        <div class="bg-primary align-items-center justify-content-center" style="border-radius: 10px;">
-                          <p style="color: white;padding-left: 15px; font-weight: 500;">
-                            <%= row.status %>
-                          </p>
-                        </div>
-                        <% } %>
-              </td>
-              <!-- PHẦN GHI CHÚ -->
-              <td>
-                <%= row.note %>
-                  <a href="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal<%= row._id %>"
-                    data-bs-whatever="@getbootstrap"><i class="fa-solid fa-file-pen"></i></a>
-                  <div class="modal fade" id="exampleModal<%= row._id %>" tabindex="-1"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-target="#exampleModal<%= row._id %>">
-                    <div class="modal-dialog">
-                      <form id="editNoteForm" action="/home/add-note/<%= row._id %>" method="POST">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Chỉnh sửa ghi chú</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                            <div class="mb-3">
-                              <label for="message-text" class="col-form-label">Message:</label>
-                              <textarea class="form-control" id="message-text" name="textNote"></textarea>
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Xác nhận</button>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-              </td>
-              <!-- PHẦN XÁC NHẬN TRẠNG THÁI -->
-              <td>
-                <div>
-                  <% if (row.status==='Sắp tới' || row.status==='Khách đang cắt' || row.status==='Khách đến muộn' ) { %>
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                      data-bs-target="#accept<%= row._id %>">
-                      Xác nhận
-                    </button>
-                    <% } else if (row.status==='Đã hoàn thành' ) { %>
-                      <% } else if (row.status==='Đã hủy lịch' ) { %>
-                        <% } %>
+              <% if(row.idUser==null){ %>
+                <td>
+                  <%= row.customerName %>
+                </td>
+                <% } else { %>
+                  <td>
+                    <%= row.idUser.name %>
+                  </td>
+                  <% } %>
 
-                          <div class="modal fade" id="accept<%= row._id %>" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true"
-                            data-bs-target="#accept<%= row._id %>">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Xác nhận lịch hẹn</h5>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                    <td>
+                      <% var tenDichVu=row.services.map(dichVu=> dichVu.name).join(', ');
+                        %>
+                        <%= tenDichVu %>
+                    </td>
+                    <td>
+                      <%= row.hour %>
+                    </td>
+                    <td>
+                      <%= row.day %>
+                    </td>
+                    <% if(row.idUser==null){ %>
+                      <td>
+                        <%= row.customerPhone %>
+                      </td>
+                      <% } else { %>
+                        <td>
+                          <%= row.idUser.phone %>
+                        </td>
+                        <% } %>
+                          <td>
+                            <%= row.nameSalon %>
+                          </td>
+                          <td>
+                            <%= row.price %>
+                          </td>
+                          <!-- HIỂN THỊ TRẠNG THÁI -->
+                          <td>
+                            <% if (row.status==='Sắp tới' ) { %>
+                              <div class="bg-warning align-items-center justify-content-center"
+                                style="border-radius: 10px;">
+                                <p style="color: white;padding-left: 15px; font-weight: 500;">
+                                  <%= row.status %>
+                                </p>
+                              </div>
+                              <% } else if (row.status==='Đã hoàn thành' ) { %>
+                                <div class="bg-success align-items-center justify-content-center"
+                                  style="border-radius: 10px;">
+                                  <p style="color: white;padding-left: 15px; font-weight: 500;">
+                                    <%= row.status %>
+                                  </p>
                                 </div>
-                                <% if (row.status==='Sắp tới' ) { %>
-                                  <div class="modal-body">
-                                    Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> - <%=
-                                          row.nameSalon %> vào sử dụng dịch vụ không
+                                <% } else if (row.status==='Đã hủy lịch' || row.status==='Khách đến muộn' ) { %>
+                                  <div class="bg-danger align-items-center justify-content-center"
+                                    style="border-radius: 10px;">
+                                    <p style="color: white;padding-left: 15px; font-weight: 500;">
+                                      <%= row.status %>
+                                    </p>
                                   </div>
-                                  <div class="modal-footer">
-                                    <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác nhận</a>
-                                  </div>
-                                  <% }else if(row.status==='Khách đến muộn' ) { %>
-                                    <div class="modal-body">
-                                      Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> - <%=
-                                            row.nameSalon %> vào sử dụng dịch vụ.
+                                  <% } else if (row.status==='Khách đang cắt' ) { %>
+                                    <div class="bg-primary align-items-center justify-content-center"
+                                      style="border-radius: 10px;">
+                                      <p style="color: white;padding-left: 15px; font-weight: 500;">
+                                        <%= row.status %>
+                                      </p>
                                     </div>
-                                    <div class="modal-footer">
-                                      <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác
-                                        nhận</a>
-                                    </div>
-                                    <% }else if(row.status==='Khách đang cắt' ) { %>
+                                    <% } %>
+                          </td>
+                          <!-- PHẦN GHI CHÚ -->
+                          <td>
+                            <%= row.note %>
+                              <a href="" type="button" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal<%= row._id %>" data-bs-whatever="@getbootstrap"><i
+                                  class="fa-solid fa-file-pen"></i></a>
+                              <div class="modal fade" id="exampleModal<%= row._id %>" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true"
+                                data-bs-target="#exampleModal<%= row._id %>">
+
+                                <div class="modal-dialog">
+                                  <form id="editNoteForm" action="/home/add-note/<%= row._id %>" method="POST">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Chỉnh sửa ghi chú</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                          aria-label="Close"></button>
+                                      </div>
                                       <div class="modal-body">
-                                        Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> - <%=
-                                              row.nameSalon %> hoàn thành dịch vụ.
+                                        <div class="mb-3">
+                                          <label for="message-text" class="col-form-label">Message:</label>
+                                          <textarea class="form-control" id="message-text" name="textNote"></textarea>
+                                        </div>
                                       </div>
                                       <div class="modal-footer">
-                                        <a class="btn btn-success" href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác
-                                          nhận</a>
+                                        <button type="submit" class="btn btn-success">Xác nhận</button>
                                       </div>
-                                      <% } %>
+                                    </div>
+                                  </form>
+                                </div>
                               </div>
+                          </td>
+                          <!-- PHẦN XÁC NHẬN TRẠNG THÁI -->
+                          <td>
+                            <div>
+                              <% if (row.status==='Sắp tới' && row.status==='Khách đang cắt' &&
+                                row.status==='Khách đến muộn' ) { %>
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                  data-bs-target="#accept<%= row._id %>">Xác nhận</button>
+                                </button>
+                                <% } else if (row.status==='Đã hoàn thành' ) { %>
+                                  <% } else if (row.status==='Đã hủy lịch' ) { %>
+                                    <% } %>
+                                      <div class="modal fade" id="accept<%= row._id %>" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true"
+                                        data-bs-target="#accept<%= row._id %>">
+                                        <div class="modal-dialog">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="exampleModalLabel">Xác nhận lịch hẹn</h5>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                            </div>
+                                            <% if (row.status=='Sắp tới' ) { %>
+                                              <div class="modal-body">
+                                                Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> -
+                                                    <%= row.nameSalon %> vào sử dụng dịch vụ không
+                                              </div>
+                                              <div class="modal-footer">
+                                                <a class="btn btn-success"
+                                                  href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác nhận</a>
+                                              </div>
+                                              <% }else if(row.status=='Khách đến muộn' ) { %>
+                                                <div class="modal-body">
+                                                  Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> -
+                                                      <%= row.nameSalon %> vào sử dụng dịch vụ.
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <a class="btn btn-success"
+                                                    href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác
+                                                    nhận</a>
+                                                </div>
+                                                <% }else if(row.status=='Khách đang cắt' ) { %>
+                                                  <div class="modal-body">
+                                                    Bạn có muốn xác nhận Khách hàng <%= row.idUser.name %> - <%= row.phone %> -
+                                                        <%= row.nameSalon %> hoàn thành dịch vụ.
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                    <a class="btn btn-success"
+                                                      href="/home/xac-nhan-lich-dat/<%= row._id%>">Xác nhận</a>
+                                                  </div>
+                                                  <% } %>
+                                          </div>
+                                        </div>
+                                      </div>
                             </div>
-                          </div>
-                </div>
-              </td>
+                          </td>
             </tr>
             <% } ) %>
         </table>
