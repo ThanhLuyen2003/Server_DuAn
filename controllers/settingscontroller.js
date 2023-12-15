@@ -11,7 +11,7 @@ exports.login = async (req, res, next) => {
                     req.session.userLogin = objU;
                     // console.log('aaaaaaaaaaaa' + user);
                     //chuyển sang màn hình chính or danh sách
-                    return res.redirect('/statistic/thongketheolichcat');
+                    return res.redirect('/home');
                 }else{
                     msg = 'Vui lòng kiểm tra lại mật khẩu !!!'
                 }

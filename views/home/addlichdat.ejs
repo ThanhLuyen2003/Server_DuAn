@@ -1,0 +1,249 @@
+<%- include('../inc/header.ejs') %>
+
+    <!-- Start Header form -->
+    <div class="container">
+        <div class="text-center pt-5">
+            <h2 class="fw-bolder">NHẬP ĐƠN TRỰC TIẾP TẠI QUÁN</h2>
+            <p>
+                (dùng cho khách đến trực tiếp và khách xếp lại lịch khi đến muộn)
+            </p>
+        </div>
+        <!-- End Header form -->
+
+        <!-- Start Card -->
+        <div class="card">
+            <!-- Start Card Body -->
+            <div class="card-body">
+                <!-- Start Form -->
+                <form action="/home/add-bill" method="post" class="needs-validation" novalidate autocomplete="off">
+                    <!-- TÊN KHÁCH HÀNG -->
+                    <div class="form-group mb-3">
+                        <label for="inputName" class="ms-3 mb-2 fs-5 fw-bolder">Tên Khách hàng</label>
+                        <input type="text" class="form-control" id="inputName" name="customerName"
+                            placeholder="Customer's name" required value="Duy Hưng" />
+                    </div>
+                    <!-- End Input Name -->
+
+                    <!-- SỐ ĐIỆN THOẠI -->
+                    <div class="form-group mb-3">
+                        <label for="inputPhone" class="ms-3 mb-2 fs-5 fw-bolder">Số điện thoại</label>
+                        <input type="tel" class="form-control" id="inputPhone" name="customerPhone"
+                            placeholder="099xxxxxxx" pattern="\d{3}\d{3}\d{4}" required value="0123456789" />
+                    </div>
+
+                    <!-- Start Input Date , Start Time and End Time -->
+                    <div class="form-row">
+
+                        <!-- NGÀY -->
+                        <div class="form-group col-md-4 mb-3">
+                            <label for="inputDate" class="ms-3 mb-2 fs-5 fw-bolder">Ngày</label>
+                            <input type="date" class="form-control" id="inputDate" name="date" required />
+                        </div>
+
+                        <!-- CHỌN GIỜ -->
+                        <div class="form-group col-md-4 mb-3">
+                            <label class="ms-3 mb-2 fs-5 fw-bolder">Giờ</label>
+                            <div class="d-flex flex-row justify-content-between align-items-center">
+                                <select class="form-control mr-1" id="inputStartTimeHour" name="startHour" required>
+                                    <option value="" disabled selected>Hour</option>
+                                    <!-- JavaScript code to generate options from 7 to 21 -->
+                                    <script>
+                                        for (let i = 7; i <= 21; i++) {
+                                            document.write(`<option value="${i}">${i}</option>`);
+                                        }
+                                    </script>
+                                </select>
+                                <div class="pl-1 pr-2">:</div>
+                                <select class="form-control" id="inputStartTimeMinute" name="startMinute" required>
+                                    <option value="" disabled selected>Min</option>
+                                    <option value="00">00</option>
+                                    <option value="30">30</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <!-- CHỌN DỊCH VỤ -->
+                    <div class="form-row">
+                        <legend class="col-form-label pb-3 ms-3 mb-2 fs-5 fw-bolder">Dịch vụ</legend>
+                        <div class="row px-1">
+                            <div class="card-list-container" style="overflow-x: auto;">
+                                <ul class="card-list" style="list-style: none;
+                                display: flex;
+                                gap: 10px; /* Khoảng cách giữa các thẻ card */
+                                padding: 0;
+                                margin: 0;">
+                                    <% services.forEach(service=> { %>
+                                        <li class="card-item " style="flex: 0 0 auto;">
+                                            <div class="card" style="width: 18rem;">
+                                                <img src="<%= service.image %>" class="card-img-top image-card-style"
+                                                    alt="...">
+                                                <div class="card-body custom-card-body">
+                                                    <h5 class="card-title">
+                                                        <%=service.name%>
+                                                    </h5>
+                                                    <p class="card-text">
+                                                        <%=service.describe%>
+                                                    </p>
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <div class="fs-5 fw-bolder">
+                                                                <script>
+                                                                    document.write(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(<%= service.price %>));
+                                                                </script>
+                                                            </div>
+                                                        </div>
+                                                        <input type="checkbox" name="services" value='<%= JSON.stringify(service) %>' class="chooseServices"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <% }) %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Check Snack Type -->
+
+                    <!-- Start Input Remark -->
+                    <div class="form-group">
+                        <label for="textAreaRemark" class="ms-3 mb-2 fs-5 fw-bolder">Ghi chú</label>
+                        <textarea class="form-control" name="nodeBill" id="textAreaRemark" rows="2"
+                            placeholder="Tell us you want more..."></textarea>
+                    </div>
+                    <hr class="mt-4 mb-4" />
+                    <div class="d-flex flex-row">
+                        <div id="totalPrice" class="d-flex flex-row align-items-center flex-grow-1">
+                            <div class="fs-6 me-2 fw-normal">Tổng tiền: </div>
+                            <div class="fs-5 fw-bolder">0đ </div>
+                        </div>
+                        <button class="btn btn-primary btn-block col-lg-2" type="submit" name="save">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+    <!-- Start Scritp for Form -->
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+
+        // Get current date in the format "YYYY-MM-DD"
+        function getCurrentDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            let month = today.getMonth() + 1;
+            month = month < 10 ? '0' + month : month;
+            let day = today.getDate();
+            day = day < 10 ? '0' + day : day;
+            return `${year}-${month}-${day}`;
+        }
+
+        // Set the default value of the input to today's date
+        document.getElementById('inputDate').value = getCurrentDate();
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Lưu trữ danh sách dịch vụ được chọn
+            let selectedServices = [];
+
+            // Lấy các phần tử dịch vụ trong danh sách
+            const serviceItems = document.querySelectorAll(".card-item");
+
+            // Thêm sự kiện click cho mỗi phần tử dịch vụ
+            serviceItems.forEach((item) => {
+                item.addEventListener("click", function () {
+                    // Toggle trạng thái chọn
+                    item.classList.toggle("selected");
+                    const checkbox = item.querySelector(".chooseServices");
+
+                    // Thay đổi trạng thái của checkbox
+                    checkbox.checked = !checkbox.checked;
+
+                    // Lấy thông tin dịch vụ từ dữ liệu đã được tích hợp vào HTML
+                    const serviceName = item.querySelector(".card-title").innerText;
+                    const servicePrice = parseFloat(item.querySelector(".fs-5").innerText.replace(/\D/g, ''));
+
+                    // Kiểm tra xem dịch vụ đã được chọn hay chưa
+                    if (item.classList.contains("selected")) {
+                        // Nếu chưa được chọn, thêm vào danh sách
+                        selectedServices.push({ name: serviceName, price: servicePrice });
+                    } else {
+                        // Nếu đã được chọn, loại bỏ khỏi danh sách
+                        selectedServices = selectedServices.filter(service => service.name !== serviceName);
+                    }
+
+                    // Cập nhật tổng giá tiền
+                    updateTotalPrice();
+                });
+            });
+
+            // Hàm cập nhật tổng giá tiền
+            function updateTotalPrice() {
+                // Tính tổng giá tiền từ danh sách dịch vụ được chọn
+                const totalPrice = selectedServices.reduce((sum, service) => sum + service.price, 0);
+
+                // Hiển thị tổng giá tiền trên giao diện
+                const totalPriceElement = document.getElementById("totalPrice");
+                totalPriceElement.querySelector(".fs-5").innerText = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice);
+            }
+
+            const submitButton = document.getElementById("submitButton");
+            submitButton.addEventListener("click", function () {
+                // Gọi hàm để gửi dữ liệu lên server
+                sendDataToServer(selectedServices);
+            });
+        });
+
+        function sendDataToServer(data) {
+            // Sử dụng thư viện jQuery để gửi dữ liệu AJAX
+            $.ajax({
+                type: "POST", // Hoặc "GET" tùy vào phương thức của bạn
+                url: "/path/to/your/controller", // Đường dẫn đến controller của bạn
+                data: JSON.stringify({ services: data }), // Chuyển đổi thành chuỗi JSON
+                contentType: "application/json",
+                success: function (response) {
+                    // Xử lý phản hồi từ server nếu cần
+                    console.log(response);
+                },
+                error: function (error) {
+                    // Xử lý lỗi nếu có
+                    console.error(error);
+                }
+            });
+        }
+    </script>
+    <!-- End Scritp for Form -->
+
+
+    <%- include('../inc/footer.ejs') %>

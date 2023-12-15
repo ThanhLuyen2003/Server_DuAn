@@ -22,7 +22,7 @@
                     </div>
                     <div class="ps-3">
                       <h6>
-                        <%= formatMoney %> đ
+                        <%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalAmount) %>
                       </h6>
                       <span class="text-success small pt-1 fw-bold">12%</span> <span
                         class="text-muted small pt-2 ps-1">increase</span>
@@ -31,16 +31,15 @@
                 </div>
               </div>
             </div>
-            <!-- End Sales Card -->
 
-            <!-- Revenue Card -->
+            <!-- KHÁCH TRỰC TIẾP -->
             <div class="col-xxl-4 col-md-6 mb-3">
               <div class="card info-card revenue-card">
                 <div class="card-body">
-                  <h5 class="card-title">Số lượng lịch đặt</h5>
+                  <h5 class="card-title">Từ khách Trực tiếp</h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="fa-solid fa-circle-dollar-to-slot"></i>
+                      <i class="fa-solid fa-map-location-dot"></i>
                     </div>
                     <div class="ps-3">
                       <h6>$3,264</h6>
@@ -51,16 +50,16 @@
                 </div>
 
               </div>
-            </div><!-- End Revenue Card -->
+            </div>
 
-            <!-- Customers Card -->
+            <!-- KHÁCH ONLINE -->
             <div class="col-xxl-4 col-xl-12 mb-3">
               <div class="card info-card customers-card">
                 <div class="card-body">
-                  <h5 class="card-title">Khách hàng quay trở lại <span>| This Year</span></h5>
+                  <h5 class="card-title">Từ khách onilne</h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="fa-solid fa-users"></i>
+                      <i class="fa-solid fa-mobile-screen-button"></i>
                     </div>
                     <div class="ps-3">
                       <h6>1244</h6>
@@ -71,7 +70,7 @@
                 </div>
               </div>
 
-            </div><!-- End Customers Card -->
+            </div>
 
             <!-- Reports -->
             <div class="col-12">

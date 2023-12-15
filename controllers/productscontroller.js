@@ -15,7 +15,7 @@ exports.list = async (req, res, next) => {
     var dieu_kien_loc = null;
     if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
         // Tìm kiếm theo cột 'name'
-        dieu_kien_loc = { 
+        dieu_kien_loc = {
             $or: [
                 { name: { $regex: new RegExp(req.query.billSearch, 'i') } },
                 { soluongnhap: parseFloat(req.query.billSearch) || 0 },
@@ -27,13 +27,13 @@ exports.list = async (req, res, next) => {
                 { type: { $regex: new RegExp(req.query.billSearch, 'i') } }
             ]
         };
-      } else {
+    } else {
         thong_bao = "Không có dữ liệu";
-      }
-    
+    }
+
     console.log("Search Parameter:", req.query.productsp222);
     console.log("Filter Condition:", dieu_kien_loc);
-    
+
     try {
         const sortOptions = {};
         sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
@@ -58,7 +58,7 @@ exports.addPro = async (req, res, next) => {
     let msg = '';
     var listProducts = await myMD.productModel.find().sort({ name: 1 });
     if (req.method == 'POST') {
-    let objP = new myMD.productModel();
+        let objP = new myMD.productModel();
 
     try {
         const uploadedFilePath = './public/uploads/' + req.file.originalname;
@@ -83,14 +83,14 @@ exports.addPro = async (req, res, next) => {
     objP.ingredient = req.body.ingredient;
     objP.type = req.body.type;
 
-    try {
-        let new_p = await objP.save();
-        console.log(new_p);
-        msg = 'Lưu thành công';
-      } catch (error) {
-        msg = 'Error: ' + error.message;
-        console.log(error);
-      }
+        try {
+            let new_p = await objP.save();
+            console.log(new_p);
+            msg = 'Lưu thành công';
+        } catch (error) {
+            msg = 'Error: ' + error.message;
+            console.log(error);
+        }
     }
     res.render('product/add', { msg: msg, listProducts: listProducts });
 };
@@ -193,13 +193,13 @@ exports.sxTheoGiaSP = async (req, res, next) => {
 
 exports.renderPage = async (req, res, next) => {
     try {
-      const listProducts = await myMD.productModel.find();
-      const listOders = await myMD.OrderModel.find();
-    //   const listOders = res.locals.listOders;
-  
-      res.render('product/list', { listProducts, listOders });
+        const listProducts = await myMD.productModel.find();
+        const listOders = await myMD.OrderModel.find();
+        //   const listOders = res.locals.listOders;
+
+        res.render('product/list', { listProducts, listOders });
     } catch (err) {
-      console.error('Error retrieving data:', err);
-      res.status(500).json({ error: 'Internal server error' });
+        console.error('Error retrieving data:', err);
+        res.status(500).json({ error: 'Internal server error' });
     }
-  };
+};
