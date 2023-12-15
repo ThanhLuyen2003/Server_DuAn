@@ -60,7 +60,7 @@ exports.addPro = async (req, res, next) => {
     if (req.method == 'POST') {
         let objP = new myMD.productModel();
 
-    try {
+      try {
         const uploadedFilePath = './public/uploads/' + req.file.originalname;
         fs.renameSync(req.file.path, uploadedFilePath);
         
