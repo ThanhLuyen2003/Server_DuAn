@@ -14,7 +14,7 @@ exports.addBill = async (req, res, next) => {
             const serviceObjects = selectedServices.map(serviceString => JSON.parse(serviceString));
 
             const totalPrice = calculateTotalPrice(serviceObjects);
-            
+
             console.log(selectedServices);
             console.log(totalPrice);
             const {
@@ -53,6 +53,19 @@ exports.addBill = async (req, res, next) => {
     try {
         const services = await myMD.ServiceModel.find();
         res.render('home/addlichdat', { services: services });
+    } catch (error) {
+        console.error('Lỗi khi lấy danh sách dịch vụ:', error);
+        res.status(500).json({ error: 'Lỗi máy chủ nội bộ' });
+    }
+}
+
+exports.editBill = async (req, res, next) => {
+    const services = await myMD.ServiceModel.find();
+    const timesList = await myMD.timeModel.find();
+
+    try {
+        console.log('Thay đổi lịch đặt');
+        res.render('home/sualichdat', { services: services, times: timesList, listBill: billDB });
     } catch (error) {
         console.error('Lỗi khi lấy danh sách dịch vụ:', error);
         res.status(500).json({ error: 'Lỗi máy chủ nội bộ' });

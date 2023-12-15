@@ -13,10 +13,14 @@ router.get('/filter_data',check_login.yeu_cau_dang_nhap,homeController.homeFilte
 // router.get('/danh-sach-lich-dat',check_login.yeu_cau_dang_nhap,staffController.ds_lich_dat);
 
 router.get('/xac-nhan-lich-dat/:ids', check_login.yeu_cau_dang_nhap,homeController.xac_nhan_lich_dat);
+router.get('/huy-lich/:ids', check_login.yeu_cau_dang_nhap,homeController.huyLich);
 
 router.post('/add-note/:ids', check_login.yeu_cau_dang_nhap, homeController.addNote);
 
 router.get('/add-bill',check_login.yeu_cau_dang_nhap, billController.addBill);
 router.post('/add-bill',check_login.yeu_cau_dang_nhap, billController.addBill);
+
+router.get('/edit-bill/:ids',check_login.yeu_cau_dang_nhap, billController.editBill);
+router.post('/edit-bill/:ids',check_login.yeu_cau_dang_nhap, billController.editBill);
 
 module.exports = router;

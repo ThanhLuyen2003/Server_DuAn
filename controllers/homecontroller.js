@@ -61,7 +61,7 @@ exports.home = async (req, res, next) => {
 
     // Lặp qua từng lịch đặt và cập nhật trạng thái
     for (const bill of listBill) {
-      if (bill.status != 'Đã hoàn thành' && bill.status != 'khách đang cắt') {
+      if (bill.status !== 'Đã hoàn thành' && bill.status !== 'Khách đang cắt' && bill.status !== 'Đã hủy lịch') {
         const appointmentTime = moment(`${bill.day} ${bill.hour}`, 'YYYY-MM-DD HH:mm');
         const currentTime = moment();
         const minutesDiff = currentTime.diff(appointmentTime, 'minutes');
@@ -72,9 +72,8 @@ exports.home = async (req, res, next) => {
         } else if (minutesDiff > 10) {
           bill.status = 'Khách đến muộn';
         }
-
         // Cập nhật trạng thái vào cơ sở dữ liệu
-        await billDB.updateOne({ _id: bill._id }, { $set: { status: bill.status, note: bill.note } });
+        await billDB.updateOne({ _id: bill._id }, { $set: { status: bill.status, note: bill.note} });
       }
     }
 
@@ -106,7 +105,9 @@ exports.xac_nhan_lich_dat = async (req, res, next) => {
   }
 
   if (billStatus === 'Khách đến muộn') {
+    console.log('before1' + objBill.status);
     objBill.status = 'Khách đang cắt';
+    console.log('before2' + objBill.status);
   }
 
   if (billStatus === 'Khách đang cắt') {
@@ -115,11 +116,47 @@ exports.xac_nhan_lich_dat = async (req, res, next) => {
 
   try {
     await billDB.findByIdAndUpdate(ids, objBill);
+    console.log('after' + objBill.status);
+
   } catch (error) {
+    console.error('Lỗi khi xác nhận lịch:', err);
+    res.status(500).json({ error: 'Lỗi máy chủ nội bộ' });
   }
 
   res.redirect('/home');
 }
+
+exports.huyLich = async (req, res, next) => {
+  console.log('Hủy Lịch');
+  const ids = req.params.ids;
+  try {
+    let objBill = await billDB.findById(ids);
+
+    if (!objBill) {
+      return res.status(404).json({ error: 'Không tìm thấy đối tượng' });
+    }
+
+    console.log(objBill.status);  // Log trạng thái hiện tại
+
+    if (objBill.status === 'Khách đến muộn') {
+      objBill.status = 'Đã hủy lịch';
+    } else {
+      console.log('Trạng thái không phù hợp để hủy lịch');
+      return res.status(400).json({ error: 'Trạng thái không phù hợp để hủy lịch' });
+    }
+
+    console.log(objBill.status);  // Log trạng thái sau khi cập nhật
+
+    await objBill.save();
+    console.log(objBill.status);  // Log trạng thái sau khi cập nhật
+    res.redirect('/home');
+  } catch (error) {
+    console.error('Lỗi khi hủy lịch:', error);
+    res.status(500).json({ error: 'Lỗi máy chủ nội bộ' });
+  }
+}
+
+
 
 exports.addNote = async (req, res, next) => {
   const ids = req.params.ids;

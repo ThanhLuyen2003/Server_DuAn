@@ -62,8 +62,7 @@ exports.thongketheolichcat = async (req, res, next) => {
       status: 'Đã hoàn thành',
     });
     // tổng tiền
-    const totalAmount = completedBills.reduce((acc, bill) => acc + parseInt(bill.price) * 1000, 0);
-    var formatMoney = formatCash(totalAmount + "");
+    const totalAmount = completedBills.reduce((acc, bill) => acc + parseInt(bill.price), 0);
 
     // Trích xuất tất cả các dịch vụ từ các hóa đơn đã hoàn thành
     const allServices = completedBills.flatMap(bill => bill.services);
@@ -88,7 +87,7 @@ exports.thongketheolichcat = async (req, res, next) => {
     console.log(top10Services);
     console.log(top10Users);
 
-    res.render('thongke/thongketheolichcat', { formatMoney: formatMoney, topService: top10Services, topUser: top10Users });
+    res.render('thongke/thongketheolichcat', { totalAmount: totalAmount, topService: top10Services, topUser: top10Users });
   } catch (error) {
     console.error('Lỗi khi lấy và tính tổng tiền các hóa đơn:', error);
     next(error);
