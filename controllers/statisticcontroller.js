@@ -62,10 +62,6 @@ exports.thongkebanhang = async (req, res, next) => {
    
     console.log('Tổng tiền bán hàng:', totalSales);
 
-
-  
-<<<<<<< Updated upstream
-
     const totalPages = Math.ceil(totalSatistic / limit);
 
     res.render('thongke/thongkebanhang', {
@@ -82,39 +78,7 @@ exports.thongkebanhang = async (req, res, next) => {
     console.error('Error retrieving users:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
-=======
-      const listSatistic = await myMD.productModel.find(dieu_kien_loc).sort(sortOptions).skip((page - 1) * limit).limit(limit);
-      const listOders = await myMD.OrderModel.find();
-      const totalSatistic = await myMD.productModel.countDocuments(dieu_kien_loc);
-  
-      // tính tổng tiền nhập
-      let total = 0;
-      const allListSatistic = await myMD.productModel.find(dieu_kien_loc).sort(sortOptions);
-      allListSatistic.forEach((row) => {
-        const price = row.pricenhap;
-        const slnhap = row.soluongnhap;
-        const tongtiennhap = price * slnhap;
-        total += tongtiennhap;
-      });
 
-      
-  
-      const totalPages = Math.ceil(totalSatistic / limit);
-  
-      res.render('thongke/thongkebanhang', {
-        listSatistic: listSatistic,
-        listOders: listOders,
-        currentPage: page,
-        totalPages: totalPages,
-        totalSatistic: totalSatistic,
-        total: total
-      });
-  
-    } catch (err) {
-      console.error('Error retrieving users:', err);
-      res.status(500).json({ error: 'Internal server error' });
-    }
->>>>>>> Stashed changes
 }
 
 // Hưng 
