@@ -85,6 +85,9 @@ exports.thongkebanhang = async (req, res, next) => {
 exports.thongketheolichcat = async (req, res, next) => {
   try {
     let filter = { status: 'Đã hoàn thành' };
+    const formattedToday = new Date().toISOString().slice(0, 10);
+    let formattedStartDate = formattedToday;
+    let formattedEndDate = formattedToday;
 
     // Kiểm tra xem có query parameters startDay và endDay hay không
     if (req.query.startDay && req.query.endDay) {
@@ -92,8 +95,8 @@ exports.thongketheolichcat = async (req, res, next) => {
       const endDay = moment(req.query.endDay);
 
       // Chuyển đổi ngày về định dạng 'YYYY-MM-DD'
-      const formattedStartDate = startDay.format('YYYY-MM-DD');
-      const formattedEndDate = endDay.format('YYYY-MM-DD');
+      formattedStartDate = startDay.format('YYYY-MM-DD');
+      formattedEndDate = endDay.format('YYYY-MM-DD');
 
       // Thêm điều kiện tìm kiếm theo ngày
       filter.day = {
@@ -101,7 +104,6 @@ exports.thongketheolichcat = async (req, res, next) => {
         $lte: formattedEndDate,
       };
     }
-    const formattedToday = new Date().toISOString().slice(0, 10);
     // Thực hiện truy vấn với điều kiện tìm kiếm
     const completedBills = await billMd.find(filter);
     // tổng tiền
@@ -132,8 +134,8 @@ exports.thongketheolichcat = async (req, res, next) => {
 
 
     res.render('thongke/thongketheolichcat', {
-      formattedStartDate: formattedToday,
-      formattedEndDate: formattedToday,
+      formattedStartDate: formattedStartDate,
+      formattedEndDate: formattedEndDate,
       totalAmount: totalAmount,
       topServiceByCount: top10ServicesByCount,
       topServiceByRevenue: sortedServiceRevenueList,
