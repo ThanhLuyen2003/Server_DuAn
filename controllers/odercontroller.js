@@ -17,7 +17,7 @@ async function sendEmail(order, user) {
     // Cấu hình nội dung email
     const mailOptions = {
       from: 'hungntph2626@fpt.edu.vn',
-      to: 'nth31012003@gmail.com',
+      to: 'ducdung0107@gmail.com',
       subject: 'Bạn có 1 đơn hàng mới',
       text: `Khách hàng ${user.name} đã đặt hàng vào lúc ${order.time}.`,
     };

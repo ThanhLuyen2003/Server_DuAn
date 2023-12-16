@@ -1,5 +1,34 @@
 var billDB = require('../models/BillModel');
+var myMD = require('../models/model');
 const moment = require('moment');
+const nodemailer = require('nodemailer');
+
+async function sendEmail(bill, user) {
+  try {
+    // Cấu hình transporter (sử dụng SMTP)
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'hungntph26261@fpt.edu.vn',
+        pass: 'tmnm oksz jhzr ymds',
+      },
+    });
+
+    // Cấu hình nội dung email
+    const mailOptions = {
+      from: 'hungntph2626@fpt.edu.vn',
+      to: 'ducdung0107@gmail.com',
+      subject: 'Bạn có 1 lịch cắt tóc mới',
+      text: `Khách hàng ${user.name} đã đặt lịch vào lúc ${bill.hour}.`,
+    };
+
+    // Gửi email
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent:', info.response);
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
+}
 
 exports.home = async (req, res, next) => {
   let loc = null;
@@ -78,7 +107,21 @@ exports.home = async (req, res, next) => {
     }
 
     const totalBill = await billDB.countDocuments(loc);
+    const listU = await myMD.userModel.find();
+    const listBills = await billDB.find();
 
+    listBills.forEach(async (row) => {
+      if (row.status === 'Sắp tới') {
+        // Lấy thông tin người dùng từ listU
+        const user = listU.find(u => u._id.toString() === row.idUser.toString());
+
+        // Kiểm tra xem user có tồn tại không
+        if (user) {
+          // Gọi hàm sendEmail khi có đơn hàng mới
+          await sendEmail(row, user);
+        }
+      }
+    });
     res.render('home/danhsach', {
       listBill: currentList,
       currentPage,
