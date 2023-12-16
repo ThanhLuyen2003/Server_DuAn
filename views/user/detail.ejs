@@ -1,0 +1,208 @@
+<%- include('../inc/header.ejs') %>
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Chi tiết khách hàng</h1>
+        </div><!-- End Page Title -->
+
+        <section class="section profile">
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="card">
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                            <img src="<%= userObj.avatar %>" alt="Profile" class="rounded-circle">
+                            <h2>
+                                <%= userObj.name %>
+                            </h2>
+                            <div>
+                                <%= userObj.email %>
+                            </div>
+                            <div class="social-links mt-2">
+                                <%= userObj.phone %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-8">
+                    <div class="card">
+                        <div class="card-body pt-3">
+                            <!-- Bordered Tabs -->
+                            <ul class="nav nav-tabs nav-tabs-bordered">
+
+                                <li class="nav-item">
+                                    <button class="nav-link active" data-bs-toggle="tab"
+                                        data-bs-target="#profile-overview"
+                                        style="font-weight: 700;color: rgba(1, 41, 112);">LỊCH SỬ DỊCH VỤ</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit"
+                                        style="font-weight: 700;color: rgba(1, 41, 112);">LỊCH SỬ DẶT HÀNG</button>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content pt-2">
+
+                                <!-- LỊCH SỬ DỊCH VỤ -->
+                                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                    <% if(userBills.length==0) {%>
+                                        <div> KHÔNG CÓ LỊCH TRẢI NGHIỆM DỊCH VỤ </div>
+                                        <% }else { %>
+                                            <table class="table table-bordered table-striped">
+                                                <tr>
+                                                    <th>Dịch vụ đã trải nghiệm</th>
+                                                    <th>Ngày và giờ</th>
+                                                    <th>Salon</th>
+                                                    <th>Số điện thoại Salon</th>
+                                                    <th>Chi phí</th>
+                                                    <th>Trạng thái</th>
+                                                </tr>
+                                                <% userBills.forEach( ( row )=>{ %>
+                                                    <tr>
+                                                        <td>
+                                                            <% var tenDichVu=row.services.map(dichVu=>
+                                                                dichVu.name).join(', ');%>
+                                                                <%= tenDichVu %>
+                                                        </td>
+                                                        <td>
+                                                            <%= row.day %> - <%= row.hour %>
+                                                        </td>
+                                                        <td>
+                                                            <%= row.nameSalon %>
+                                                        </td>
+                                                        <td>
+                                                            <%= row.phone %>
+                                                        </td>
+                                                        <td>
+                                                            <%= new Intl.NumberFormat('vi-VN', { style: 'currency' ,
+                                                                currency: 'VND' }).format(row.price)%>
+                                                        </td>
+                                                        <td>
+                                                            <% if (row.status==='Sắp tới' ) { %>
+                                                                <div class="bg-warning align-items-center justify-content-center px-2"
+                                                                    style="border-radius: 10px;">
+                                                                    <p
+                                                                        style="color: white;text-align: center; font-weight: 500;">
+                                                                        <%= row.status %>
+                                                                    </p>
+                                                                </div>
+                                                                <% } else if (row.status==='Đã hoàn thành' ) { %>
+                                                                    <div class="bg-success align-items-center justify-content-center px-2"
+                                                                        style="border-radius: 10px;">
+                                                                        <p
+                                                                            style="color: white;text-align: center; font-weight: 500;">
+                                                                            <%= row.status %>
+                                                                        </p>
+                                                                    </div>
+                                                                    <% } else if (row.status==='Đã hủy lịch' ||
+                                                                        row.status==='Khách đến muộn' ) { %>
+                                                                        <div class="bg-danger align-items-center justify-content-center px-2"
+                                                                            style="border-radius: 10px;">
+                                                                            <p
+                                                                                style="color: white;text-align: center; font-weight: 500;">
+                                                                                <%= row.status %>
+                                                                            </p>
+                                                                        </div>
+                                                                        <% } else if (row.status==='Khách đang cắt' ) {
+                                                                            %>
+                                                                            <div class="bg-primary align-items-center justify-content-center px-2"
+                                                                                style="border-radius: 10px;">
+                                                                                <p
+                                                                                    style="color: white;text-align: center; font-weight: 500;">
+                                                                                    <%= row.status %>
+                                                                                </p>
+                                                                            </div>
+                                                                            <% } %>
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>
+                                            </table>
+                                            <% } %>
+                                </div>
+
+                                <!-- LỊCH SỬ DẶT HÀNG -->
+                                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                                    <% if(userOrders.length==0) {%>
+                                        <div> KHÔNG CÓ LỊCH ĐẶT HÀNG </div>
+                                        <% }else { %>
+                                            <table class="table table-bordered table-striped">
+                                                <tr>
+                                                    <th style="width: 500px;">Sản phẩm đã mua</th>
+                                                    <th>Thời gian</th>
+                                                    <th>Thanh toán</th>
+                                                    <th>Trạng thái</th>
+                                                    <th>Ghi chú</th>
+
+                                                </tr>
+                                                <% userOrders.forEach( ( row )=>{ %>
+                                                    <tr>
+                                                        <td>
+                                                            <% var tenDichVu=row.products.map(dichVu=>dichVu.name).join(', ');
+                                                            var soLuong=row.products.map(dichVu=>dichVu.quantity).join(', ');%>
+                                                                <%= tenDichVu %> - <%= soLuong   %>
+                                                        </td>
+                                                        <td>
+                                                            <%= row.time %>
+                                                        </td>
+                                                        <td>
+                                                            <%= row.price %> đ
+                                                        </td>
+                                                        <td>
+                                                            <%= row.status %>
+                                                        </td>
+                                                        <td>
+                                                            <% if (row.status==='Có đơn' ) { %>
+                                                                <div class="bg-warning align-items-center justify-content-center px-2"
+                                                                    style="border-radius: 10px;">
+                                                                    <p
+                                                                        style="color: white;text-align: center; font-weight: 500;">
+                                                                        <%= row.status %>
+                                                                    </p>
+                                                                </div>
+                                                                <% } else if (row.status==='Đã giao hàng' ) { %>
+                                                                    <div class="bg-success align-items-center justify-content-center px-2"
+                                                                        style="border-radius: 10px;">
+                                                                        <p
+                                                                            style="color: white;text-align: center; font-weight: 500;">
+                                                                            <%= row.status %>
+                                                                        </p>
+                                                                    </div>
+                                                                    <% } else if (row.status==='Hủy đơn' ||
+                                                                        row.status==='Khách hủy đơn' ) { %>
+                                                                        <div class="bg-danger align-items-center justify-content-center px-2"
+                                                                            style="border-radius: 10px;">
+                                                                            <p
+                                                                                style="color: white;text-align: center; font-weight: 500;">
+                                                                                <%= row.status %>
+                                                                            </p>
+                                                                        </div>
+                                                                        <% } else if (row.status==='Đang giao hàng' ) {
+                                                                            %>
+                                                                            <div class="bg-primary align-items-center justify-content-center px-2"
+                                                                                style="border-radius: 10px;">
+                                                                                <p
+                                                                                    style="color: white;text-align: center; font-weight: 500;">
+                                                                                    <%= row.status %>
+                                                                                </p>
+                                                                            </div>
+                                                                            <% } %>
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>
+                                            </table>
+                                            <% } %>
+                                </div>
+
+                            </div><!-- End Bordered Tabs -->
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <%- include('../inc/footer.ejs') %>

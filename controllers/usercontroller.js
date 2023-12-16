@@ -1,5 +1,5 @@
 var myMD = require('../models/model');
-var fs = require('fs');
+var billDB = require ('../models/BillModel');
 
 exports.list = async (req, res, next) => {
   const page = parseInt(req.query.page) || 1;
@@ -40,4 +40,27 @@ exports.list = async (req, res, next) => {
     totalPages: Math.ceil(totalUsers / limit),
     totalUsers
   });
+}
+
+
+exports.detailCustomer = async (req, res, next) => {
+  console.log('Chi tiết khách hàng');
+  
+  let userId = req.params.ids;
+  console.log(userId);
+
+  try {
+    // Lấy thông tin chi tiết của người dùng
+    let userObj = await myMD.userModel.findById(userId);
+
+    // Lấy danh sách các đơn hàng đặt lịch của người dùng
+    let userBills = await billDB.find({ idUser: userId }).exec();
+    let userOrders = await myMD.OrderModel.find({ phoneU: userObj.phone }).exec();
+    
+    res.render('user/detail', { userObj: userObj, userBills: userBills, userOrders: userOrders});
+    // res.send(userOrders);
+  } catch (error) {
+    console.error('Lỗi khi xem chi tiết khách hàng:', error);
+    res.status(500).json({ error: 'Lỗi máy chủ nội bộ' });
+  }
 }

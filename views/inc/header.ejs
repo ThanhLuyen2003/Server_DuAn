@@ -14,33 +14,101 @@
     integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://kit.fontawesome.com/be081a0279.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="views/style.css">
 
   <style>
+    .pagetitle {
+      margin-bottom: 10px;
+    }
+
+    .pagetitle h1 {
+      font-size: 32px;
+      margin-bottom: 0;
+      font-weight: 600;
+      color: #012970;
+    }
+
+    .profile .profile-card img {
+      max-width: 120px;
+    }
+
+    .profile .profile-card h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2c384e;
+      margin: 10px 0 0 0;
+    }
+
+    .profile .profile-card h3 {
+      font-size: 18px;
+    }
+
+    .profile .profile-card .social-links a {
+      font-size: 20px;
+      display: inline-block;
+      color: rgba(1, 41, 112, 0.5);
+      line-height: 0;
+      margin-right: 10px;
+      transition: 0.3s;
+    }
+
+    .profile .profile-card .social-links a:hover {
+      color: #012970;
+    }
+
+    .profile .profile-overview .row {
+      margin-bottom: 20px;
+      font-size: 15px;
+    }
+
+    .profile .profile-overview .card-title {
+      color: #012970;
+    }
+
+    .profile .profile-overview .label {
+      font-weight: 600;
+      color: rgba(1, 41, 112, 0.6);
+    }
+
+    .profile .profile-edit label {
+      font-weight: 600;
+      color: rgba(1, 41, 112, 0.6);
+    }
+
+    .profile .profile-edit img {
+      max-width: 120px;
+    }
+
     .card-item {
-        transition: background-color 0.2s ease; /* Hiệu ứng chuyển động màu nền */
+      transition: background-color 0.2s ease;
+      /* Hiệu ứng chuyển động màu nền */
     }
 
     .card-item:hover:not(.selected) .card-body {
-        background-color: #f0f0f0; /* Màu nền khi trỏ vào */
-        cursor: pointer;
+      background-color: #f0f0f0;
+      /* Màu nền khi trỏ vào */
+      cursor: pointer;
     }
 
     .card-item.selected .card-body {
-        background-color: #cce5ff; /* Màu nền khi được chọn */
+      background-color: #cce5ff;
+      /* Màu nền khi được chọn */
     }
 
     .custom-card-body {
-        transition: background-color 0.2s ease; /* Hiệu ứng chuyển động màu nền */
+      transition: background-color 0.2s ease;
+      /* Hiệu ứng chuyển động màu nền */
     }
 
     .card-item:hover:not(.selected) .custom-card-body {
-        background-color: #f0f0f0; /* Màu nền khi trỏ vào */
+      background-color: #f0f0f0;
+      /* Màu nền khi trỏ vào */
     }
 
     .card-item.selected .custom-card-body {
-        background-color: #cce5ff; /* Màu nền khi được chọn */
+      background-color: #cce5ff;
+      /* Màu nền khi được chọn */
     }
+
     .image-card-style {
       width: 100%;
       height: 200px;

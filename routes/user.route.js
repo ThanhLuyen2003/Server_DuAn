@@ -5,4 +5,6 @@ var usercontroller = require('../controllers/usercontroller');
 
 router.get('/',check_login.yeu_cau_dang_nhap ,usercontroller.list);
 
+router.get('/detail-customer/:ids',check_login.yeu_cau_dang_nhap ,usercontroller.detailCustomer);
+
 module.exports = router;
