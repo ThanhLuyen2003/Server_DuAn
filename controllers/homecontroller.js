@@ -103,7 +103,7 @@ exports.home = async (req, res, next) => {
           bill.status = 'Khách đến muộn';
         }
         // Cập nhật trạng thái vào cơ sở dữ liệu
-        await billDB.updateOne({ _id: bill._id }, { $set: { status: bill.status, note: bill.note} });
+        await billDB.updateOne({ _id: bill._id }, { $set: { status: bill.status, note: bill.note } });
       }
     }
 
@@ -217,22 +217,24 @@ exports.addNote = async (req, res, next) => {
 };
 
 exports.homeFilter = async (req, res, next) => {
-  console.log('Request to /home/filter_data received.');
+  console.log('Yêu cầu đến /home/filter_data đã được nhận.');
   const page = parseInt(req.query.page) || 1;
   const limitPerPage = 10;
   const skip = (page - 1) * limitPerPage;
 
+  let loc = {}; // Khai báo biến loc ở đây
+
   try {
+    let listTime = await myMD.timeModel.find();
     let listBill = await billDB.find()
       .populate('idUser')
       .sort({ day: 1, hour: 1 });
 
     // Lấy dữ liệu từ query parameters thay vì req.body
-    const { startDay, endDay, statusSuccess, statusInService, statusLate, statusCanceled } = req.query;
+    const { startDay, endDay, statusSuccess, statusInService, statusLate, statusCanceled, startMinute } = req.query;
     console.log(req.query);
 
     // Xây dựng các điều kiện lọc
-    const loc = {};
     if (startDay) loc.startDate = { $gte: moment(startDay, 'YYYY-MM-DD').startOf('day').utc().toDate() };
     if (endDay) loc.endDate = { $lte: moment(endDay, 'YYYY-MM-DD').endOf('day').utc().toDate() };
 
@@ -242,8 +244,8 @@ exports.homeFilter = async (req, res, next) => {
     if (statusLate) statusArray.push('Khách đến muộn');
     if (statusCanceled) statusArray.push('Đã hủy lịch');
     if (statusArray.length > 0) loc.status = { $in: statusArray };
+    if (startMinute) loc.startMinute = startMinute;
 
-    // Lọc danh sách hóa đơn dựa trên điều kiện
     const filteredBills = listBill.filter(bill => {
       const billStatus = bill.status;
 
@@ -253,9 +255,15 @@ exports.homeFilter = async (req, res, next) => {
       // So sánh ngày theo khoảng
       const isWithinDateRange = (!startDay || billDate.isSameOrAfter(startDay)) && (!endDay || billDate.isSameOrBefore(endDay));
 
-      return isWithinDateRange && (!loc.status || (Array.isArray(loc.status.$in) && loc.status.$in.includes(billStatus)));
-    });
+      // Chuyển đổi loc.startMinute thành cùng kiểu dữ liệu với bill.startMinute
+      const locStartMinute = loc.startMinute ? moment(loc.startMinute, 'HH:mm').format('HH:mm') : null;
 
+      return (
+        isWithinDateRange &&
+        (!loc.status || (Array.isArray(loc.status.$in) && loc.status.$in.includes(billStatus))) &&
+        (!locStartMinute || bill.hour === locStartMinute)
+      );
+    });
 
     console.log(loc);
     console.log(startDay, endDay);
@@ -274,6 +282,7 @@ exports.homeFilter = async (req, res, next) => {
     const currentList = filteredBills.slice(startIndex, endIndex);
 
     res.render('home/danhsach', {
+      listTime: listTime,
       listBill: currentList,
       currentPage,
       totalPages,
@@ -284,6 +293,3 @@ exports.homeFilter = async (req, res, next) => {
     res.status(500).json({ error: 'Lỗi máy chủ nội bộ' });
   }
 };
-
-
-

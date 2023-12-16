@@ -12,9 +12,6 @@ const useSchema = new mongoose.Schema({
     price: { type: String, require: true },
     status: { type: String, require: true },
     note: { type: String, default: ''},
-    customerName: { type: String, default: '' },
-    customerPhone: { type: String, default: '' },
-    role: {type: String , default: ''},
     idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'userModel', default: null }
 },
     {
