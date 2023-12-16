@@ -23,7 +23,7 @@
 
   <div class="collapse container" id="collapseExample">
     <div class="card card-body">
-      <form id="filterForm" action="/home/filter_data" method="get" enctype="multipart/form-data">
+      <form id="filterForm" action="/home/filter-data" method="get">
         <div class="d-flex align-items-center mb-3">
           <div>
             <label for="startDate" class="fw-bolder">Từ ngày:</label>
@@ -110,7 +110,10 @@
           <% listBill.forEach( ( row )=>{ %>
             <tr>
               <td>
-                <a href="/user/detail-customer/<%=row.idUser._id%>" style="text-decoration: none; color: black;font-weight: 500;"><%= row.idUser.name %></a>
+                <a href="/user/detail-customer/<%=row.idUser._id%>"
+                  style="text-decoration: none; color: black;font-weight: 500;">
+                  <%= row.idUser.name %>
+                </a>
               </td>
               <td>
                 <% var tenDichVu=row.services.map(dichVu=> dichVu.name).join(', ');%>
