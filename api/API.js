@@ -358,4 +358,12 @@ app.put('/changeBalance/:idUser/:balance', (req, res) => {
 
 })
 
+app.get('/getProduct', (req, res) => {
+
+    md.productModel.find()
+        .then(data => {
+            res.status(200).json(data);
+        })
+})
+
 module.exports = app;
