@@ -201,7 +201,7 @@ app.get('/getOrder', (req, res) => {
 
 app.get('/getCat', (req, res) => {
 
-    md.ServiceModel.find({ type: 'cat' })
+    md.ServiceModel.find({ type: 'Cắt' })
         .then(data => {
             res.status(200).json(data);
         })
@@ -217,7 +217,7 @@ app.get('/getMassage', (req, res) => {
 
 app.get('/getChamsocda', (req, res) => {
 
-    md.ServiceModel.find({ type: 'Chamsocda' })
+    md.ServiceModel.find({ type: 'Chăm sóc da' })
         .then(data => {
             res.status(200).json(data);
         })
@@ -225,7 +225,7 @@ app.get('/getChamsocda', (req, res) => {
 
 app.get('/getUon', (req, res) => {
 
-    md.ServiceModel.find({ type: 'Uon' })
+    md.ServiceModel.find({ type: 'Uốn' })
         .then(data => {
             res.status(200).json(data);
         })
@@ -234,7 +234,7 @@ app.get('/getUon', (req, res) => {
 
 app.get('/getNhuom', (req, res) => {
 
-    md.ServiceModel.find({ type: 'Nhuom' })
+    md.ServiceModel.find({ type: 'Nhuộm' })
         .then(data => {
             res.status(200).json(data);
         })
