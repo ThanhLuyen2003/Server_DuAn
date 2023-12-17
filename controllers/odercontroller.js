@@ -114,6 +114,41 @@ exports.list = async (req, res, next) => {
 }
 
 
+const http = require('http');
+const socketIO = require('socket.io');
+
+// Tạo server HTTP
+const server = http.createServer((req, res) => {
+  // Xử lý các yêu cầu HTTP nếu cần
+  res.end('Hello World!');
+});
+
+// Thiết lập socket.io với server HTTP
+const io = socketIO(server);
+// Lưu trữ dữ liệu trạng thái (đơn giản chỉ là một biến dữ liệu ở ví dụ này)
+
+// Gửi thông báo khi dữ liệu thay đổi
+function notifyDataChange(id, status) {
+  // Gửi thông điệp 'dataChanged' đến tất cả các clients đang kết nối với dữ liệu mới
+  io.emit('dataChanged', id, status);
+}
+
+// Lắng nghe các kết nối mới từ clients
+io.on('connection', (socket) => {
+  console.log('Client connected');
+
+  // Gửi dữ liệu ban đầu đến client khi kết nối được thiết lập
+  // socket.emit('initialData', data);
+
+  // Ngắt kết nối khi client ngắt kết nối
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
+});
+
+
+
+server.listen(9999)
 
 exports.duyetSP = async (req, res, next) => {
   console.log('Xác nhận đơn hàng');
@@ -138,6 +173,7 @@ exports.duyetSP = async (req, res, next) => {
   try {
     console.log('AFTER' + objBill.status);
     await myMD.OrderModel.findByIdAndUpdate({ _id: ids }, objBill);
+    notifyDataChange(ids, objBill.status)
     console.log('AFTER UPDATE' + objBill.status);
   } catch (error) {
     console.log(error);
