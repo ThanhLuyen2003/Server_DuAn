@@ -109,6 +109,31 @@ exports.thongketheolichcat = async (req, res, next) => {
     // tổng tiền
     const totalAmount = totalAmountFunc(completedBills);
 
+    // Tính tổng doanh thu của mỗi salon
+    const salonRevenueMap = new Map();
+    for (const bill of completedBills) {
+      const salonName = bill.nameSalon;
+      const servicePrice = parseFloat(bill.price);
+
+      salonRevenueMap.set(salonName, (salonRevenueMap.get(salonName) || 0) + servicePrice);
+    }
+
+    // Sắp xếp và lấy top salon theo tổng doanh thu
+    const sortedSalonRevenueList = [...salonRevenueMap.entries()].sort((a, b) => b[1] - a[1]);
+
+    // Lấy thông tin chi tiết về salon từ bảng salon
+    const salonDetails = await myMD.salonModel.find({ name: { $in: sortedSalonRevenueList.map(item => item[0]) } });
+
+    // Kết hợp thông tin salon và doanh thu để render
+    const result = sortedSalonRevenueList.map(([salonName, revenue]) => {
+      const salonDetail = salonDetails.find(salon => salon.name === salonName);
+      return {
+        salonName: salonName,
+        revenue: revenue,
+        salonDetail: salonDetail || {},
+      };
+    });
+
     // Trích xuất tất cả các dịch vụ từ các hóa đơn đã hoàn thành
     const allServices = completedBills.flatMap(bill => bill.services);
 
@@ -139,6 +164,7 @@ exports.thongketheolichcat = async (req, res, next) => {
       totalAmount: totalAmount,
       topServiceByCount: top10ServicesByCount,
       topServiceByRevenue: sortedServiceRevenueList,
+      salonRevenueList: result,
     });
   } catch (error) {
     console.error('Lỗi khi lấy và tính tổng tiền các hóa đơn:', error);
