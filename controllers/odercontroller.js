@@ -49,8 +49,7 @@ exports.list = async (req, res, next) => {
         { addressU: { $regex: new RegExp(req.query.billSearch, 'i') } },
         { message: { $regex: new RegExp(req.query.billSearch, 'i') } },
         { addressU: { $regex: new RegExp(req.query.billSearch, 'i') } },
-        { idUser: { $regex: new RegExp(req.query.billSearch, 'i') } },
-        { status: { $regex: new RegExp(req.query.billSearch, 'i') } }
+        { idUser: { $regex: new RegExp(req.query.billSearch, 'i') } }
       ]
     };
   } else {

@@ -232,7 +232,7 @@ exports.homeFilter = async (req, res, next) => {
       .sort({ day: 1, hour: 1 });
 
     // Lấy dữ liệu từ query parameters thay vì req.body
-    const { startDay, endDay, statusSuccess, statusInService, statusLate, statusCanceled, startMinute } = req.query;
+    const { startDay, endDay, statusSaptoi , statusSuccess, statusInService, statusLate, statusCanceled, startMinute } = req.query;
     console.log(req.query);
 
     // Xây dựng các điều kiện lọc
@@ -240,6 +240,7 @@ exports.homeFilter = async (req, res, next) => {
     if (endDay) loc.endDate = { $lte: moment(endDay, 'YYYY-MM-DD').endOf('day').utc().toDate() };
 
     const statusArray = [];
+    if (statusSaptoi) statusArray.push('Sắp tới');
     if (statusSuccess) statusArray.push('Đã hoàn thành');
     if (statusInService) statusArray.push('Khách đang cắt');
     if (statusLate) statusArray.push('Khách đến muộn');
