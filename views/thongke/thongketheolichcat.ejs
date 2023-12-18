@@ -54,6 +54,36 @@
               </div>
             </div>
 
+            <!-- Thống kê top 10 dịch vụ theo doanh thu -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title fs-3 mb-4">Top dịch vụ ưa thích theo doanh thu</h5>
+                <div class="activity">
+                  <% topServiceByRevenue.forEach((service, index)=> { %>
+                    <div class="activity-item d-flex">
+                      <div class="activite-label">
+                        <!-- Các điều kiện màu sắc có thể được thay đổi tùy thuộc vào yêu cầu của bạn -->
+                        <% if (index===0) { %>
+                          <span class="text-warning fw-bold fs-4">Top <%= index + 1 %></span>
+                          <% } else if (index===1) { %>
+                            <span class="text-success fw-semibold fs-5">Top <%= index + 1 %></span>
+                            <% } else if (index===2) { %>
+                              <span class="text-info fw-medium fs-6">Top <%= index + 1 %></span>
+                              <% } else { %>
+                                <span class="text-secondary">Top <%= index + 1 %></span>
+                                <% } %>
+                      </div>
+                      <i class='bi bi-circle-fill activity-badge align-self-start'></i>
+                      <div class="activity-content">
+                        <%= service[0] %> - <%= new Intl.NumberFormat().format(service[1]) %> VND
+                      </div>
+                    </div>
+                    <% }); %>
+                </div>
+              </div>
+            </div>
+
+
             <!-- KHÁCH TRỰC TIẾP -->
             <!-- <div class="col-xxl-4 col-md-6 mb-3">
               <div class="card info-card revenue-card">
@@ -94,7 +124,7 @@
             </div> -->
 
             <!-- Recent Sales -->
-            <div class="col-12">
+            <!-- <div class="col-12">
               <div class="card recent-sales overflow-auto">
                 <div class="card-body">
                   <h5 class="card-title">Top Salon - Doanh thu cao nhất</span></h5>
@@ -138,7 +168,8 @@
 
                 </div>
               </div>
-            </div><!-- End Recent Sales -->
+            </div> -->
+            <!-- End Recent Sales -->
 
           </div>
         </div><!-- End Left side columns -->
@@ -174,37 +205,8 @@
               </div>
             </div>
           </div>
-
-          <!-- Thống kê top 10 dịch vụ theo doanh thu -->
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title fs-3 mb-4">Top dịch vụ ưa thích theo doanh thu</h5>
-              <div class="activity">
-                <% topServiceByRevenue.forEach((service, index)=> { %>
-                  <div class="activity-item d-flex">
-                    <div class="activite-label">
-                      <!-- Các điều kiện màu sắc có thể được thay đổi tùy thuộc vào yêu cầu của bạn -->
-                      <% if (index===0) { %>
-                        <span class="text-warning fw-bold fs-4">Top <%= index + 1 %></span>
-                        <% } else if (index===1) { %>
-                          <span class="text-success fw-semibold fs-5">Top <%= index + 1 %></span>
-                          <% } else if (index===2) { %>
-                            <span class="text-info fw-medium fs-6">Top <%= index + 1 %></span>
-                            <% } else { %>
-                              <span class="text-secondary">Top <%= index + 1 %></span>
-                              <% } %>
-                    </div>
-                    <i class='bi bi-circle-fill activity-badge align-self-start'></i>
-                    <div class="activity-content">
-                      <%= service[0] %> - <%= new Intl.NumberFormat().format(service[1]) %> VND
-                    </div>
-                  </div>
-                  <% }); %>
-              </div>
-            </div>
-          </div>
-
-        </div><!-- End Right side columns -->
+        </div>
+        <!-- End Right side columns -->
 
       </div>
     </section>
