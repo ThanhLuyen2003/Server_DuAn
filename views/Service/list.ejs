@@ -47,7 +47,7 @@
             <%= row.name %>
           </td>
           <td>
-            <%= row.price %>
+            <%= new Intl.NumberFormat('vi-VN', { style: 'currency' , currency: 'VND' }).format(row.price)%>
           </td>
           <td>
             <%= row.type %>

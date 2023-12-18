@@ -103,14 +103,14 @@
             <th>Chi phí</th>
             <th style="width: 150px;">Trạng thái</th>
             <th style="width: 120px;">Ghi chú</th>
-            <th style="width: 100px;"> </th>
+            <th style="width: 120px;"> </th>
           </tr>
 
           <% listBill.forEach( ( row )=>{ %>
             <tr>
               <td>
                 <a href="/user/detail-customer/<%=row.idUser._id%>"
-                  style="text-decoration: none; color: black;font-weight: 500;">
+                  style="text-decoration: none; color: black;font-weight: 500; text-decoration: underline;">
                   <%= row.idUser.name %>
                 </a>
               </td>
