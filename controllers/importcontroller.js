@@ -9,7 +9,7 @@ exports.list = async (req, res, next) => {
     const sortOrder = req.query.sortOrder || 'asc';
     var thong_bao = null;
     var dieu_kien_loc = {};
-
+    // tìm kiếm
     if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
         // Tìm kiếm theo tên sản phẩm nếu có
         const billSearch = req.query.billSearch.trim();

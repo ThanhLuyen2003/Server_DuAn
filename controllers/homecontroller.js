@@ -33,24 +33,24 @@ async function sendEmail(bill, user) {
 exports.home = async (req, res, next) => {
   let loc = null;
   // tim kiem
-  let thong_bao = null;
-  let dieu_kien_loc = null;
+  var thong_bao = null;
+  var dieu_kien_loc = {};
+  
   if (typeof req.query.billSearch !== 'undefined' && req.query.billSearch.trim() !== '') {
+    const billSearch = req.query.billSearch.trim();
     dieu_kien_loc = {
       $or: [
-        { nameSalon: { $regex: req.query.billSearch, $options: 'i' } },
-        { addressSalon: { $regex: req.query.billSearch, $options: 'i' } },
-        { day: { $regex: req.query.billSearch, $options: 'i' } },
-        { hour: { $regex: req.query.billSearch, $options: 'i' } },
-        { phone: { $regex: req.query.billSearch, $options: 'i' } },
-        { status: { $regex: req.query.billSearch, $options: 'i' } },
-        { price: { $regex: req.query.billSearch, $options: 'i' } },
-        { note: { $regex: req.query.billSearch, $options: 'i' } }
+        { nameSalon: { $regex: req.query.billSearch.trim(), $options: 'i' } },
+        { addressSalon: { $regex: req.query.billSearch.trim(), $options: 'i' } },
+        { price: { $regex: req.query.billSearch.trim(), $options: 'i' } },
+        { idUser: { $in: await getUserIdByPhoneNumber(req.query.billSearch.trim()) } },
+        { idUser: { $in: await getUserIdByName(req.query.billSearch.trim()) } },
       ]
     };
   } else {
     thong_bao = "Không có dữ liệu";
   }
+  
 
   if (typeof req.query.phone !== 'undefined') {
     loc = { phone: req.query.phone };
@@ -129,6 +129,7 @@ exports.home = async (req, res, next) => {
       currentPage,
       totalPages,
       totalBill,
+      thong_bao: thong_bao
     });
   } catch (err) {
     console.error('Lỗi khi lấy danh sách lịch đặt:', err);
@@ -293,3 +294,11 @@ exports.homeFilter = async (req, res, next) => {
     res.status(500).json({ error: 'Lỗi máy chủ nội bộ' });
   }
 };
+async function getUserIdByPhoneNumber(phoneNumber) {
+  const user = await myMD.userModel.findOne({ phone: { $regex: phoneNumber, $options: 'i' } });
+  return user ? [user._id] : [];
+}
+async function getUserIdByName(NameUser) {
+  const user = await myMD.userModel.findOne({ name: { $regex: NameUser, $options: 'i' } });
+  return user ? [user._id] : [];
+}

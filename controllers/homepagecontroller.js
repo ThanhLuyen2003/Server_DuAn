@@ -7,3 +7,7 @@ exports.homepage = async (req,res,next) =>{
 exports.vefpoly = async (req,res,next) =>{
     res.render('homepage/veFpoly');
 }
+
+exports.dichvu = async (req,res,next) =>{
+    res.render('homepage/dichvu');
+}

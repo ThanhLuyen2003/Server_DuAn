@@ -6,5 +6,7 @@ router.get('/',homepagecontroller.homepage);
 
 router.get('/vefpoly', homepagecontroller.vefpoly);
 
+router.get('/dichvuhomepage', homepagecontroller.dichvu);
+
 module.exports = router;
 
