@@ -13,9 +13,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
     integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- FONT GOOGLE -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;1,500&display=swap"
+    rel="stylesheet">
+  <!-- FONTAWARESOME -->
   <script src="https://kit.fontawesome.com/be081a0279.js" crossorigin="anonymous"></script>
-
   <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .content-main {
+      flex: 1;
+    }
+
     .pagetitle {
       margin-bottom: 10px;
     }
@@ -375,6 +391,9 @@
     .highlight:hover {
       transform: scale(1.2);
     }
+    .container{
+      max-width: 1440px;
+    }
   </style>
 
 </head>
@@ -478,3 +497,4 @@
       </div>
     </div>
   </nav>
+  <div class="content-main">

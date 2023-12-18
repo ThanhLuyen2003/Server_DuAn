@@ -36,12 +36,14 @@
         <th>Email</th>
         <th>Ảnh đại diện</th>
         <th>address</th>
-        <th>balance</th>
       </tr>
       <% listUsers.forEach( ( row )=>{ %>
         <tr>
           <td>
-            <%= row.name %>
+            <a href="/user/detail-customer/<%=row._id%>"
+              style="text-decoration: none; color: black;font-weight: 500; text-decoration: underline">
+              <%= row.name %>
+            </a>
           </td>
           <td>
             <%= row.phone %>
@@ -54,9 +56,6 @@
           </td>
           <td>
             <%= row.address %>
-          </td>
-          <td>
-            <%= row.balance %>
           </td>
         </tr>
         <% } ) %>
