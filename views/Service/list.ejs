@@ -20,54 +20,77 @@
             </div>
           </div>
           <form class="form-inline my-2 my-lg-0" method="post" action="">
-            <input class="form-control mr-sm-2" type="search" name="billSearch" id="searchInput" placeholder="Nhập tên dịch vụ..." aria-label="Search">
+            <input class="form-control mr-sm-2" type="search" name="billSearch" id="searchInput"
+              placeholder="Nhập tên dịch vụ..." aria-label="Search">
             <button class="btn btn-warning my-2 my-sm-0" type="submit">Tìm</button>
-        </form>
+          </form>
         </form>
       </div>
     </nav>
   </div>
 
   <div class="container">
-    <% if (listDichVu.length === 0) { %>
-      <p style="text-align: center; font-size: 30px;">Không có dữ liệu !</p>
-    <% } else { %>
-    <table class="table table-bordered table-striped">
-      <tr>
-        <th>Tên dịch vụ</th>
-        <th>Giá</th>
-        <th>Danh mục</th>
-        <th>Ảnh mô tả</th>
-        <th>Mô tả dịch vụ</th>
-        <th></th>
-      </tr>
-      <% listDichVu.forEach( ( row )=>{ %>
-        <tr>
-          <td>
-            <%= row.name %>
-          </td>
-          <td>
-            <%= new Intl.NumberFormat('vi-VN', { style: 'currency' , currency: 'VND' }).format(row.price)%>
-          </td>
-          <td>
-            <%= row.type %>
-          </td>
-          <td> <img src="<%=row.image %>" alt="" style="width: 60px; height: 60px;margin-left: 10px;"></td>
-          <td>
-            <%= row.describe %>
-          </td>
-          <td>
-            <div class="d-flex">
-              <a href="/dichvu/edit/<%=row._id%>">
-                <button type="button" class="btn btn-warning" style="margin-right: 10px;">Sửa</button>
-              </a>
+    <% if (listDichVu.length===0) { %>
+      <p style="text-align: center; font-size: 30px;">Không có dữ liệu</p>
+      <% } else { %>
+        <table class="table table-bordered table-striped">
+          <tr>
+            <th>Tên dịch vụ</th>
+            <th>Giá</th>
+            <th>Danh mục</th>
+            <th>Ảnh mô tả</th>
+            <th>Thời gian hoàn thành dịch vụ</th>
+            <th>Mô tả dịch vụ</th>
+            <th></th>
+          </tr>
+          <% listDichVu.forEach( ( row )=>{ %>
+            <tr>
+              <td>
+                <%= row.name %>
+              </td>
+              <td>
+                <%= new Intl.NumberFormat('vi-VN', { style: 'currency' , currency: 'VND' }).format(row.price)%>
+              </td>
+              <td>
+                <%= row.type %>
+              </td>
+              <td>
+                <img src="<%=row.image %>" alt="" style="width: 60px; height: 60px;margin-left: 10px;">
+              </td>
+              <td>
+                <% 
+                  var hours = Math.floor(row.time);
+                  var minutes = (row.time - hours) * 60;
+              
+                  if (hours > 0) {
+                    %>
+                    <%= hours %> giờ 
+                    <% 
+                  }
+                  
+                  if (minutes > 0) {
+                    %>
+                    <%= minutes %> phút
+                    <% 
+                  }
+                %>
+              </td>
+              
+              <td>
+                <%= row.describe %>
+              </td>
+              <td>
+                <div class="d-flex">
+                  <a href="/dichvu/edit/<%=row._id%>">
+                    <button type="button" class="btn btn-warning" style="margin-right: 10px;">Sửa</button>
+                  </a>
 
-            </div>
-          </td>
-        </tr>
-        <% } ) %>
-    </table>
-    <% } %>
+                </div>
+              </td>
+            </tr>
+            <% } ) %>
+        </table>
+        <% } %>
   </div>
 
   <div style="margin-left: 850px; margin-top: 50px;">
@@ -84,5 +107,20 @@
       </ul>
     </nav>
   </div>
+
+  <script>
+    function formatTime(time) {
+      var hours = Math.floor(time);
+      var minutes = Math.round((time - hours) * 60);
+
+      var formattedTime = hours + " giờ";
+
+      if (minutes > 0) {
+        formattedTime += " " + minutes + " phút";
+      }
+
+      return formattedTime;
+    }
+  </script>
 
   <%- include('../inc/footer.ejs') %>

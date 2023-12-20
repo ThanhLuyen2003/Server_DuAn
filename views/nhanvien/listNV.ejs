@@ -7,13 +7,13 @@
 
 <%- include('../inc/header.ejs') %>
   <div class="container">
-    <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Danh sách hàng nhập về</h1>
+    <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Nhân viên</h1>
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <form class="d-flex" role="search">
           <div class="d-flex justify-content-around align-items-center mb-9">
-            <a type="button" class="btn btn-warning" href="http://localhost:3000/statistic/import/add"
-              style="width: auto; margin-right: 20px;">+ Thêm sản phẩm cần nhập
+            <a type="button" class="btn btn-warning" href="http://localhost:3000/staff/add"
+              style="width: auto; margin-right: 20px;">+ Thêm nhân viên mới
             </a>
             <div style="margin-right: 10px;" class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -21,8 +21,8 @@
                 Sắp xếp theo
               </button>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/statistic/import/sxtheogia">Giá</a></li>
-                <li><a class="dropdown-item" href="/statistic/import/sxtheosl">Số lượng nhập</a></li>
+                <li><a class="dropdown-item" href="/statistic/import/sxtheogia">Lương</a></li>
+                <li><a class="dropdown-item" href="/statistic/import/sxtheosl">....</a></li>
               </ul>
             </div>
            <div class="d-flex justify-content-around align-items-center mb-9">
@@ -39,41 +39,50 @@
   </div>
 
   <div class="container">
-    <% if (listimport.length === 0) { %>
+    <% if (listStaff.length === 0) { %>
       <p style="text-align: center; font-size: 30px;">Không có dữ liệu</p>
     <% } else { %>
     <table class="table table-bordered table-striped">
       <tr>
-        <th>Tên sản phẩm</th>
-        <th>Ảnh</th>
-        <th>Giá</th>
-        <th>Số lượng nhập</th>
-        <th>Tổng giá</th>
+        <th>Chức vụ</th>
+        <th>Tên nhân viên</th>
+        <th>Ảnh nhân viên</th>
+        <th>Số điện thoại</th>
+        <th>Năm sinh</th>
+        <th>Quê quán</th>
+        <th>Kinh nghiệm</th>
+        <th>Lương tháng</th>
         <th></th>
       </tr>
-      <% listimport.forEach( ( row )=>{ %>
+      <% listStaff.forEach( ( row )=>{ %>
         <tr>
+          <td>
+            <%= row.chucvu %>
+          </td>
           <td>
             <%= row.name %>
           </td>
-          <td> <img src="<%=row.img %>" alt="" style="width: 60px; height: 60px;margin-left: 10px;"></td>
-          <td>
-            <%= row.price %>
+          <td> 
+            <img src="<%= row.img %>" alt="" style="width: 60px; height: 60px; margin-left: 10px;">
           </td>
           <td>
-            <%= row.soluongnhap %>
+            0<%= row.sdt %>
           </td>
           <td>
-            <% 
-              const price = row.price;
-              const quantity = row.soluongnhap;
-              const result = price * quantity;
-            %>
-            <%= result %> 
+            <%= row.namsinh %>
+          </td>
+          <td>
+            <%= row.que %>
+          </td>
+          <td> 
+            <%= row.kinhnghiem %>
+          </td>
+          <td>
+            <%= new Intl.NumberFormat('vi-VN', { style: 'currency' , currency: 'VND' }).format(row.luongthang) %>
           </td>
           <td>
             <div class="d-flex">
-              <a href="/statistic/import/edit/<%=row._id%>">
+              <a href="/staff/edit/<%=row._id%>">
                 <button type="button" class="btn btn-warning" style="margin-right: 10px;">Sửa</button>
               </a>
 
@@ -81,18 +90,6 @@
           </td>
         </tr>
         <% } ); %>
-
-        <% 
-        let total = 0;
-        listimport.forEach((row) => {
-          const price = row.price;
-          const quantity = row.soluongnhap;
-          const result = price * quantity;
-          total += result;
-        });
-      %>
-      
-      <p style="font-weight: bold;">Tổng tiền nhập hàng: <%= numberWithCommas(total) %>đ</p>
         
     </table>
     <% } %>
@@ -105,12 +102,12 @@
       <ul class="pagination">
 
 
-        <li class="page-item"><a class="page-link" href="http://localhost:3000/import?currentPage-1&limit=10">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="http://localhost:3000/import?page=1&limit=10">1</a></li>
-        <li class="page-item"><a class="page-link" href="http://localhost:3000/import?page=2&limit=10">2</a></li>
-        <li class="page-item"><a class="page-link" href="http://localhost:3000/import?page=3&limit=10">3</a></li>
-        <li class="page-item"><a class="page-link" href="http://localhost:3000/import?page=4&limit=10">4</a></li>
-        <li class="page-item"><a class="page-link" href="http://localhost:3000/import?currentPage+1&limit=10">Next</a>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/staff?currentPage-1&limit=10">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/staff?page=1&limit=10">1</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/staff?page=2&limit=10">2</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/staff?page=3&limit=10">3</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/staff?page=4&limit=10">4</a></li>
+        <li class="page-item"><a class="page-link" href="http://localhost:3000/staff?currentPage+1&limit=10">Next</a>
         </li>
       </ul>
     </nav>

@@ -181,7 +181,7 @@ exports.duyetSP = async (req, res, next) => {
   res.redirect('/oder');
 }
 
-exports.huySP = async (req, res, next) => {
+exports.huySP = async (req, res, next) => {c
   console.log('Xác nhận đơn hàng');
   let ids = req.params.ids;
 
@@ -197,6 +197,7 @@ exports.huySP = async (req, res, next) => {
 
   if (billStatus === 'Đang giao hàng') {
     objBill.status = 'Hủy đơn';
+    
   }
 
   objBill._id = ids;

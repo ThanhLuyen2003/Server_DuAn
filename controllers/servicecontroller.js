@@ -42,19 +42,23 @@ exports.list = async (req, res, next) => {
     res.render('Service/list', {
         listDichVu: listDichVu, currentPage: page,
         totalPages: Math.ceil(totalService / limit),
-        totalService
+        totalService,
+        listTime: listTime,
     });
 }
+
 
 exports.addService = async (req, res, next) => {
     let msg = '';
     var listService = await myMD.ServiceModel.find().sort({ name: 1 });
     if (req.method == 'POST') {
 
+        let listTime = await myMD.timeModel.find();
         let objSe = new myMD.ServiceModel();
         objSe.name = req.body.name;
         objSe.price = req.body.price;
         objSe.type = req.body.type;
+        objSe.time = req.body.time;
         try {
             fs.renameSync(req.file.path, './public/uploads/' + req.file.originalname);
             msg = 'Url ảnh:  http://localhost:3000/uploads/' + req.file.originalname;
@@ -87,6 +91,7 @@ exports.editService = async (req, res, next) => {
         objSe.name = req.body.name;
         objSe.price = req.body.price;
         objSe.type = req.body.type;
+        objSe.time = req.body.time;
         try {
             fs.renameSync(req.file.path, './public/uploads/' + req.file.originalname);
             msg = 'Url ảnh:  http://localhost:3000/uploads/' + req.file.originalname;
@@ -116,6 +121,7 @@ exports.deleteService = async (req, res, next) => {
     }
     res.redirect('/dichvu');
 }
+
 exports.sxTheoTenService = async (req, res, next) => {
     var listDichVu = await myMD.ServiceModel.find().sort({ name: 1 });
     res.render('Service/list', { listDichVu: listDichVu })

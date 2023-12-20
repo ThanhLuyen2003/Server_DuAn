@@ -75,6 +75,7 @@ const serviceModel = new db.mongoose.Schema({
     type: { type: String, required: true },
     image: { type: String, required: true },
     describe: { type: String, required: true },
+    time: {type: Number},
 
 },
     {
@@ -177,12 +178,13 @@ let ImportModel = db.mongoose.model('importModel', importModel)
 
 const staffSchema = new db.mongoose.Schema({
     name: { type: String, require: true },
-    userName: { type: String, require: true },
-    pass: { type: String, require: true },
-    email: { type: String, require: true },
-    numberPhone: { type: String, require: true },
-    role: { type: String, require: true },
-    otherInfo: { type: String, require: true },
+    img: { type: String, require: true },
+    sdt: { type: Number, require: true },
+    namsinh: { type: Number, require: true },
+    que: { type: String, require: true },
+    luongthang: { type: Number, require: true },
+    kinhnghiem: { type: String, require: true },
+    chucvu: { type: String, require: true },
 },
     {
         collection: 'staff'

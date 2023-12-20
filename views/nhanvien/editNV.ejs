@@ -1,0 +1,41 @@
+<%- include('../inc/header.ejs') %>
+    <h1 style="font-weight: bold; text-align: center; margin-top: 20px;">Nhân viên mới</h1>
+
+    <div class="container">
+        <form action="" method="post" enctype="multipart/form-data">
+            <form class="px-4 py-3">
+
+                <label class="form-label">Họ và tên</label>
+                <input type="text" name="name" placeholder="Họ tên nhân viên" class="form-control" value="<%=objP.name %>">
+                <br>
+
+                <div class="mb-3">
+                    <label class="form-label">Hình ảnh</label>
+                    <label for="formFileMultiple" class="form-label"></label>
+                    <input class="form-control" type="file" name="file_anh" id="formFileMultiple"
+                        value="<%=objP.img %>" multiple>
+                </div>
+                <label class="form-label">Số điện thoại</label>
+                <input type="text" name="sdt" placeholder="Số điện thoại" class="form-control" pattern="[0-9]*" inputmode="numeric" value="<%=objP.sdt %>">
+                <br>
+                <label class="form-label">Quê quán</label>
+                <input type="text" name="que" placeholder="Quê quán" class="form-control" value="<%=objP.que %>">
+                <br>
+                <label class="form-label">Năm sinh</label>
+                <input type="number" name="namsinh" placeholder="Năm sinh" class="form-control" value="<%=objP.namsinh %>">
+                <br>
+                <label class="form-label">Lương tháng</label>
+                <input type="number" name="luongthang" placeholder="Lương tháng" class="form-control" value="<%=objP.luongthang %>">
+                <br>
+                <label class="form-label">Kinh nghiệm</label>
+                <input type="text" name="kinhnghiem" placeholder="Kinh nghiệm" class="form-control" value="<%=objP.kinhnghiem %>">
+                <br>
+                <label class="form-label">Chức vụ</label>
+                <input type="text" name="chucvu" placeholder="Chức vụ" class="form-control" value="<%=objP.chucvu %>">
+                <br>
+                <button class="btn btn-warning" type="submit">Lưu</button>
+                <%= msg %>
+            </form>
+        </form>
+    </div>
+<%- include('../inc/footer.ejs') %>
